@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>規則叢集投票策略</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    background: #0d1117; color: #c9d1d9; padding: 24px;
+    max-width: 800px; margin: 0 auto;
+}
+h1 { color: #58a6ff; font-size: 1.4em; margin-bottom: 4px; }
+.subtitle { color: #8b949e; font-size: 0.85em; margin-bottom: 24px; }
+.day { background: #161b22; border: 1px solid #30363d; border-radius: 8px; margin-bottom: 12px; }
+.day-header {
+    padding: 12px 16px; cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center;
+    user-select: none;
+}
+.day-header:hover { background: #1c2129; border-radius: 8px; }
+.day-date { font-weight: bold; color: #f0f6fc; }
+.day-meta { display: flex; gap: 12px; align-items: center; font-size: 0.85em; }
+.regime-bull { color: #3fb950; }
+.regime-bear { color: #f85149; }
+.badge { padding: 2px 8px; border-radius: 4px; font-size: 0.8em; }
+.badge-buy { background: #0d4429; color: #3fb950; }
+.badge-sell { background: #4a1c1c; color: #f85149; }
+.badge-hold { background: #1c2333; color: #58a6ff; }
+.day-body { padding: 0 16px 16px; display: none; }
+.day.open .day-body { display: block; }
+.day.open .arrow { transform: rotate(90deg); }
+.arrow { color: #484f58; transition: transform 0.15s; display: inline-block; }
+.section-label { color: #8b949e; font-size: 0.8em; margin: 12px 0 6px; text-transform: uppercase; }
+.stock-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.stock {
+    background: #21262d; padding: 4px 10px; border-radius: 4px;
+    font-size: 0.9em; color: #c9d1d9;
+}
+.stock-buy { border-left: 3px solid #3fb950; }
+.stock-sell { border-left: 3px solid #f85149; text-decoration: line-through; color: #8b949e; }
+.empty { color: #484f58; font-style: italic; font-size: 0.85em; }
+footer { text-align: center; color: #484f58; font-size: 0.75em; margin-top: 32px; }
+</style>
+</head>
+<body>
+<h1>規則叢集投票策略</h1>
+<div class="subtitle">vote_v5_zscore_hedge · 8 規則 ≥ 5 票 · 更新時間 2026-03-04 00:02</div>
+
+<div class="day open">
+  <div class="day-header">
+    <div><span class="arrow">▶</span> <span class="day-date">2026-03-03</span></div>
+    <div class="day-meta"><span class="regime-bull">↑ 多頭</span><span class="badge badge-hold">10 檔</span><span class="badge badge-buy">+10</span></div>
+  </div>
+  <div class="day-body">
+    <div class="section-label">持股</div>
+    <div class="stock-list"><span class="stock">2347</span><span class="stock">2637</span><span class="stock">2809</span><span class="stock">2855</span><span class="stock">2887</span><span class="stock">3088</span><span class="stock">3209</span><span class="stock">5522</span><span class="stock">5880</span><span class="stock">6192</span></div>
+    <div class="section-label">買進</div><div class="stock-list"><span class="stock stock-buy">2347</span><span class="stock stock-buy">2637</span><span class="stock stock-buy">2809</span><span class="stock stock-buy">2855</span><span class="stock stock-buy">2887</span><span class="stock stock-buy">3088</span><span class="stock stock-buy">3209</span><span class="stock stock-buy">5522</span><span class="stock stock-buy">5880</span><span class="stock stock-buy">6192</span></div>
+    
+  </div>
+</div>
+<footer>由 run_strategy.py 自動產生 · 資料來源 FinLab</footer>
+<script>
+document.querySelectorAll('.day-header').forEach(h => {
+    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+});
+</script>
+</body>
+</html>

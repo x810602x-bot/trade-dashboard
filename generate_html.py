@@ -135,7 +135,7 @@ def generate():
 <h1>\u898f\u5247\u53e2\u96c6\u6295\u7968\u7b56\u7565</h1>
 <div class="subtitle">vote_v5_zscore_hedge \u00b7 8 \u898f\u5247 \u2265 5 \u7968 \u00b7 \u66f4\u65b0\u6642\u9593 {now}</div>
 {''.join(days_html)}
-<footer>\u7531 run_strategy.py \u81ea\u52d5\u7522\u751f \u00b7 \u8cc7\u6599\u4f86\u6e90 FinLab</footer>
+<footer></footer>
 <script>{JS}</script>
 </body>
 </html>"""

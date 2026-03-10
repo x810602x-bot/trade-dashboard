@@ -13,7 +13,7 @@ echo [OK] 已產生 HTML
 cd /d "%DASHBOARD%"
 git add .
 git commit -m "update: %date:~0,10%"
-git push
+git push -u origin main
 if errorlevel 1 (
     echo [錯誤] git push 失敗
     pause

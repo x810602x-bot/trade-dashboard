@@ -1,94 +1,47 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>規則叢集投票策略</title>
+<title>營收股價策略</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-    background: #0d1117; color: #c9d1d9; padding: 24px;
-    max-width: 800px; margin: 0 auto;
-}
-h1 { color: #58a6ff; font-size: 1.4em; margin-bottom: 4px; }
-.subtitle { color: #8b949e; font-size: 0.85em; margin-bottom: 24px; }
-.day { background: #161b22; border: 1px solid #30363d; border-radius: 8px; margin-bottom: 12px; }
-.day-header {
-    padding: 12px 16px; cursor: pointer; display: flex;
-    justify-content: space-between; align-items: center;
-    user-select: none;
-}
-.day-header:hover { background: #1c2129; border-radius: 8px; }
-.day-date { font-weight: bold; color: #f0f6fc; }
-.day-meta { display: flex; gap: 12px; align-items: center; font-size: 0.85em; }
-.regime-bull { color: #3fb950; }
-.regime-bear { color: #f85149; }
-.badge { padding: 2px 8px; border-radius: 4px; font-size: 0.8em; }
-.badge-buy { background: #0d4429; color: #3fb950; }
-.badge-sell { background: #4a1c1c; color: #f85149; }
-.badge-hold { background: #1c2333; color: #58a6ff; }
-.day-body { padding: 0 16px 16px; display: none; }
-.day.open .day-body { display: block; }
-.day.open .arrow { transform: rotate(90deg); }
-.arrow { color: #484f58; transition: transform 0.15s; display: inline-block; }
-.section-label { color: #8b949e; font-size: 0.8em; margin: 12px 0 6px; text-transform: uppercase; }
-.stock-list { display: flex; flex-wrap: wrap; gap: 6px; }
-.stock {
-    background: #21262d; padding: 4px 10px; border-radius: 4px;
-    font-size: 0.9em; color: #c9d1d9;
-}
-.stock-buy { border-left: 3px solid #3fb950; }
-.stock-sell { border-left: 3px solid #f85149; text-decoration: line-through; color: #8b949e; }
-.empty { color: #484f58; font-style: italic; font-size: 0.85em; }
-footer { text-align: center; color: #484f58; font-size: 0.75em; margin-top: 32px; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:#1a1a2e;color:#e0e0e0;
+      min-height:100vh;display:flex;justify-content:center;padding:16px}
+.container{width:100%;max-width:480px}
+h1{font-size:1.4rem;padding:20px 0 4px}
+.date{color:#888;font-size:0.95rem;padding-bottom:16px}
+.card{border-radius:12px;padding:16px;margin-bottom:12px}
+.card-header{display:flex;justify-content:space-between;align-items:center;
+              margin-bottom:10px;font-weight:600;font-size:1.05rem}
+.count{font-size:0.9rem;opacity:0.85}
+.buy{background:#1b4332}
+.sell{background:#4a1525}
+.hold{background:#2a2a3e}
+.tag{display:inline-block;background:rgba(255,255,255,0.12);
+     padding:6px 14px;border-radius:8px;margin:3px 4px;font-size:1rem}
+.empty{color:#888;font-size:0.95rem}
 </style>
 </head>
 <body>
-<h1>規則叢集投票策略</h1>
-<div class="subtitle">vote_v5_zscore_hedge · 8 規則 ≥ 5 票 · 更新時間 2026-03-10 13:51</div>
+<div class="container">
+<h1>營收股價策略</h1>
+<div class="date">2026-03-10</div>
 
-<div class="day open">
-  <div class="day-header">
-    <div><span class="arrow">▶</span> <span class="day-date">2026-03-06</span></div>
-    <div class="day-meta"><span class="regime-bull">↑ 多頭</span><span class="badge badge-hold">10 檔</span></div>
-  </div>
-  <div class="day-body">
-    <div class="section-label">持股</div>
-    <div class="stock-list"><span class="stock">2347</span><span class="stock">2637</span><span class="stock">2809</span><span class="stock">2855</span><span class="stock">2887</span><span class="stock">3088</span><span class="stock">3209</span><span class="stock">5522</span><span class="stock">5880</span><span class="stock">6192</span></div>
-    
-    
-  </div>
+<div class="card buy">
+  <div class="card-header"><span>買入</span><span class="count">3 檔</span></div>
+  <div><span class="tag">5386</span> <span class="tag">6861</span> <span class="tag">4749</span></div>
 </div>
-<div class="day">
-  <div class="day-header">
-    <div><span class="arrow">▶</span> <span class="day-date">2026-03-04</span></div>
-    <div class="day-meta"><span class="regime-bull">↑ 多頭</span><span class="badge badge-hold">10 檔</span></div>
-  </div>
-  <div class="day-body">
-    <div class="section-label">持股</div>
-    <div class="stock-list"><span class="stock">2347</span><span class="stock">2637</span><span class="stock">2809</span><span class="stock">2855</span><span class="stock">2887</span><span class="stock">3088</span><span class="stock">3209</span><span class="stock">5522</span><span class="stock">5880</span><span class="stock">6192</span></div>
-    
-    
-  </div>
+
+<div class="card sell">
+  <div class="card-header"><span>賣出</span><span class="count">0 檔</span></div>
+  <div><span class="empty">（無）</span></div>
 </div>
-<div class="day">
-  <div class="day-header">
-    <div><span class="arrow">▶</span> <span class="day-date">2026-03-03</span></div>
-    <div class="day-meta"><span class="regime-bull">↑ 多頭</span><span class="badge badge-hold">10 檔</span></div>
-  </div>
-  <div class="day-body">
-    <div class="section-label">持股</div>
-    <div class="stock-list"><span class="stock">2347</span><span class="stock">2637</span><span class="stock">2809</span><span class="stock">2855</span><span class="stock">2887</span><span class="stock">3088</span><span class="stock">3209</span><span class="stock">5522</span><span class="stock">5880</span><span class="stock">6192</span></div>
-    
-    
-  </div>
+
+<div class="card hold">
+  <div class="card-header"><span>目前持股</span><span class="count">3 檔</span></div>
+  <div><span class="tag">4749</span> <span class="tag">5386</span> <span class="tag">6861</span></div>
 </div>
-<footer></footer>
-<script>
-document.querySelectorAll('.day-header').forEach(h => {
-    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
-});
-</script>
+</div>
 </body>
 </html>

@@ -6,42 +6,257 @@
 <title>營收股價策略</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,sans-serif;background:#1a1a2e;color:#e0e0e0;
-      min-height:100vh;display:flex;justify-content:center;padding:16px}
-.container{width:100%;max-width:480px}
+body{
+  font-family:-apple-system,"Segoe UI",sans-serif;
+  background:#1a1a2e;color:#e0e0e0;
+  min-height:100vh;display:flex;justify-content:center;padding:16px;
+}
+.container{width:100%;max-width:720px}
 h1{font-size:1.4rem;padding:20px 0 4px}
-.date{color:#888;font-size:0.95rem;padding-bottom:16px}
-.card{border-radius:12px;padding:16px;margin-bottom:12px}
-.card-header{display:flex;justify-content:space-between;align-items:center;
-              margin-bottom:10px;font-weight:600;font-size:1.05rem}
-.count{font-size:0.9rem;opacity:0.85}
-.buy{background:#1b4332}
-.sell{background:#4a1525}
-.hold{background:#2a2a3e}
-.tag{display:inline-block;background:rgba(255,255,255,0.12);
-     padding:6px 14px;border-radius:8px;margin:3px 4px;font-size:1rem}
-.empty{color:#888;font-size:0.95rem}
+.sub{display:flex;gap:16px;align-items:baseline;padding-bottom:16px}
+.date{color:#888;font-size:0.95rem}
+.held{color:#888;font-size:0.9rem}
+
+table{width:100%;border-collapse:collapse;font-size:0.92rem}
+thead th{
+  text-align:left;padding:8px 6px;color:#888;font-weight:500;
+  border-bottom:1px solid #333;font-size:0.82rem;white-space:nowrap;
+}
+tbody td{padding:8px 6px;border-bottom:1px solid #262640}
+tbody tr:hover{background:rgba(255,255,255,0.03)}
+
+.col-name{min-width:120px}
+.col-act{text-align:center;width:60px}
+.col-ret{text-align:right;width:64px}
+.col-wt{text-align:right;width:64px}
+.col-date{text-align:center;width:90px;color:#999;font-size:0.85rem}
+
+.badge{
+  display:inline-block;font-size:0.72rem;padding:1px 6px;
+  border-radius:4px;vertical-align:middle;margin-left:4px;font-weight:600;
+}
+.badge-tp{background:#1b4332;color:#4ade80}
+.badge-sl{background:#4a1525;color:#f87171}
+.badge-tp-done{background:#1b4332;color:#4ade80;opacity:0.6}
+.badge-sl-done{background:#4a1525;color:#f87171;opacity:0.6}
+
+.act{
+  display:inline-block;font-size:0.82rem;padding:2px 8px;
+  border-radius:4px;font-weight:600;
+}
+.act-buy{background:#1b4332;color:#4ade80}
+.act-sell{background:#4a1525;color:#f87171}
+
+.ret{font-weight:600;font-variant-numeric:tabular-nums}
+.ret.pos{color:#4ade80}
+.ret.neg{color:#f87171}
+.ret.neutral{color:#666}
+
+.wt{font-variant-numeric:tabular-nums}
+.wt.dim{color:#555}
+
+.empty{text-align:center;padding:32px;color:#666}
 </style>
 </head>
 <body>
 <div class="container">
 <h1>營收股價策略</h1>
-<div class="date">2026-03-10</div>
-
-<div class="card buy">
-  <div class="card-header"><span>買入</span><span class="count">3 檔</span></div>
-  <div><span class="tag">5386</span> <span class="tag">6861</span> <span class="tag">4749</span></div>
+<div class="sub">
+  <span class="date">2026-03-10</span>
+  <span class="held">持倉 7 檔</span>
 </div>
 
-<div class="card sell">
-  <div class="card-header"><span>賣出</span><span class="count">7 檔</span></div>
-  <div><span class="tag">6588</span> <span class="tag">2890</span> <span class="tag">3167</span> <span class="tag">3526</span> <span class="tag">5475</span> <span class="tag">2485</span> <span class="tag">2383</span></div>
-</div>
+<table>
+<thead>
+<tr>
+  <th>名稱</th>
+  <th style="text-align:center">新增移除</th>
+  <th style="text-align:right">漲跌</th>
+  <th style="text-align:right">權重更新</th>
+  <th style="text-align:center">清單新增</th>
+  <th style="text-align:center">清單移除</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="col-name">5386 青雲國際</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-ret"><span class="ret neutral">—</span></td>
+  <td class="col-wt"><span class="wt">25%</span></td>
+  <td class="col-date">2026-03-10</td>
+  <td class="col-date"></td>
+</tr>
+<tr>
+  <td class="col-name">6861 睿生光電</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-ret"><span class="ret neutral">—</span></td>
+  <td class="col-wt"><span class="wt">25%</span></td>
+  <td class="col-date">2026-03-10</td>
+  <td class="col-date"></td>
+</tr>
+<tr>
+  <td class="col-name">4749 新應材</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-ret"><span class="ret neutral">—</span></td>
+  <td class="col-wt"><span class="wt">25%</span></td>
+  <td class="col-date">2026-03-10</td>
+  <td class="col-date"></td>
+</tr>
+<tr>
+  <td class="col-name">2383 台光電子</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+13.1%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">2485 兆赫電子</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+34.5%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">2890 永豐金控</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+2.1%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">3167 大量科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+5.4%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">3526 凡甲科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-3.9%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">5475 德宏工業</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+23.2%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">6588 東典光電</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-19.3%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">5386 青雲國際 <span class="badge badge-tp-done">已停利</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+79.4%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-09</td>
+</tr>
+<tr>
+  <td class="col-name">8996 高力 <span class="badge badge-sl-done">已停損</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-20.7%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">1590 亞德客-KY <span class="badge badge-sl-done">已停損</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-22.0%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">4157 太景*-KY</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-20.1%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">2408 南科</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+8.1%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">2451 創見資訊</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-13.4%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">4967 十銓</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-1.8%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">5289 宜鼎國際</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+14.5%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">3006 晶豪科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+0.4%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">3131 弘塑科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-17.6%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">8299 群聯電子</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-1.1%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
+<tr>
+  <td class="col-name">3443 創意電子</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+0.8%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-01-12</td>
+  <td class="col-date">2026-02-11</td>
+</tr>
 
-<div class="card hold">
-  <div class="card-header"><span>目前持股</span><span class="count">7 檔</span></div>
-  <div><span class="tag">2383</span> <span class="tag">2485</span> <span class="tag">2890</span> <span class="tag">3167</span> <span class="tag">3526</span> <span class="tag">5475</span> <span class="tag">6588</span></div>
-</div>
+</tbody>
+</table>
 </div>
 </body>
 </html>

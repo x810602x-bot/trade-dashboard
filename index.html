@@ -13,9 +13,8 @@ body{
 }
 .container{width:100%;max-width:720px}
 h1{font-size:1.4rem;padding:20px 0 4px}
-.sub{display:flex;gap:16px;align-items:baseline;padding-bottom:16px}
+.sub{padding-bottom:16px}
 .date{color:#888;font-size:0.95rem}
-.held-count{color:#888;font-size:0.9rem}
 
 table{width:100%;border-collapse:collapse;font-size:0.92rem}
 thead th{
@@ -53,19 +52,15 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 
 .empty{text-align:center;padding:32px;color:#666}
 
-.section-sep td{
-  border-bottom:1px solid #444;padding:0;height:2px;
-}
-
-.past-section{margin-top:24px}
-.past-section summary{
+.section{margin-top:16px}
+.section summary{
   cursor:pointer;font-size:0.85rem;color:#888;
   padding:8px 14px;background:#1e1e36;border-radius:6px;
   display:inline-block;user-select:none;
 }
-.past-section summary:hover{color:#bbb;background:#262640}
-.past-section[open] summary{margin-bottom:8px}
-.past-section table{margin-top:4px}
+.section summary:hover{color:#bbb;background:#262640}
+.section[open] summary{margin-bottom:8px}
+.section table{margin-top:4px}
 </style>
 </head>
 <body>
@@ -73,9 +68,10 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 <h1>營收股價策略</h1>
 <div class="sub">
   <span class="date">2026-03-10</span>
-  <span class="held-count">持倉 1 檔</span>
 </div>
 
+<details class="section" open>
+<summary>持倉（1 檔）</summary>
 <table>
 <thead>
 <tr>
@@ -100,7 +96,26 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-02-10</td>
   <td class="col-date"></td>
 </tr>
-<tr class="section-sep"><td colspan="8"></td></tr>
+
+</tbody>
+</table>
+</details>
+<details class="section" open>
+<summary>買進（2 筆）</summary>
+<table>
+<thead>
+<tr>
+  <th>名稱</th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th style="text-align:right">買入價</th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重更新</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
 <tr>
   <td class="col-name">6861 睿生光電</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
@@ -121,6 +136,26 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-03-10</td>
   <td class="col-date"></td>
 </tr>
+
+</tbody>
+</table>
+</details>
+<details class="section" open>
+<summary>賣出（9 筆）</summary>
+<table>
+<thead>
+<tr>
+  <th>名稱</th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th style="text-align:right">買入價</th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重更新</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
 <tr>
   <td class="col-name">2485 兆赫電子</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
@@ -214,9 +249,9 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 
 </tbody>
 </table>
-
-<details class="past-section">
-<summary>上期買賣（10 筆）</summary>
+</details>
+<details class="section">
+<summary>上期賣出（10 筆）</summary>
 <table>
 <thead>
 <tr>

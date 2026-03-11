@@ -36,13 +36,13 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   display:inline-block;font-size:0.82rem;padding:2px 8px;
   border-radius:4px;font-weight:600;
 }
-.act-buy{background:#1b4332;color:#4ade80}
-.act-sell{background:#4a1525;color:#f87171}
+.act-buy{background:#4a1525;color:#f87171}
+.act-sell{background:#1b4332;color:#4ade80}
 .act-hold{background:#1e293b;color:#94a3b8}
 
 .ret{font-weight:600;font-variant-numeric:tabular-nums}
-.ret.pos{color:#4ade80}
-.ret.neg{color:#f87171}
+.ret.pos{color:#f87171}
+.ret.neg{color:#4ade80}
 .ret.neutral{color:#666}
 
 .wt{font-variant-numeric:tabular-nums}
@@ -52,6 +52,20 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 .price.dim{color:#555}
 
 .empty{text-align:center;padding:32px;color:#666}
+
+.section-sep td{
+  border-bottom:1px solid #444;padding:0;height:2px;
+}
+
+.past-section{margin-top:24px}
+.past-section summary{
+  cursor:pointer;font-size:0.85rem;color:#888;
+  padding:8px 14px;background:#1e1e36;border-radius:6px;
+  display:inline-block;user-select:none;
+}
+.past-section summary:hover{color:#bbb;background:#262640}
+.past-section[open] summary{margin-bottom:8px}
+.past-section table{margin-top:4px}
 </style>
 </head>
 <body>
@@ -71,8 +85,8 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <th style="text-align:right">買入價</th>
   <th style="text-align:right">賣出價</th>
   <th style="text-align:right">權重更新</th>
-  <th style="text-align:center">清單新增</th>
-  <th style="text-align:center">清單移除</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
 </tr>
 </thead>
 <tbody>
@@ -86,6 +100,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-02-10</td>
   <td class="col-date"></td>
 </tr>
+<tr class="section-sep"><td colspan="8"></td></tr>
 <tr>
   <td class="col-name">6861 睿生光電</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
@@ -105,26 +120,6 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-03-10</td>
   <td class="col-date"></td>
-</tr>
-<tr>
-  <td class="col-name">1590 亞德客-KY</td>
-  <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret neg">-23.0%</span></td>
-  <td class="col-price"><span class="price">1,260.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt dim">—</span></td>
-  <td class="col-date">2026-02-10</td>
-  <td class="col-date">2026-03-10</td>
-</tr>
-<tr>
-  <td class="col-name">2383 台光電子</td>
-  <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret pos">+13.1%</span></td>
-  <td class="col-price"><span class="price">2,100.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt dim">—</span></td>
-  <td class="col-date">2026-02-10</td>
-  <td class="col-date">2026-03-10</td>
 </tr>
 <tr>
   <td class="col-name">2485 兆赫電子</td>
@@ -157,10 +152,30 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-03-10</td>
 </tr>
 <tr>
+  <td class="col-name">3163 波若威科</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+23.9%</span></td>
+  <td class="col-price"><span class="price">565.0</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
   <td class="col-name">3167 大量科技</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+5.4%</span></td>
   <td class="col-price"><span class="price">279.0</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-02-10</td>
+  <td class="col-date">2026-03-10</td>
+</tr>
+<tr>
+  <td class="col-name">3526 凡甲科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-3.9%</span></td>
+  <td class="col-price"><span class="price">293.0</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-02-10</td>
@@ -195,6 +210,36 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-02-10</td>
   <td class="col-date">2026-03-10</td>
+</tr>
+
+</tbody>
+</table>
+
+<details class="past-section">
+<summary>上期買賣（10 筆）</summary>
+<table>
+<thead>
+<tr>
+  <th>名稱</th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th style="text-align:right">買入價</th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重更新</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="col-name">2344 華邦電</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+55.5%</span></td>
+  <td class="col-price"><span class="price">64.9</span></td>
+  <td class="col-price"><span class="price">101.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2025-11-10</td>
+  <td class="col-date">2026-02-11</td>
 </tr>
 <tr>
   <td class="col-name">4157 太景*-KY</td>
@@ -267,31 +312,21 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-02-11</td>
 </tr>
 <tr>
-  <td class="col-name">3131 弘塑科技</td>
+  <td class="col-name">2360 致茂電子</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret neg">-17.6%</span></td>
-  <td class="col-price"><span class="price">1,845.0</span></td>
-  <td class="col-price"><span class="price">1,530.0</span></td>
+  <td class="col-ret"><span class="ret pos">+4.9%</span></td>
+  <td class="col-price"><span class="price">990.0</span></td>
+  <td class="col-price"><span class="price">1,045.0</span></td>
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-01-12</td>
   <td class="col-date">2026-02-11</td>
 </tr>
 <tr>
-  <td class="col-name">8299 群聯電子</td>
+  <td class="col-name">3669 圓展</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret neg">-1.1%</span></td>
-  <td class="col-price"><span class="price">1,805.0</span></td>
-  <td class="col-price"><span class="price">1,795.0</span></td>
-  <td class="col-wt"><span class="wt dim">—</span></td>
-  <td class="col-date">2026-01-12</td>
-  <td class="col-date">2026-02-11</td>
-</tr>
-<tr>
-  <td class="col-name">3443 創意電子</td>
-  <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret pos">+0.8%</span></td>
-  <td class="col-price"><span class="price">2,475.0</span></td>
-  <td class="col-price"><span class="price">2,510.0</span></td>
+  <td class="col-ret"><span class="ret neg">-29.8%</span></td>
+  <td class="col-price"><span class="price">44.4</span></td>
+  <td class="col-price"><span class="price">31.4</span></td>
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-01-12</td>
   <td class="col-date">2026-02-11</td>
@@ -299,6 +334,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 
 </tbody>
 </table>
+</details>
 </div>
 </body>
 </html>

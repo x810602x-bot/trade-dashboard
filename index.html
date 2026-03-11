@@ -13,9 +13,18 @@ body{
 }
 .container{width:100%;max-width:720px}
 h1{font-size:1.4rem;padding:20px 0 4px}
-.sub{display:flex;gap:16px;align-items:baseline;padding-bottom:16px}
+.sub{display:flex;gap:16px;align-items:baseline;padding-bottom:12px}
 .date{color:#888;font-size:0.95rem}
-.held{color:#888;font-size:0.9rem}
+.held-count{color:#888;font-size:0.9rem}
+
+.held-section{padding-bottom:16px}
+.held-label{color:#888;font-size:0.82rem;margin-bottom:6px}
+.held-list{display:flex;flex-wrap:wrap;gap:6px}
+.pill{
+  display:inline-block;font-size:0.82rem;padding:3px 10px;
+  border-radius:12px;background:#262640;color:#b0b0c0;
+  white-space:nowrap;
+}
 
 table{width:100%;border-collapse:collapse;font-size:0.92rem}
 thead th{
@@ -54,7 +63,13 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 <h1>營收股價策略</h1>
 <div class="sub">
   <span class="date">2026-03-10</span>
-  <span class="held">持倉 10 檔</span>
+  <span class="held-count">持倉 1 檔</span>
+</div>
+
+<div class="held-section">
+<div class="held-list">
+<span class="pill">5386 青雲國際</span>
+</div>
 </div>
 
 <table>

@@ -16,6 +16,16 @@ h1{font-size:1.4rem;padding:20px 0 4px}
 .sub{padding-bottom:16px}
 .date{color:#888;font-size:0.95rem}
 
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:16px;
+}
+.metric{background:#1e1e36;border-radius:6px;padding:10px 12px}
+.metric-label{font-size:0.75rem;color:#888}
+.metric-value{font-size:1.1rem;font-weight:600;font-variant-numeric:tabular-nums}
+.metric-value.pos{color:#f87171}
+.metric-value.neg{color:#4ade80}
+
 table{width:100%;border-collapse:collapse;font-size:0.92rem}
 thead th{
   text-align:left;padding:8px 6px;color:#888;font-weight:500;
@@ -67,8 +77,19 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 <div class="container">
 <h1>營收股價策略</h1>
 <div class="sub">
-  <span class="date">2026-03-10</span>
+  <span class="date">最後更新日期 2026-03-10</span>
 </div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">年化報酬</div><div class="metric-value pos">+30.7%</div></div>
+<div class="metric"><div class="metric-label">夏普比率</div><div class="metric-value">1.30</div></div>
+<div class="metric"><div class="metric-label">最大回撤</div><div class="metric-value neg">-21.3%</div></div>
+<div class="metric"><div class="metric-label">勝率</div><div class="metric-value">50.7%</div></div>
+<div class="metric"><div class="metric-label">總交易</div><div class="metric-value">1,434 筆</div></div>
+<div class="metric"><div class="metric-label">平均報酬</div><div class="metric-value pos">+4.1%</div></div>
+<div class="metric"><div class="metric-label">最大獲利</div><div class="metric-value pos">+153.9%</div></div>
+<div class="metric"><div class="metric-label">最大虧損</div><div class="metric-value neg">-65.6%</div></div>
+</div>
+
 
 <details class="section" open>
 <summary>持倉（1 檔）</summary>

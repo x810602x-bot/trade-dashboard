@@ -13,18 +13,9 @@ body{
 }
 .container{width:100%;max-width:720px}
 h1{font-size:1.4rem;padding:20px 0 4px}
-.sub{display:flex;gap:16px;align-items:baseline;padding-bottom:12px}
+.sub{display:flex;gap:16px;align-items:baseline;padding-bottom:16px}
 .date{color:#888;font-size:0.95rem}
 .held-count{color:#888;font-size:0.9rem}
-
-.held-section{padding-bottom:16px}
-.held-label{color:#888;font-size:0.82rem;margin-bottom:6px}
-.held-list{display:flex;flex-wrap:wrap;gap:6px}
-.pill{
-  display:inline-block;font-size:0.82rem;padding:3px 10px;
-  border-radius:12px;background:#262640;color:#b0b0c0;
-  white-space:nowrap;
-}
 
 table{width:100%;border-collapse:collapse;font-size:0.92rem}
 thead th{
@@ -46,6 +37,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 }
 .act-buy{background:#1b4332;color:#4ade80}
 .act-sell{background:#4a1525;color:#f87171}
+.act-hold{background:#1e293b;color:#94a3b8}
 
 .ret{font-weight:600;font-variant-numeric:tabular-nums}
 .ret.pos{color:#4ade80}
@@ -66,17 +58,11 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <span class="held-count">持倉 1 檔</span>
 </div>
 
-<div class="held-section">
-<div class="held-list">
-<span class="pill">5386 青雲國際</span>
-</div>
-</div>
-
 <table>
 <thead>
 <tr>
   <th>名稱</th>
-  <th style="text-align:center">新增移除</th>
+  <th style="text-align:center">狀態</th>
   <th style="text-align:right">漲跌</th>
   <th style="text-align:right">權重更新</th>
   <th style="text-align:center">清單新增</th>
@@ -85,10 +71,18 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 </thead>
 <tbody>
 <tr>
+  <td class="col-name">5386 青雲國際</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neutral">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date"></td>
+  <td class="col-date"></td>
+</tr>
+<tr>
   <td class="col-name">6861 睿生光電</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
   <td class="col-ret"><span class="ret neutral">—</span></td>
-  <td class="col-wt"><span class="wt">25%</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-03-10</td>
   <td class="col-date"></td>
 </tr>
@@ -96,7 +90,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-name">4749 新應材</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
   <td class="col-ret"><span class="ret neutral">—</span></td>
-  <td class="col-wt"><span class="wt">25%</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-03-10</td>
   <td class="col-date"></td>
 </tr>
@@ -133,17 +127,17 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-03-10</td>
 </tr>
 <tr>
-  <td class="col-name">3167 大量科技</td>
+  <td class="col-name">2897 王道銀行</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret pos">+5.4%</span></td>
+  <td class="col-ret"><span class="ret pos">+1.7%</span></td>
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-02-10</td>
   <td class="col-date">2026-03-10</td>
 </tr>
 <tr>
-  <td class="col-name">3526 凡甲科技</td>
+  <td class="col-name">3167 大量科技</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret neg">-3.9%</span></td>
+  <td class="col-ret"><span class="ret pos">+5.4%</span></td>
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-02-10</td>
   <td class="col-date">2026-03-10</td>

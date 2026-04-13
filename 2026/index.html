@@ -67,6 +67,28 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 .price{font-variant-numeric:tabular-nums}
 .price.dim{color:#555}
 
+.shares{font-variant-numeric:tabular-nums;font-weight:600}
+.shares.dim{color:#555;font-weight:400}
+.col-shares{text-align:right;width:72px}
+
+.capital-box{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:#1e1e36;border-radius:6px;padding:10px 14px;margin-bottom:8px;
+}
+.capital-label{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#bbb;font-size:0.88rem;
+}
+.capital-label input{
+  background:#0f0f1e;border:1px solid #333;color:#e0e0e0;
+  border-radius:4px;padding:4px 8px;width:100px;font-size:0.95rem;
+  font-variant-numeric:tabular-nums;
+}
+.capital-label input:focus{outline:none;border-color:#4a5fa8}
+.capital-unit{color:#888;font-size:0.85rem}
+.capital-summary{color:#888;font-size:0.82rem;flex:1;min-width:180px}
+.capital-summary.active{color:#bbb}
+
 .empty{text-align:center;padding:32px;color:#666}
 
 .section{margin-top:16px}
@@ -117,119 +139,104 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 
 <details class="section" open>
 <summary>買進（10 筆）</summary>
-<table>
+<div class="capital-box">
+  <label class="capital-label">資金
+    <input id="capital-input" type="number" inputmode="numeric" min="0" step="1" placeholder="例如 18">
+    <span class="capital-unit">萬</span>
+  </label>
+  <span id="capital-summary" class="capital-summary">輸入資金後自動計算張數</span>
+</div>
+<table class="buy-table">
 <thead>
 <tr>
   <th>名稱</th>
   <th style="text-align:center">狀態</th>
-  <th style="text-align:right">漲跌</th>
   <th style="text-align:right">收盤價</th>
-  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">張數</th>
   <th style="text-align:right">權重</th>
   <th style="text-align:center">買入日</th>
-  <th style="text-align:center">賣出日</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr data-stock-id="3167" data-close="633.0">
   <td class="col-name">3167 大量科技</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">633.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="6693" data-close="139.5">
   <td class="col-name">6693 廣閎科</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">139.5</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="5475" data-close="292.0">
   <td class="col-name">5475 德宏工業</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">292.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="1785" data-close="115.5">
   <td class="col-name">1785 光洋科</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">115.5</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="2382" data-close="321.5">
   <td class="col-name">2382 廣達</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">321.5</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="2305" data-close="18.1">
   <td class="col-name">2305 全友電腦</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">18.1</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="4760" data-close="253.0">
   <td class="col-name">4760 勤凱科技</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">253.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="8091" data-close="183.0">
   <td class="col-name">8091 翔名科技</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">183.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="4576" data-close="165.0">
   <td class="col-name">4576 大銀微系統</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">165.0</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-stock-id="4949" data-close="84.7">
   <td class="col-name">4949 有成精密</td>
   <td class="col-act"><span class="act act-buy">新增</span></td>
-  <td class="col-ret"><span class="ret neutral">—</span></td>
   <td class="col-price"><span class="price">84.7</span></td>
-  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
   <td class="col-wt"><span class="wt">10%</span></td>
   <td class="col-date">2026-04-13</td>
-  <td class="col-date"></td>
 </tr>
 
 </tbody>
@@ -396,5 +403,97 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 </table>
 </details>
 </div>
+<script>
+(function () {
+  const input = document.getElementById("capital-input");
+  const summary = document.getElementById("capital-summary");
+  if (!input) return;
+
+  const rows = Array.from(document.querySelectorAll(".buy-table tbody tr[data-stock-id]"));
+  const stocks = rows.map(function (r) {
+    return {
+      id: r.dataset.stockId,
+      close: parseFloat(r.dataset.close) || 0,
+      cell: r.querySelector(".col-shares .shares"),
+    };
+  });
+
+  function resetShares() {
+    stocks.forEach(function (s) {
+      s.cell.textContent = "—";
+      s.cell.classList.add("dim");
+    });
+    summary.textContent = "輸入資金後自動計算張數";
+    summary.classList.remove("active");
+  }
+
+  function calcShares(capital) {
+    const cost = {};
+    stocks.forEach(function (s) {
+      cost[s.id] = s.close * 1.10 * 1000;
+    });
+    const shares = {};
+    stocks.forEach(function (s) { shares[s.id] = 0; });
+
+    let remaining = capital;
+
+    // 階段 1：按每張成本從低到高，能買 1 張就買，盡量買更多檔
+    const sorted = stocks.slice().sort(function (a, b) { return cost[a.id] - cost[b.id]; });
+    const bought = [];
+    sorted.forEach(function (s) {
+      if (cost[s.id] > 0 && remaining >= cost[s.id]) {
+        shares[s.id] = 1;
+        remaining -= cost[s.id];
+        bought.push(s);
+      }
+    });
+
+    // 階段 2：對已買進的股票平均權重加張（每次選投入最少且買得起的）
+    while (true) {
+      let target = null;
+      let minInvest = Infinity;
+      for (let i = 0; i < bought.length; i++) {
+        const s = bought[i];
+        if (remaining < cost[s.id]) continue;
+        const invest = shares[s.id] * cost[s.id];
+        if (invest < minInvest) {
+          minInvest = invest;
+          target = s;
+        }
+      }
+      if (target === null) break;
+      shares[target.id] += 1;
+      remaining -= cost[target.id];
+    }
+
+    return { shares: shares, remaining: remaining, boughtCount: bought.length };
+  }
+
+  function update() {
+    const raw = input.value.trim();
+    if (raw === "") { resetShares(); return; }
+    const wan = parseFloat(raw);
+    if (isNaN(wan) || wan <= 0) { resetShares(); return; }
+
+    const capital = wan * 10000;
+    const result = calcShares(capital);
+
+    stocks.forEach(function (s) {
+      const n = result.shares[s.id];
+      s.cell.textContent = n + " 張";
+      s.cell.classList.toggle("dim", n === 0);
+    });
+
+    const used = capital - result.remaining;
+    const usedWan = (used / 10000).toFixed(2);
+    const remainStr = Math.round(result.remaining).toLocaleString("zh-TW");
+    summary.textContent = "配到 " + result.boughtCount + " 檔　用 " + usedWan + " 萬　剩 " + remainStr + " 元";
+    summary.classList.add("active");
+  }
+
+  input.addEventListener("input", update);
+  resetShares();
+})();
+</script>
 </body>
 </html>

@@ -63,6 +63,18 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 .col-wt{text-align:right;width:64px}
 .col-date{text-align:center;width:90px;color:#999;font-size:0.85rem}
 
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:#bbb}
+.sort-ind{
+  display:inline-block;margin-left:6px;font-size:0.7rem;
+  color:#555;line-height:1;font-variant-numeric:tabular-nums;
+}
+.sort-ind::before{content:"↕"}
+.sort-ind.asc{color:#e0e0e0}
+.sort-ind.asc::before{content:"▲"}
+.sort-ind.desc{color:#e0e0e0}
+.sort-ind.desc::before{content:"▼"}
+
 .act{
   display:inline-block;font-size:0.82rem;padding:2px 8px;
   border-radius:4px;font-weight:600;
@@ -182,10 +194,10 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 <table>
 <thead>
 <tr>
-  <th>名稱</th>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
   <th style="text-align:center">狀態</th>
   <th style="text-align:right">漲跌</th>
-  <th style="text-align:right">買入價</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">買入價<span class="sort-ind"></span></th>
   <th style="text-align:right">賣出價</th>
   <th style="text-align:right">權重</th>
   <th style="text-align:center">買入日</th>
@@ -193,7 +205,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr data-sort-id="1597" data-sort-price="189.0">
   <td class="col-name">1597 直得</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+16.9%</span></td>
@@ -203,7 +215,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="3028" data-sort-price="76.5">
   <td class="col-name">3028 增你強</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+6.7%</span></td>
@@ -213,7 +225,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="3088" data-sort-price="131.0">
   <td class="col-name">3088 艾訊公司</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+8.4%</span></td>
@@ -223,7 +235,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="3209" data-sort-price="64.7">
   <td class="col-name">3209 全科</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+24.3%</span></td>
@@ -233,7 +245,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="3498" data-sort-price="112.0">
   <td class="col-name">3498 陽程科技</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+38.4%</span></td>
@@ -243,7 +255,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="3691" data-sort-price="147.0">
   <td class="col-name">3691 碩禾</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+6.8%</span></td>
@@ -253,7 +265,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="4973" data-sort-price="115.5">
   <td class="col-name">4973 廣穎電通</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+9.5%</span></td>
@@ -263,7 +275,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="6015" data-sort-price="17.4">
   <td class="col-name">6015 宏遠證券</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret neg">-6.0%</span></td>
@@ -273,7 +285,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="6016" data-sort-price="25.4">
   <td class="col-name">6016 康和證券</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret neg">-4.3%</span></td>
@@ -283,7 +295,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-05-12</td>
   <td class="col-date"></td>
 </tr>
-<tr>
+<tr data-sort-id="6166" data-sort-price="96.5">
   <td class="col-name">6166 凌華科技</td>
   <td class="col-act"><span class="act act-hold">持有</span></td>
   <td class="col-ret"><span class="ret pos">+37.8%</span></td>
@@ -302,10 +314,10 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 <table>
 <thead>
 <tr>
-  <th>名稱</th>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
   <th style="text-align:center">狀態</th>
   <th style="text-align:right">漲跌</th>
-  <th style="text-align:right">買入價</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">買入價<span class="sort-ind"></span></th>
   <th style="text-align:right">賣出價</th>
   <th style="text-align:right">權重</th>
   <th style="text-align:center">買入日</th>
@@ -313,7 +325,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr data-sort-id="6693" data-sort-price="150.0">
   <td class="col-name">6693 廣閎科</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+5.7%</span></td>
@@ -323,7 +335,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="1785" data-sort-price="127.0">
   <td class="col-name">1785 光洋科</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+26.0%</span></td>
@@ -333,7 +345,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="2305" data-sort-price="19.4">
   <td class="col-name">2305 全友電腦</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret neg">-10.1%</span></td>
@@ -343,7 +355,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="8091" data-sort-price="186.0">
   <td class="col-name">8091 翔名科技</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+5.3%</span></td>
@@ -353,7 +365,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="4576" data-sort-price="173.0">
   <td class="col-name">4576 大銀微系統</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+44.5%</span></td>
@@ -363,7 +375,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="4949" data-sort-price="88.5">
   <td class="col-name">4949 有成精密</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+7.1%</span></td>
@@ -373,7 +385,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="6672" data-sort-price="152.5">
   <td class="col-name">6672 騰輝電子-KY</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+39.7%</span></td>
@@ -383,7 +395,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="3264" data-sort-price="191.0">
   <td class="col-name">3264 欣銓科技</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+18.4%</span></td>
@@ -393,7 +405,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="3265" data-sort-price="163.0">
   <td class="col-name">3265 台曜電子</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+10.7%</span></td>
@@ -403,7 +415,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="6190" data-sort-price="62.7">
   <td class="col-name">6190 萬泰科</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret pos">+28.4%</span></td>
@@ -413,7 +425,7 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
 </tr>
-<tr>
+<tr data-sort-id="6861" data-sort-price="163.5">
   <td class="col-name">6861 睿生光電</td>
   <td class="col-act"><span class="act act-sell">移除</span></td>
   <td class="col-ret"><span class="ret neg">-18.8%</span></td>
@@ -518,6 +530,53 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 
   input.addEventListener("input", update);
   resetShares();
+})();
+
+(function () {
+  const tables = document.querySelectorAll("table");
+  tables.forEach(function (table) {
+    const tbody = table.tBodies[0];
+    if (!tbody) return;
+    const headers = table.querySelectorAll("th.sortable");
+    if (!headers.length) return;
+    let currentKey = null;
+    let currentDir = null;
+
+    function readKey(row, key) {
+      const raw = key === "id" ? row.dataset.sortId : row.dataset.sortPrice;
+      const n = parseFloat(raw);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function applySort(key, dir) {
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort(function (a, b) {
+        const av = readKey(a, key);
+        const bv = readKey(b, key);
+        return dir === "asc" ? av - bv : bv - av;
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+      headers.forEach(function (h) {
+        const ind = h.querySelector(".sort-ind");
+        if (!ind) return;
+        ind.classList.remove("asc", "desc");
+        if (h.dataset.sortKey === key) ind.classList.add(dir);
+      });
+    }
+
+    headers.forEach(function (h) {
+      h.addEventListener("click", function () {
+        const key = h.dataset.sortKey;
+        if (key === currentKey) {
+          currentDir = currentDir === "desc" ? "asc" : "desc";
+        } else {
+          currentKey = key;
+          currentDir = "desc";
+        }
+        applySort(currentKey, currentDir);
+      });
+    });
+  });
 })();
 </script>
 </body>

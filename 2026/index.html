@@ -133,7 +133,7 @@ th.sortable:hover{color:#bbb}
 <div class="container">
 <h1>每月換股策略</h1>
 <div class="sub">
-  <span class="date">最後更新日期 2026-06-09</span>
+  <span class="date">最後更新日期 2026-06-10</span>
 </div>
 <div class="metrics">
 <div class="metric"><div class="metric-label">年化報酬</div><div class="metric-value pos">+31.5%</div></div>
@@ -190,7 +190,112 @@ th.sortable:hover{color:#bbb}
 </details>
 
 <details class="section" open>
-<summary>持倉（10 檔）</summary>
+<summary>買進（10 筆）</summary>
+<div class="capital-box">
+  <label class="capital-label">資金
+    <input id="capital-input" type="number" inputmode="numeric" min="0" step="1" placeholder="例如 500">
+    <span class="capital-unit">萬</span>
+  </label>
+  <span id="capital-summary" class="capital-summary">輸入資金後自動計算張數</span>
+</div>
+<table class="buy-table">
+<thead>
+<tr>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
+  <th style="text-align:center">狀態</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">收盤價<span class="sort-ind"></span></th>
+  <th style="text-align:right">張數</th>
+  <th style="text-align:right">權重</th>
+  <th style="text-align:center">買入日</th>
+</tr>
+</thead>
+<tbody>
+<tr data-stock-id="8926" data-close="75.0" data-sort-id="8926" data-sort-price="75.0">
+  <td class="col-name">8926 台汽電</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">75.0</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="2025" data-close="14.45" data-sort-id="2025" data-sort-price="14.45">
+  <td class="col-name">2025 千興</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">14.4</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="2855" data-close="51.3" data-sort-id="2855" data-sort-price="51.3">
+  <td class="col-name">2855 統一證券</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">51.3</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="5864" data-close="43.65" data-sort-id="5864" data-sort-price="43.65">
+  <td class="col-name">5864 致和證</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">43.6</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="4739" data-close="125.0" data-sort-id="4739" data-sort-price="125.0">
+  <td class="col-name">4739 康普材料</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">125.0</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="6693" data-close="160.5" data-sort-id="6693" data-sort-price="160.5">
+  <td class="col-name">6693 廣閎科</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">160.5</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="3022" data-close="85.0" data-sort-id="3022" data-sort-price="85.0">
+  <td class="col-name">3022 威達電</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">85.0</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="1714" data-close="13.1" data-sort-id="1714" data-sort-price="13.1">
+  <td class="col-name">1714 和桐化學</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">13.1</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="2414" data-close="57.5" data-sort-id="2414" data-sort-price="57.5">
+  <td class="col-name">2414 精技電腦</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">57.5</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-stock-id="2838" data-close="21.65" data-sort-id="2838" data-sort-price="21.65">
+  <td class="col-name">2838 聯邦銀行</td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">21.6</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+
+</tbody>
+</table>
+</details>
+<details class="section" open>
+<summary>賣出（10 筆）</summary>
 <table>
 <thead>
 <tr>
@@ -207,110 +312,110 @@ th.sortable:hover{color:#bbb}
 <tbody>
 <tr data-sort-id="1597" data-sort-price="189.0">
   <td class="col-name">1597 直得</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret neg">-15.3%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-22.0%</span></td>
   <td class="col-price"><span class="price">189.0</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="3028" data-sort-price="76.5">
   <td class="col-name">3028 增你強</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+1.7%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-1.1%</span></td>
   <td class="col-price"><span class="price">76.5</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="3088" data-sort-price="131.0">
   <td class="col-name">3088 艾訊公司</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+3.8%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+6.5%</span></td>
   <td class="col-price"><span class="price">131.0</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="3209" data-sort-price="64.7">
   <td class="col-name">3209 全科</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+10.4%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+0.3%</span></td>
   <td class="col-price"><span class="price">64.7</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="3498" data-sort-price="112.0">
   <td class="col-name">3498 陽程科技</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+17.9%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+9.8%</span></td>
   <td class="col-price"><span class="price">112.0</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="3691" data-sort-price="147.0">
   <td class="col-name">3691 碩禾</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+13.6%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+10.9%</span></td>
   <td class="col-price"><span class="price">147.0</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="4973" data-sort-price="115.5">
   <td class="col-name">4973 廣穎電通</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+52.4%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+67.1%</span></td>
   <td class="col-price"><span class="price">115.5</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="6015" data-sort-price="17.4">
   <td class="col-name">6015 宏遠證券</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+9.8%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+3.5%</span></td>
   <td class="col-price"><span class="price">17.4</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="6016" data-sort-price="25.4">
   <td class="col-name">6016 康和證券</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+15.3%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+7.7%</span></td>
   <td class="col-price"><span class="price">25.4</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 <tr data-sort-id="6166" data-sort-price="96.5">
   <td class="col-name">6166 凌華科技</td>
-  <td class="col-act"><span class="act act-hold">持有</span></td>
-  <td class="col-ret"><span class="ret pos">+42.5%</span></td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+30.0%</span></td>
   <td class="col-price"><span class="price">96.5</span></td>
   <td class="col-price"><span class="price dim">—</span></td>
-  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-05-12</td>
-  <td class="col-date"></td>
+  <td class="col-date">2026-06-11</td>
 </tr>
 
 </tbody>
 </table>
 </details>
 <details class="section">
-<summary>上期賣出（11 筆）</summary>
+<summary>上期賣出（10 筆）</summary>
 <table>
 <thead>
 <tr>
@@ -424,16 +529,6 @@ th.sortable:hover{color:#bbb}
   <td class="col-wt"><span class="wt dim">—</span></td>
   <td class="col-date">2026-04-13</td>
   <td class="col-date">2026-05-12</td>
-</tr>
-<tr data-sort-id="6861" data-sort-price="163.5">
-  <td class="col-name">6861 睿生光電</td>
-  <td class="col-act"><span class="act act-sell">移除</span></td>
-  <td class="col-ret"><span class="ret neg">-18.8%</span></td>
-  <td class="col-price"><span class="price">163.5</span></td>
-  <td class="col-price"><span class="price">133.5</span></td>
-  <td class="col-wt"><span class="wt dim">—</span></td>
-  <td class="col-date">2026-03-11</td>
-  <td class="col-date">2026-04-13</td>
 </tr>
 
 </tbody>

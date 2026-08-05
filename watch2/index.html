@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每月換股策略（雙重觀察）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,"Segoe UI",sans-serif;
+  background:#1a1a2e;color:#e0e0e0;
+  min-height:100vh;display:flex;justify-content:center;padding:16px;
+}
+.container{width:100%;max-width:720px}
+h1{font-size:1.4rem;padding:20px 0 4px}
+.sub{padding-bottom:16px}
+.date{color:#888;font-size:0.95rem}
+
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:16px;
+}
+.metric{background:#1e1e36;border-radius:6px;padding:10px 12px}
+.metric-label{font-size:0.75rem;color:#888}
+.metric-value{font-size:1.1rem;font-weight:600;font-variant-numeric:tabular-nums}
+.metric-value.pos{color:#f87171}
+.metric-value.neg{color:#4ade80}
+
+.yearly{margin-bottom:16px}
+.yearly-title{font-size:0.85rem;color:#888;margin-bottom:6px}
+.yearly-row{display:flex;gap:2px}
+.yearly-cell{flex:1;text-align:center;border-radius:4px;padding:6px 2px}
+.yearly-val{font-size:0.82rem;font-weight:600;color:#fff}
+.yearly-year{font-size:0.72rem;color:#999;margin-top:2px}
+
+.monthly{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.m-row{display:grid;grid-template-columns:42px repeat(12,1fr);gap:2px}
+.m-year{
+  text-align:right;padding-right:6px;color:#999;font-size:0.72rem;
+  font-variant-numeric:tabular-nums;align-self:center;
+}
+.m-cell{
+  text-align:center;border-radius:3px;padding:4px 0;
+  font-size:0.66rem;font-weight:600;color:#fff;
+  font-variant-numeric:tabular-nums;
+  min-height:20px;display:flex;align-items:center;justify-content:center;
+}
+.m-empty{background:#262640}
+.m-month{background:transparent;color:#999;font-weight:400;font-size:0.7rem}
+
+table{width:100%;border-collapse:collapse;font-size:0.92rem}
+thead th{
+  text-align:left;padding:8px 6px;color:#888;font-weight:500;
+  border-bottom:1px solid #333;font-size:0.82rem;white-space:nowrap;
+}
+tbody td{padding:8px 6px;border-bottom:1px solid #262640}
+tbody tr:hover{background:rgba(255,255,255,0.03)}
+
+.col-name{min-width:120px}
+.col-act{text-align:center;width:60px}
+.col-ret{text-align:right;width:64px}
+.col-price{text-align:right;width:72px}
+.col-wt{text-align:right;width:64px}
+.col-date{text-align:center;width:90px;color:#999;font-size:0.85rem}
+
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:#bbb}
+.sort-ind{
+  display:inline-block;margin-left:6px;font-size:0.7rem;
+  color:#555;line-height:1;font-variant-numeric:tabular-nums;
+}
+.sort-ind::before{content:"↕"}
+.sort-ind.asc{color:#e0e0e0}
+.sort-ind.asc::before{content:"▲"}
+.sort-ind.desc{color:#e0e0e0}
+.sort-ind.desc::before{content:"▼"}
+
+.act{
+  display:inline-block;font-size:0.82rem;padding:2px 8px;
+  border-radius:4px;font-weight:600;
+}
+.act-buy{background:#4a1525;color:#f87171}
+.act-sell{background:#1b4332;color:#4ade80}
+.act-hold{background:#1e293b;color:#94a3b8}
+
+.ret{font-weight:600;font-variant-numeric:tabular-nums}
+.ret.pos{color:#f87171}
+.ret.neg{color:#4ade80}
+.ret.neutral{color:#666}
+
+.wt{font-variant-numeric:tabular-nums}
+.wt.dim{color:#555}
+
+.price{font-variant-numeric:tabular-nums}
+.price.dim{color:#555}
+
+.shares{font-variant-numeric:tabular-nums;font-weight:600}
+.shares.dim{color:#555;font-weight:400}
+.col-shares{text-align:right;width:72px}
+
+.capital-box{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:#1e1e36;border-radius:6px;padding:10px 14px;margin-bottom:8px;
+}
+.capital-label{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#bbb;font-size:0.88rem;
+}
+.capital-label input{
+  background:#0f0f1e;border:1px solid #333;color:#e0e0e0;
+  border-radius:4px;padding:4px 8px;width:100px;font-size:0.95rem;
+  font-variant-numeric:tabular-nums;
+}
+.capital-label input:focus{outline:none;border-color:#4a5fa8}
+.capital-unit{color:#888;font-size:0.85rem}
+.capital-summary{color:#888;font-size:0.82rem;flex:1;min-width:180px}
+.capital-summary.active{color:#bbb}
+
+.empty{text-align:center;padding:32px;color:#666}
+
+.section{margin-top:16px}
+.section summary{
+  cursor:pointer;font-size:0.85rem;color:#888;
+  padding:8px 14px;background:#1e1e36;border-radius:6px;
+  display:inline-block;user-select:none;
+}
+.section summary:hover{color:#bbb;background:#262640}
+.section[open] summary{margin-bottom:8px}
+.section table{margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>每月換股策略（雙重觀察）</h1>
+<div class="sub">
+  <span class="date">觀察門檻：股價 ≤ 600 元｜5日均成交金額 > 3,000 萬</span><br>
+  <span class="date">最後更新日期 2026-08-05</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">年化報酬</div><div class="metric-value pos">+30.4%</div></div>
+<div class="metric"><div class="metric-label">夏普比率</div><div class="metric-value">1.20</div></div>
+<div class="metric"><div class="metric-label">最大回撤</div><div class="metric-value neg">-16.5%</div></div>
+<div class="metric"><div class="metric-label">勝率</div><div class="metric-value">50.4%</div></div>
+<div class="metric"><div class="metric-label">總交易</div><div class="metric-value">1,433 筆</div></div>
+<div class="metric"><div class="metric-label">平均報酬</div><div class="metric-value pos">+4.0%</div></div>
+<div class="metric"><div class="metric-label">最大獲利</div><div class="metric-value pos">+153.9%</div></div>
+<div class="metric"><div class="metric-label">最大虧損</div><div class="metric-value neg">-65.6%</div></div>
+</div>
+
+<div class="yearly">
+<div class="yearly-title">近十年報酬</div>
+<div class="yearly-row">
+<div class="yearly-cell" style="background:rgba(219,39,119,0.18)"><div class="yearly-val">+3%</div><div class="yearly-year">2016</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.56)"><div class="yearly-val">+43%</div><div class="yearly-year">2017</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.38)"><div class="yearly-val">+24%</div><div class="yearly-year">2018</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.37)"><div class="yearly-val">+23%</div><div class="yearly-year">2019</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.85)"><div class="yearly-val">+73%</div><div class="yearly-year">2020</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.41)"><div class="yearly-val">+27%</div><div class="yearly-year">2021</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.42)"><div class="yearly-val">+28%</div><div class="yearly-year">2022</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.56)"><div class="yearly-val">+43%</div><div class="yearly-year">2023</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.70)"><div class="yearly-val">+58%</div><div class="yearly-year">2024</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.74)"><div class="yearly-val">+62%</div><div class="yearly-year">2025</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.48)"><div class="yearly-val">+34%</div><div class="yearly-year">2026</div></div>
+</div>
+</div>
+
+<details class="section monthly-section">
+<summary>每月報酬</summary>
+<div class="monthly">
+<div class="m-row"><div class="m-year">2008</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.22)">2.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.29)">5.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.1%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-3.5%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div></div>
+<div class="m-row"><div class="m-year">2009</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.3%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.32)">6.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">3.2%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.25)">3.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">2.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.39)">9.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-2.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.35)">7.7%</div></div>
+<div class="m-row"><div class="m-year">2010</div><div class="m-cell" style="background:rgba(74,222,128,0.25)">-3.8%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.26)">4.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.48)">12.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.29)">-5.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.26)">-4.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.54)">15.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">3.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.35)">7.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">2.7%</div></div>
+<div class="m-row"><div class="m-year">2011</div><div class="m-cell" style="background:rgba(219,39,119,0.56)">15.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">2.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.37)">8.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.43)">10.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-2.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.38)">-8.8%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.25)">-3.9%</div><div class="m-cell m-empty"></div></div>
+<div class="m-row"><div class="m-year">2012</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-3.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">3.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.4%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">5.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">3.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-2.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div></div>
+<div class="m-row"><div class="m-year">2013</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.46)">11.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.37)">8.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.29)">5.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">3.7%</div></div>
+<div class="m-row"><div class="m-year">2014</div><div class="m-cell" style="background:rgba(219,39,119,0.46)">11.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-3.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.45)">11.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.33)">7.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.45)">-11.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.45)">11.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">3.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.43)">-10.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.29)">5.4%</div></div>
+<div class="m-row"><div class="m-year">2015</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-2.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.32)">6.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.15)">0.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">3.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-3.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.32)">6.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-3.5%</div></div>
+<div class="m-row"><div class="m-year">2016</div><div class="m-cell" style="background:rgba(219,39,119,0.15)">0.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.34)">7.2%</div></div>
+<div class="m-row"><div class="m-year">2017</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">6.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.26)">-4.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">3.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">7.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.64)">18.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">4.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.42)">10.1%</div></div>
+<div class="m-row"><div class="m-year">2018</div><div class="m-cell" style="background:rgba(219,39,119,0.40)">9.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-3.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.38)">8.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.41)">10.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.44)">11.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.28)">-5.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">3.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.28)">-5.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.38)">-8.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">2.6%</div></div>
+<div class="m-row"><div class="m-year">2019</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">3.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">4.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">4.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.48)">12.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-2.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.0%</div></div>
+<div class="m-row"><div class="m-year">2020</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-2.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-2.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">3.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">8.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.50)">13.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.65)">19.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.72)">21.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.48)">12.5%</div></div>
+<div class="m-row"><div class="m-year">2021</div><div class="m-cell" style="background:rgba(219,39,119,0.54)">14.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">3.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">6.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.26)">-4.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.43)">10.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.31)">-5.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.26)">-4.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.28)">4.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.28)">4.9%</div></div>
+<div class="m-row"><div class="m-year">2022</div><div class="m-cell" style="background:rgba(219,39,119,0.42)">10.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-1.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">4.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">6.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.46)">11.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.29)">5.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.15)">0.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.30)">-5.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div></div>
+<div class="m-row"><div class="m-year">2023</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">8.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.59)">16.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.46)">11.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.25)">-3.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-1.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">2.9%</div></div>
+<div class="m-row"><div class="m-year">2024</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.54)">14.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">4.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">2.8%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">1.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.44)">11.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.54)">14.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.30)">5.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div></div>
+<div class="m-row"><div class="m-year">2025</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">1.8%</div><div class="m-cell" style="background:rgba(74,222,128,0.27)">-4.6%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.26)">4.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.28)">-4.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.37)">8.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.52)">13.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.85)">26.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.49)">13.0%</div></div>
+<div class="m-row"><div class="m-year">2026</div><div class="m-cell" style="background:rgba(219,39,119,0.29)">5.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.27)">-4.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.37)">8.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.45)">11.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.49)">13.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">3.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.4%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div></div>
+<div class="m-row"><div class="m-year"></div><div class="m-cell m-month">Jan</div><div class="m-cell m-month">Feb</div><div class="m-cell m-month">Mar</div><div class="m-cell m-month">Apr</div><div class="m-cell m-month">May</div><div class="m-cell m-month">Jun</div><div class="m-cell m-month">Jul</div><div class="m-cell m-month">Aug</div><div class="m-cell m-month">Sep</div><div class="m-cell m-month">Oct</div><div class="m-cell m-month">Nov</div><div class="m-cell m-month">Dec</div></div>
+</div>
+</details>
+
+<details class="section" open>
+<summary>持倉（10 檔）</summary>
+<table>
+<thead>
+<tr>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">買入價<span class="sort-ind"></span></th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sort-id="1709" data-sort-price="28.3">
+  <td class="col-name">1709 和益化工</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neg">-7.4%</span></td>
+  <td class="col-price"><span class="price">28.3</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="2434" data-sort-price="74.5">
+  <td class="col-name">2434 統懋</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neg">-19.3%</span></td>
+  <td class="col-price"><span class="price">74.5</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="2637" data-sort-price="86.6">
+  <td class="col-name">2637 慧洋-KY</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neg">-1.4%</span></td>
+  <td class="col-price"><span class="price">86.6</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="2885" data-sort-price="62.3">
+  <td class="col-name">2885 復華金</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret pos">+14.7%</span></td>
+  <td class="col-price"><span class="price">62.3</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="3022" data-sort-price="86.6">
+  <td class="col-name">3022 威達電</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret pos">+12.7%</span></td>
+  <td class="col-price"><span class="price">86.6</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="4541" data-sort-price="68.3">
+  <td class="col-name">4541 晟田科技</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neg">-3.4%</span></td>
+  <td class="col-price"><span class="price">68.3</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="6023" data-sort-price="105.0">
+  <td class="col-name">6023 寶來期</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neg">-0.2%</span></td>
+  <td class="col-price"><span class="price">105.0</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="6414" data-sort-price="384.0">
+  <td class="col-name">6414 樺漢科技</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret pos">+22.1%</span></td>
+  <td class="col-price"><span class="price">384.0</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="6416" data-sort-price="98.1">
+  <td class="col-name">6416 瑞祺電通</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret pos">+4.4%</span></td>
+  <td class="col-price"><span class="price">98.1</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+<tr data-sort-id="8096" data-sort-price="159.5">
+  <td class="col-name">8096 擎亞科技</td>
+  <td class="col-act"><span class="act act-hold">持有</span></td>
+  <td class="col-ret"><span class="ret neg">-18.8%</span></td>
+  <td class="col-price"><span class="price">159.5</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-07-14</td>
+  <td class="col-date"></td>
+</tr>
+
+</tbody>
+</table>
+</details>
+<details class="section">
+<summary>上期賣出（18 筆）</summary>
+<table>
+<thead>
+<tr>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">買入價<span class="sort-ind"></span></th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sort-id="2851" data-sort-price="37.0">
+  <td class="col-name">2851 中再保</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+8.7%</span></td>
+  <td class="col-price"><span class="price">37.0</span></td>
+  <td class="col-price"><span class="price">38.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="3147" data-sort-price="352.0">
+  <td class="col-name">3147 大綜電腦</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-32.6%</span></td>
+  <td class="col-price"><span class="price">352.0</span></td>
+  <td class="col-price"><span class="price">238.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="8926" data-sort-price="77.0">
+  <td class="col-name">8926 台汽電</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-8.8%</span></td>
+  <td class="col-price"><span class="price">77.0</span></td>
+  <td class="col-price"><span class="price">68.6</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="2855" data-sort-price="50.5">
+  <td class="col-name">2855 統一證券</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+2.1%</span></td>
+  <td class="col-price"><span class="price">50.5</span></td>
+  <td class="col-price"><span class="price">49.8</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="5864" data-sort-price="43.0">
+  <td class="col-name">5864 致和證</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-4.6%</span></td>
+  <td class="col-price"><span class="price">43.0</span></td>
+  <td class="col-price"><span class="price">36.8</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="4931" data-sort-price="248.5">
+  <td class="col-name">4931 新盛力</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-5.6%</span></td>
+  <td class="col-price"><span class="price">248.5</span></td>
+  <td class="col-price"><span class="price">233.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="4739" data-sort-price="129.0">
+  <td class="col-name">4739 康普材料</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-27.4%</span></td>
+  <td class="col-price"><span class="price">129.0</span></td>
+  <td class="col-price"><span class="price">93.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="6693" data-sort-price="157.0">
+  <td class="col-name">6693 廣閎科</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+44.7%</span></td>
+  <td class="col-price"><span class="price">157.0</span></td>
+  <td class="col-price"><span class="price">228.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-07-14</td>
+</tr>
+<tr data-sort-id="6015" data-sort-price="17.4">
+  <td class="col-name">6015 宏遠證券</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+1.4%</span></td>
+  <td class="col-price"><span class="price">17.4</span></td>
+  <td class="col-price"><span class="price">17.8</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="6016" data-sort-price="25.4">
+  <td class="col-name">6016 康和證券</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+5.7%</span></td>
+  <td class="col-price"><span class="price">25.4</span></td>
+  <td class="col-price"><span class="price">27.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="8271" data-sort-price="265.0">
+  <td class="col-name">8271 宇瞻科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-26.7%</span></td>
+  <td class="col-price"><span class="price">265.0</span></td>
+  <td class="col-price"><span class="price">195.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="8227" data-sort-price="227.0">
+  <td class="col-name">8227 巨有科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-23.1%</span></td>
+  <td class="col-price"><span class="price">227.0</span></td>
+  <td class="col-price"><span class="price">175.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="3691" data-sort-price="147.0">
+  <td class="col-name">3691 碩禾</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+8.2%</span></td>
+  <td class="col-price"><span class="price">147.0</span></td>
+  <td class="col-price"><span class="price">160.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="3498" data-sort-price="112.0">
+  <td class="col-name">3498 陽程科技</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+5.6%</span></td>
+  <td class="col-price"><span class="price">112.0</span></td>
+  <td class="col-price"><span class="price">119.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="3028" data-sort-price="76.5">
+  <td class="col-name">3028 增你強</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-2.3%</span></td>
+  <td class="col-price"><span class="price">76.5</span></td>
+  <td class="col-price"><span class="price">75.2</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="4973" data-sort-price="115.5">
+  <td class="col-name">4973 廣穎電通</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+64.8%</span></td>
+  <td class="col-price"><span class="price">115.5</span></td>
+  <td class="col-price"><span class="price">191.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="3209" data-sort-price="64.7">
+  <td class="col-name">3209 全科</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-3.4%</span></td>
+  <td class="col-price"><span class="price">64.7</span></td>
+  <td class="col-price"><span class="price">62.9</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+<tr data-sort-id="2376" data-sort-price="327.5">
+  <td class="col-name">2376 技嘉</td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+4.4%</span></td>
+  <td class="col-price"><span class="price">327.5</span></td>
+  <td class="col-price"><span class="price">344.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-05-12</td>
+  <td class="col-date">2026-06-11</td>
+</tr>
+
+</tbody>
+</table>
+</details>
+</div>
+<script>
+(function () {
+  const input = document.getElementById("capital-input");
+  const summary = document.getElementById("capital-summary");
+  if (!input) return;
+
+  const rows = Array.from(document.querySelectorAll(".buy-table tbody tr[data-stock-id]"));
+  const stocks = rows.map(function (r) {
+    return {
+      id: r.dataset.stockId,
+      close: parseFloat(r.dataset.close) || 0,
+      cell: r.querySelector(".col-shares .shares"),
+    };
+  });
+
+  function resetShares() {
+    stocks.forEach(function (s) {
+      s.cell.textContent = "—";
+      s.cell.classList.add("dim");
+    });
+    summary.textContent = "輸入資金後自動計算張數";
+    summary.classList.remove("active");
+  }
+
+  function calcShares(capital) {
+    const cost = {};
+    stocks.forEach(function (s) {
+      cost[s.id] = s.close * 1.10 * 1000;
+    });
+    const shares = {};
+    stocks.forEach(function (s) { shares[s.id] = 0; });
+
+    let remaining = capital;
+
+    // 階段 1：按每張成本從低到高，能買 1 張就買，盡量買更多檔
+    const sorted = stocks.slice().sort(function (a, b) { return cost[a.id] - cost[b.id]; });
+    const bought = [];
+    sorted.forEach(function (s) {
+      if (cost[s.id] > 0 && remaining >= cost[s.id]) {
+        shares[s.id] = 1;
+        remaining -= cost[s.id];
+        bought.push(s);
+      }
+    });
+
+    // 階段 2：對已買進的股票平均權重加張（每次選投入最少且買得起的）
+    while (true) {
+      let target = null;
+      let minInvest = Infinity;
+      for (let i = 0; i < bought.length; i++) {
+        const s = bought[i];
+        if (remaining < cost[s.id]) continue;
+        const invest = shares[s.id] * cost[s.id];
+        if (invest < minInvest) {
+          minInvest = invest;
+          target = s;
+        }
+      }
+      if (target === null) break;
+      shares[target.id] += 1;
+      remaining -= cost[target.id];
+    }
+
+    return { shares: shares, remaining: remaining, boughtCount: bought.length };
+  }
+
+  function update() {
+    const raw = input.value.trim();
+    if (raw === "") { resetShares(); return; }
+    const wan = parseFloat(raw);
+    if (isNaN(wan) || wan <= 0) { resetShares(); return; }
+
+    const capital = wan * 10000;
+    const result = calcShares(capital);
+
+    stocks.forEach(function (s) {
+      const n = result.shares[s.id];
+      s.cell.textContent = n + " 張";
+      s.cell.classList.toggle("dim", n === 0);
+    });
+
+    const used = capital - result.remaining;
+    const usedWan = (used / 10000).toFixed(2);
+    const remainStr = Math.round(result.remaining).toLocaleString("zh-TW");
+    summary.textContent = "配到 " + result.boughtCount + " 檔　用 " + usedWan + " 萬　剩 " + remainStr + " 元";
+    summary.classList.add("active");
+  }
+
+  input.addEventListener("input", update);
+  resetShares();
+})();
+
+(function () {
+  const tables = document.querySelectorAll("table");
+  tables.forEach(function (table) {
+    const tbody = table.tBodies[0];
+    if (!tbody) return;
+    const headers = table.querySelectorAll("th.sortable");
+    if (!headers.length) return;
+    let currentKey = null;
+    let currentDir = null;
+
+    function readKey(row, key) {
+      const raw = key === "id" ? row.dataset.sortId : row.dataset.sortPrice;
+      const n = parseFloat(raw);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function applySort(key, dir) {
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort(function (a, b) {
+        const av = readKey(a, key);
+        const bv = readKey(b, key);
+        return dir === "asc" ? av - bv : bv - av;
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+      headers.forEach(function (h) {
+        const ind = h.querySelector(".sort-ind");
+        if (!ind) return;
+        ind.classList.remove("asc", "desc");
+        if (h.dataset.sortKey === key) ind.classList.add(dir);
+      });
+    }
+
+    headers.forEach(function (h) {
+      h.addEventListener("click", function () {
+        const key = h.dataset.sortKey;
+        if (key === currentKey) {
+          currentDir = currentDir === "desc" ? "asc" : "desc";
+        } else {
+          currentKey = key;
+          currentDir = "desc";
+        }
+        applySort(currentKey, currentDir);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

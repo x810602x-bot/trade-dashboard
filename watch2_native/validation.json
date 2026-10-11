@@ -1,0 +1,9 @@
+{
+  "strategy_version": "watch2-fixed10-v1",
+  "native_finlab_version": "2.2.10",
+  "historical_decisions_unchanged": true,
+  "selection_months": 223,
+  "reference_metrics_matched": null,
+  "all_cards_from_same_report": true,
+  "data_date": "2026-10-08"
+}

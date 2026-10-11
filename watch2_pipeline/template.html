@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每月換股策略｜固定日期・10 檔</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#19192d;color:#d8d8e8;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}.container{max-width:780px;margin:0 auto;padding:30px 20px 50px}h1{font-size:22px;margin:0 0 8px;color:#cadbff}.sub{color:#9094b0;line-height:1.8;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}.metric{background:#202038;border-radius:8px;padding:12px}.metric-label{color:#9195b1;font-size:12px;margin-bottom:5px}.metric-value{font-size:19px;font-weight:650;font-variant-numeric:tabular-nums}.pos{color:#ff507f}.neg{color:#4ade80}.dim{color:#9195b1}.note{color:#9195b1;font-size:12px;line-height:1.8;margin:12px 0}a{color:#b7caff;text-underline-offset:3px}.yearly{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 20px}.year{min-width:56px;flex:1;text-align:center;border-radius:4px;padding:7px 3px;background:#25253d}.year strong{display:block;color:white}.year span{font-size:11px;color:#c3c5d6}details{margin-top:18px}summary{display:inline-block;cursor:pointer;border-radius:6px;background:#202038;padding:9px 13px;color:#a8adcb}details[open]>summary{margin-bottom:10px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}th,td{text-align:right;padding:10px 7px;border-bottom:1px solid #30304a;font-variant-numeric:tabular-nums}th{color:#969cb9;font-size:12px;font-weight:500}th:first-child,td:first-child{text-align:left}.tag{font-size:11px;background:#293346;padding:3px 6px;border-radius:4px;color:#b5c8df}.monthly td{padding:7px;font-size:11px}.monthly th{padding:7px}.empty{color:#9195b1;padding:15px 0}.capital{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:9px 0}input{background:#19192d;color:#e5e7eb;border:1px solid #454564;border-radius:5px;padding:8px;width:150px;font:inherit}footer{border-top:1px solid #30304a;margin-top:24px;padding-top:12px;font-size:12px;color:#9195b1;line-height:1.8}button.sort{border:0;background:none;color:inherit;font:inherit;cursor:pointer;padding:0}@media(max-width:560px){.container{padding:22px 12px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:20px}.metric-value{font-size:20px}}
+</style>
+</head>
+<body><main class="container">
+<h1>每月換股策略（固定日期・10 檔）</h1>
+<div class="sub">股價 ≤ 600 元｜5 日均成交金額 &gt; 3,000 萬｜排除金融保險業<br>每月 10 號（含）後首個交易日晚上選股，下一交易日開盤換股<br>最多 10 檔，每檔換股目標 10%；不足額留現金，獲利再投入<br><span id="date"></span></div>
+<section class="metrics" id="metrics" aria-label="策略績效"></section>
+<p class="note" id="method"></p>
+<div class="dim">年度報酬（帳戶淨值）</div><div class="yearly" id="years"></div>
+<details><summary>每月報酬</summary><div class="scroll" id="months"></div></details>
+<details open><summary id="holding-title">目前持股</summary><div class="scroll" id="holdings"></div></details>
+<details open id="pending-section"><summary>已選定，待下次開盤</summary><p class="note">參考價為資料日收盤價，並非已成交價格。公布後保留該次名單。</p><div class="scroll" id="pending"></div></details>
+<details><summary>最近一次換股賣出</summary><div class="scroll" id="sells"></div></details>
+<details><summary>本期名單配置試算</summary><p class="note">輸入換股時的帳戶總資產。每檔以 10% 計算，按參考收盤價及手續費估算整張目標；實際調整仍要扣除現有持股。這不是買進委託單。</p><div class="capital"><label for="capital">帳戶總資產</label><input id="capital" type="number" min="0" step="1" placeholder="例如 600"><span>萬元</span></div><div class="scroll" id="allocation"></div><p class="note" id="allocation-summary"></p></details>
+<details><summary>統計口徑與策略規則</summary><div class="note">營收：近 2 個月平均營收達近 12 個月最高。股價：近 5 天至少 2 天達 200 日新高。通過價格、流動性與產業篩選後，取營收年增率為正的前 10 檔。<br>每月重新配置至每檔 10%，包含續留股票；當月沒有合格股票則持有現金。沒有另加停損。<br>CAGR、夏普、最大回撤、年度與月度報酬取自同一份 FinLab 原生回測。夏普使用每日報酬及年無風險利率 2%。<br>勝率使用 FinLab 已平倉勝率；筆數為已平倉交易。平均／最大獲利／最大虧損取已平倉且有報酬值的交易，不含持股中的浮動報酬。<br>手續費買賣各 0.0475%，賣出證交稅 0.3%。表內「換股目標」不是當日實際市值占比。</div></details>
+<footer><a href="report.html" target="_blank" rel="noopener">FinLab 完整原生報表</a> · <a href="trades.csv">交易明細</a> · <a href="nav.csv">帳戶淨值</a><div id="limits"></div><div id="version"></div></footer>
+</main>
+<script id="strategy-data" type="application/json">__PAYLOAD_JSON__</script>
+<script>
+"use strict";
+const d=JSON.parse(document.getElementById('strategy-data').textContent), p=d.performance;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=(v,n=2)=>v==null?'—':`${v>0?'+':''}${(v*100).toFixed(n)}%`;
+const ret=(v,n=2)=>`<span class="${v>0?'pos':v<0?'neg':'dim'}">${pct(v,n)}</span>`;
+const num=v=>v==null?'—':Number(v).toLocaleString('zh-TW',{maximumFractionDigits:2});
+const date=v=>v?String(v).slice(0,10):'—';
+document.getElementById('date').textContent=`資料截至 ${d.date}｜回測自 ${d.start}｜本期選股日 ${d.selection_date}`;
+const cards=[['複利年化 CAGR',pct(p.cagr),p.cagr],['夏普（每日）',p.sharpe.toFixed(2),null],['最大回撤',pct(p.max_drawdown),p.max_drawdown],['已平倉勝率',`${(p.win_rate*100).toFixed(1)}%`,null],['已平倉交易',`${num(p.closed_trades)} 筆`,null],['平均每筆報酬',pct(p.avg_return),p.avg_return],['單筆最大獲利',pct(p.max_gain),p.max_gain],['單筆最大虧損',pct(p.max_loss),p.max_loss]];
+document.getElementById('metrics').innerHTML=cards.map(([label,value,color])=>`<div class="metric"><div class="metric-label">${label}</div><div class="metric-value ${color>0?'pos':color<0?'neg':''}">${value}</div></div>`).join('');
+document.getElementById('method').textContent=`績效均由同一份 FinLab 原生回測產生。${p.missing_return_trades?`${p.missing_return_trades} 筆已平倉交易缺少報酬值，未納入平均與單筆極值。`:''}`;
+const years=Object.entries(d.yearly_returns).filter(([y])=>Number(y)>=Number(d.date.slice(0,4))-10);
+document.getElementById('years').innerHTML=years.map(([y,v])=>`<div class="year" style="background:${v>=0?'rgba(219,39,119,.42)':'rgba(74,222,128,.22)'}"><strong>${pct(v,1)}</strong><span>${y}${y===d.date.slice(0,4)?' 至今':''}</span></div>`).join('');
+const monthYears=[...new Set(Object.keys(d.monthly_returns).map(k=>k.slice(0,4)))];
+document.getElementById('months').innerHTML=`<table class="monthly"><thead><tr><th>年份</th>${Array.from({length:12},(_,i)=>`<th>${i+1}月</th>`).join('')}</tr></thead><tbody>${monthYears.map(y=>`<tr><td>${y}</td>${Array.from({length:12},(_,i)=>`<td>${ret(d.monthly_returns[`${y}-${String(i+1).padStart(2,'0')}`],1)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+function stockTable(rows,mode){
+ if(!rows.length)return '<div class="empty">目前沒有項目</div>';
+ return `<table><thead><tr><th><button class="sort" type="button">名稱 ↕</button></th><th>${mode==='pending'?'參考收盤價':'每筆報酬'}</th><th>${mode==='pending'?'換股目標':'買入價'}</th><th>${mode==='sell'?'賣出價':mode==='pending'?'訊號日':'換股目標'}</th><th>${mode==='sell'?'賣出日':mode==='pending'?'狀態':'買入日'}</th></tr></thead><tbody>${rows.map(r=>`<tr data-id="${esc(r.stock_id)}"><td>${esc(r.stock_id)} ${esc(r.name)}</td><td>${mode==='pending'?num(r.close):ret(r.return)}</td><td>${mode==='pending'?'10%':num(r['trade_price@entry_date'])}</td><td>${mode==='sell'?num(r['trade_price@exit_date']):mode==='pending'?date(r.entry_sig_date):pct(r.position,0).replace('+','')}</td><td>${mode==='sell'?date(r.exit_date):mode==='pending'?'<span class="tag">待開盤</span>':date(r.entry_date)}</td></tr>`).join('')}</tbody></table>`;
+}
+document.getElementById('holding-title').textContent=`目前持股（${d.holdings.length} 檔）`;
+document.getElementById('holdings').innerHTML=stockTable(d.holdings,'hold');
+document.getElementById('pending').innerHTML=stockTable(d.pending,'pending');
+document.getElementById('pending-section').hidden=!d.pending.length;
+document.getElementById('sells').innerHTML=stockTable(d.recent_sells,'sell');
+document.getElementById('limits').textContent=d.limitations.join(' ');
+document.getElementById('version').textContent=`固定日期版｜${d.strategy_version}｜更新時間 ${d.generated_at.slice(0,19).replace('T',' ')}（台灣）`;
+document.querySelectorAll('button.sort').forEach(b=>b.onclick=()=>{const body=b.closest('table').tBodies[0];const direction=b.dataset.desc==='1'?-1:1;b.dataset.desc=direction===1?'1':'0';[...body.rows].sort((a,c)=>direction*a.dataset.id.localeCompare(c.dataset.id,'zh-TW',{numeric:true})).forEach(r=>body.append(r));});
+document.getElementById('capital').addEventListener('input',e=>{
+ const capital=Number(e.target.value)*10000, box=document.getElementById('allocation'), summary=document.getElementById('allocation-summary');
+ if(!Number.isFinite(capital)||capital<=0){box.textContent='';summary.textContent='';return;}
+ const byId=new Map([...d.holdings,...d.pending].map(r=>[r.stock_id,r]));let used=0;
+ const rows=d.latest_selection.picks.map(id=>{const r=byId.get(id)||{stock_id:id,name:'',close:null};const cost=r.close>0?r.close*1000*1.000475:null;const lots=cost?Math.floor(capital*.1/cost):0;used+=lots*(cost||0);return `<tr><td>${esc(id)} ${esc(r.name)}</td><td>${num(capital*.1)}</td><td>${num(r.close)}</td><td>${cost?`${lots} 張`:'缺參考價'}</td></tr>`;});
+ box.innerHTML=`<table><thead><tr><th>股票</th><th>每檔預算</th><th>參考價</th><th>整張目標</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;summary.textContent=`估計配置 ${num(used)} 元，剩餘現金 ${num(capital-used)} 元；不足 10 檔的資金保留。`;
+});
+</script></body></html>

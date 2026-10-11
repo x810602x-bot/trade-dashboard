@@ -1,0 +1,4 @@
+finlab==2.2.10
+pandas==3.0.0
+numpy==2.2.6
+tzdata

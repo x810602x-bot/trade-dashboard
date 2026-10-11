@@ -1,0 +1,65 @@
+name: Fixed-date watch2 and Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Taiwan 22:20, after the fixed signal day's close.
+    - cron: '20 14 * * 1-5'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: trade-dashboard-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: watch2_pipeline/requirements.txt
+      - name: Install pinned native backtest
+        run: |
+          python -m pip install uv
+          uv pip install --system -r watch2_pipeline/requirements.txt
+      - name: Check decision locking
+        run: python -m unittest discover -s watch2_pipeline -p 'test_*.py'
+      - name: Update from one FinLab report
+        env:
+          FINLAB_REFRESH_TOKEN: ${{ secrets.FINLAB_REFRESH_TOKEN }}
+          FINLAB_SESSION_ID: ${{ secrets.FINLAB_SESSION_ID }}
+          FINLAB_API_KEY: ${{ secrets.FINLAB_API_KEY }}
+        run: python watch2_pipeline/update.py
+      - name: Build and verify published numbers
+        run: |
+          python watch2_pipeline/build.py
+          python watch2_pipeline/verify.py
+      - name: Preserve decisions and native report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add watch2_pipeline/selections.json watch2_native watch2/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Update fixed-date watch2 native report"
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

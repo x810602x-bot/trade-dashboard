@@ -1,2 +1,7 @@
 __pycache__/
 *.py[cod]
+.runtime/
+.venv/
+.env
+*.lock
+_site/

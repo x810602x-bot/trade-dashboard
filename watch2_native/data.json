@@ -2,9 +2,9 @@
   "schema_version": 1,
   "strategy_version": "watch2-fixed10-v1",
   "date": "2026-10-12",
-  "generated_at": "2026-10-12T21:33:56.404826+08:00",
+  "generated_at": "2026-10-12T22:44:58.774936+08:00",
   "start": "2008-03-10",
-  "selection_date": "2026-09-10",
+  "selection_date": "2026-10-12",
   "performance": {
     "cagr": 0.3379400761219373,
     "sharpe": 1.2570006448461026,
@@ -273,7 +273,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": 0.0034192532467534065,
       "position": 0.1,
       "trade_price@entry_date": 77.0,
@@ -286,7 +286,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": -0.028862107623317867,
       "position": 0.1,
       "trade_price@entry_date": 33.45,
@@ -299,7 +299,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": -0.14349913651315793,
       "position": 0.1,
       "trade_price@entry_date": 304.0,
@@ -312,7 +312,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": 0.4004972383720933,
       "position": 0.1,
       "trade_price@entry_date": 86.0,
@@ -325,7 +325,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": 0.019642558262711773,
       "position": 0.1,
       "trade_price@entry_date": 472.0,
@@ -338,7 +338,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": 0.049894763779527285,
       "position": 0.1,
       "trade_price@entry_date": 317.5,
@@ -351,7 +351,7 @@
       "entry_date": "2026-09-11T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-10-12T00:00:00",
       "return": -0.1026486666666665,
       "position": 0.1,
       "trade_price@entry_date": 337.5,
@@ -359,7 +359,138 @@
       "close": 303.0
     }
   ],
-  "pending": [],
+  "pending": [
+    {
+      "stock_id": "1303",
+      "name": "南亞",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 308.0,
+      "trade_price@exit_date": 308.0,
+      "close": 303.0
+    },
+    {
+      "stock_id": "1815",
+      "name": "富喬",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 133.0,
+      "trade_price@exit_date": 133.0,
+      "close": 133.0
+    },
+    {
+      "stock_id": "2607",
+      "name": "榮運",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 56.0,
+      "trade_price@exit_date": 56.0,
+      "close": 57.3
+    },
+    {
+      "stock_id": "3016",
+      "name": "嘉晶",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 180.0,
+      "trade_price@exit_date": 180.0,
+      "close": 179.0
+    },
+    {
+      "stock_id": "3044",
+      "name": "健鼎",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 580.0,
+      "trade_price@exit_date": 580.0,
+      "close": 579.0
+    },
+    {
+      "stock_id": "3564",
+      "name": "其陽",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 68.7,
+      "trade_price@exit_date": 68.7,
+      "close": 68.5
+    },
+    {
+      "stock_id": "6505",
+      "name": "台塑化",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 107.5,
+      "trade_price@exit_date": 107.5,
+      "close": 108.5
+    },
+    {
+      "stock_id": "6672",
+      "name": "騰輝電子-KY",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 551.0,
+      "trade_price@exit_date": 551.0,
+      "close": 598.0
+    },
+    {
+      "stock_id": "6811",
+      "name": "宏碁資訊",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 281.0,
+      "trade_price@exit_date": 281.0,
+      "close": 275.5
+    },
+    {
+      "stock_id": "6834",
+      "name": "天二科技",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 130.0,
+      "trade_price@exit_date": 130.0,
+      "close": 145.0
+    }
+  ],
   "recent_sells": [
     {
       "stock_id": "2027",
@@ -494,43 +625,61 @@
   ],
   "latest_selection": {
     "picks": [
-      "2606",
-      "2617",
-      "3006",
-      "3219",
-      "3374",
-      "6426",
-      "6538"
+      "1303",
+      "1815",
+      "2607",
+      "3016",
+      "3044",
+      "3564",
+      "6505",
+      "6672",
+      "6811",
+      "6834"
     ],
-    "source": "reviewed_historical_baseline"
+    "source": "frozen_before_next_open",
+    "recorded_at": "2026-10-12T22:44:58.774936+08:00",
+    "execution_date": "2026-10-13",
+    "inputs_sha256": "9a5b95dd479dc9264fa2f52dc96d616d613172d424da887f4110829e84ad4fbb"
   },
   "allocation_prices": {
-    "2606": {
-      "close": 77.3,
-      "name": ""
-    },
-    "2617": {
-      "close": 32.5,
-      "name": ""
-    },
-    "3006": {
-      "close": 260.5,
-      "name": ""
-    },
-    "3219": {
-      "close": 120.5,
-      "name": ""
-    },
-    "3374": {
-      "close": 481.5,
-      "name": ""
-    },
-    "6426": {
-      "close": 333.5,
-      "name": ""
-    },
-    "6538": {
+    "1303": {
       "close": 303.0,
+      "name": ""
+    },
+    "1815": {
+      "close": 133.0,
+      "name": ""
+    },
+    "2607": {
+      "close": 57.3,
+      "name": ""
+    },
+    "3016": {
+      "close": 179.0,
+      "name": ""
+    },
+    "3044": {
+      "close": 579.0,
+      "name": ""
+    },
+    "3564": {
+      "close": 68.5,
+      "name": ""
+    },
+    "6505": {
+      "close": 108.5,
+      "name": ""
+    },
+    "6672": {
+      "close": 598.0,
+      "name": ""
+    },
+    "6811": {
+      "close": 275.5,
+      "name": ""
+    },
+    "6834": {
+      "close": 145.0,
       "name": ""
     }
   },

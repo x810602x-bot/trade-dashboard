@@ -2,9 +2,9 @@
   "schema_version": 1,
   "strategy_version": "2026-original-v1",
   "date": "2026-10-12",
-  "generated_at": "2026-10-12T21:33:59.543194+08:00",
+  "generated_at": "2026-10-12T22:45:02.537925+08:00",
   "start": "2008-03-10",
-  "selection_date": "2026-09-10",
+  "selection_date": "2026-10-12",
   "performance": {
     "cagr": 0.11392190122073598,
     "sharpe": 1.0159966586109583,
@@ -307,7 +307,108 @@
       "close": 77.3
     }
   ],
-  "pending": [],
+  "pending": [
+    {
+      "stock_id": "6834",
+      "name": "天二科技",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 145.0
+    },
+    {
+      "stock_id": "1815",
+      "name": "富喬",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 133.0
+    },
+    {
+      "stock_id": "6505",
+      "name": "台塑化",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 108.5
+    },
+    {
+      "stock_id": "2607",
+      "name": "榮運",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 57.3
+    },
+    {
+      "stock_id": "3564",
+      "name": "其陽",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 68.5
+    },
+    {
+      "stock_id": "3016",
+      "name": "嘉晶",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 179.0
+    },
+    {
+      "stock_id": "3597",
+      "name": "映興",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 44.2
+    },
+    {
+      "stock_id": "3287",
+      "name": "廣寰科",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 47.75
+    },
+    {
+      "stock_id": "2340",
+      "name": "台亞",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 51.4
+    },
+    {
+      "stock_id": "5230",
+      "name": "雷笛克光學",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-10-12T00:00:00",
+      "return": null,
+      "position": 0.1,
+      "close": 25.05
+    }
+  ],
   "recent_sells": [
     {
       "stock_id": "3022",
@@ -442,29 +543,85 @@
   ],
   "latest_selection": {
     "picks": [
-      "2617",
-      "3219",
-      "2606"
+      "6834",
+      "1815",
+      "6505",
+      "2607",
+      "3564",
+      "3016",
+      "3597",
+      "3287",
+      "2340",
+      "5230"
     ],
     "yoy": {
-      "2617": 22.29,
-      "3219": 19.72,
-      "2606": 18.15
+      "6834": 132.39,
+      "1815": 82.14,
+      "6505": 65.59,
+      "2607": 64.69,
+      "3564": 54.24,
+      "3016": 52.71,
+      "3597": 50.09,
+      "3287": 34.45,
+      "2340": 34.26,
+      "5230": 22.76
     },
-    "source": "locked_original"
+    "source": "original_revenue_gate",
+    "recorded_at": "2026-10-12T22:45:02.537925+08:00",
+    "forced": false
   },
   "allocation_prices": {
     "2617": {
       "close": 32.5,
       "name": "台航"
     },
+    "5230": {
+      "close": 25.05,
+      "name": "雷笛克光學"
+    },
     "2606": {
       "close": 77.3,
       "name": "裕民"
     },
+    "3016": {
+      "close": 179.0,
+      "name": "嘉晶"
+    },
+    "3564": {
+      "close": 68.5,
+      "name": "其陽"
+    },
+    "6505": {
+      "close": 108.5,
+      "name": "台塑化"
+    },
+    "6834": {
+      "close": 145.0,
+      "name": "天二科技"
+    },
+    "3597": {
+      "close": 44.2,
+      "name": "映興"
+    },
+    "1815": {
+      "close": 133.0,
+      "name": "富喬"
+    },
+    "2340": {
+      "close": 51.4,
+      "name": "台亞"
+    },
     "3219": {
       "close": 120.5,
       "name": "倚強科"
+    },
+    "3287": {
+      "close": 47.75,
+      "name": "廣寰科"
+    },
+    "2607": {
+      "close": 57.3,
+      "name": "榮運"
     }
   },
   "limitations": [

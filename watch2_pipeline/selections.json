@@ -2704,6 +2704,24 @@
         "6538"
       ],
       "source": "reviewed_historical_baseline"
+    },
+    "2026-10-12": {
+      "picks": [
+        "1303",
+        "1815",
+        "2607",
+        "3016",
+        "3044",
+        "3564",
+        "6505",
+        "6672",
+        "6811",
+        "6834"
+      ],
+      "source": "frozen_before_next_open",
+      "recorded_at": "2026-10-12T22:44:58.774936+08:00",
+      "execution_date": "2026-10-13",
+      "inputs_sha256": "9a5b95dd479dc9264fa2f52dc96d616d613172d424da887f4110829e84ad4fbb"
     }
   }
 }

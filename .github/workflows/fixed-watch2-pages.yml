@@ -1,4 +1,4 @@
-name: Fixed-date watch2 and Pages
+name: Shared strategy dashboards and Pages
 
 on:
   push:
@@ -36,13 +36,18 @@ jobs:
           python -m pip install uv
           uv pip install --system -r watch2_pipeline/requirements.txt
       - name: Check decision locking
-        run: python -m unittest discover -s watch2_pipeline -p 'test_*.py'
+        run: |
+          python -m unittest discover -s watch2_pipeline -p 'test_*.py'
+          python -m unittest discover -s dashboard_shared -p 'test_*.py'
+          node --test dashboard_shared/test_allocation.cjs
       - name: Update from one FinLab report
         env:
           FINLAB_REFRESH_TOKEN: ${{ secrets.FINLAB_REFRESH_TOKEN }}
           FINLAB_SESSION_ID: ${{ secrets.FINLAB_SESSION_ID }}
           FINLAB_API_KEY: ${{ secrets.FINLAB_API_KEY }}
-        run: python watch2_pipeline/update.py
+        run: |
+          python watch2_pipeline/update.py
+          python strategy2026_pipeline/update.py --cached
       - name: Build and verify published numbers
         run: |
           python watch2_pipeline/build.py
@@ -51,9 +56,9 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add watch2_pipeline/selections.json watch2_native watch2/index.html
+          git add watch2_pipeline/selections.json watch2_native watch2/index.html strategy2026_pipeline/selections.json strategy2026_native 2026/index.html
           if ! git diff --cached --quiet; then
-            git commit -m "Update fixed-date watch2 native report"
+            git commit -m "Update both strategy dashboards from shared metrics"
             git push
           fi
       - uses: actions/configure-pages@v5

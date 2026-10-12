@@ -24,7 +24,7 @@
 
 ## 發布與檢查
 
-GitHub Pages 使用 Actions，主分支推送、手動執行及平日台灣時間 22:20 排程觸發。GitHub 排程可能延遲。發布流程固定重新建立 `/watch2/`，不讀取舊發布器產生的 `watch2/index.html`；`2026/` 內容照原樣複製。
+GitHub Pages 使用 Actions，主分支推送、手動執行及平日台灣時間 22:20 排程觸發。GitHub 排程可能延遲。兩頁都由 `dashboard_shared` 的同一份模板、績效統計與本金試算程式建立，不讀取舊發布器產生的 HTML。`/2026/` 保留自己的原交易引擎、費率及初始本金配置規則；詳見 `dashboard_shared/README.md`。
 
 FinLab headless 登入使用官方支援的三個環境變數，存於 GitHub Actions encrypted secrets：`FINLAB_REFRESH_TOKEN`、`FINLAB_SESSION_ID`、`FINLAB_API_KEY`。不得將值、原始資料快取或憑證寫入 Git。
 
@@ -33,6 +33,7 @@ FinLab headless 登入使用官方支援的三個環境變數，存於 GitHub Ac
 ```sh
 python -m unittest discover -s watch2_pipeline -p 'test_*.py'
 python watch2_pipeline/update.py
+python strategy2026_pipeline/update.py --cached
 python watch2_pipeline/build.py
 python watch2_pipeline/verify.py
 ```

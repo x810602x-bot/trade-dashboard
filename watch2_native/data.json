@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "strategy_version": "watch2-fixed10-v1",
-  "date": "2026-10-08",
-  "generated_at": "2026-10-12T00:45:47.898202+08:00",
+  "date": "2026-10-12",
+  "generated_at": "2026-10-12T20:16:29.315092+08:00",
   "start": "2008-03-10",
   "selection_date": "2026-09-10",
   "performance": {
-    "cagr": 0.3397892494153256,
-    "sharpe": 1.262456959207441,
+    "cagr": 0.3379400761219373,
+    "sharpe": 1.2570006448461026,
     "max_drawdown": -0.3052529927631522,
     "win_rate": 0.5094221105527639,
     "closed_trades": 1593,
@@ -36,7 +36,7 @@
     "2023": 0.4750193919892751,
     "2024": 0.9305812869345271,
     "2025": 0.6926393395928789,
-    "2026": 0.23216260060032767
+    "2026": 0.20478202770904264
   },
   "monthly_returns": {
     "2008-01": 0.0,
@@ -264,7 +264,7 @@
     "2026-07": -0.18877527529722993,
     "2026-08": 0.12589273522312516,
     "2026-09": 0.005460900590260165,
-    "2026-10": -0.0035745758206940925
+    "2026-10": -0.025716701335766978
   },
   "holdings": [
     {
@@ -274,11 +274,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": -0.027734772727272428,
+      "return": 0.0034192532467534065,
       "position": 0.1,
       "trade_price@entry_date": 77.0,
-      "trade_price@exit_date": 74.3,
-      "close": 74.9
+      "trade_price@exit_date": 75.9,
+      "close": 77.3
     },
     {
       "stock_id": "2617",
@@ -287,11 +287,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": -0.04230863228699511,
+      "return": -0.028862107623317867,
       "position": 0.1,
       "trade_price@entry_date": 33.45,
-      "trade_price@exit_date": 31.8,
-      "close": 32.05
+      "trade_price@exit_date": 32.3,
+      "close": 32.5
     },
     {
       "stock_id": "3006",
@@ -300,11 +300,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": -0.12212771381578935,
+      "return": -0.14349913651315793,
       "position": 0.1,
       "trade_price@entry_date": 304.0,
-      "trade_price@exit_date": 273.0,
-      "close": 267.0
+      "trade_price@exit_date": 264.0,
+      "close": 260.5
     },
     {
       "stock_id": "3219",
@@ -313,11 +313,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": 0.5109098837209305,
+      "return": 0.4004972383720933,
       "position": 0.1,
       "trade_price@entry_date": 86.0,
-      "trade_price@exit_date": 130.0,
-      "close": 130.0
+      "trade_price@exit_date": 127.5,
+      "close": 120.5
     },
     {
       "stock_id": "3374",
@@ -326,11 +326,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": 0.0524659427966101,
+      "return": 0.019642558262711773,
       "position": 0.1,
       "trade_price@entry_date": 472.0,
-      "trade_price@exit_date": 491.0,
-      "close": 497.0
+      "trade_price@exit_date": 490.5,
+      "close": 481.5
     },
     {
       "stock_id": "6426",
@@ -339,11 +339,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": 0.07350559055118078,
+      "return": 0.049894763779527285,
       "position": 0.1,
       "trade_price@entry_date": 317.5,
-      "trade_price@exit_date": 331.0,
-      "close": 341.0
+      "trade_price@exit_date": 334.0,
+      "close": 333.5
     },
     {
       "stock_id": "6538",
@@ -352,11 +352,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-09-10T00:00:00",
       "exit_sig_date": null,
-      "return": -0.015282777777777645,
+      "return": -0.1026486666666665,
       "position": 0.1,
       "trade_price@entry_date": 337.5,
-      "trade_price@exit_date": 346.0,
-      "close": 332.5
+      "trade_price@exit_date": 324.0,
+      "close": 303.0
     }
   ],
   "pending": [],
@@ -385,7 +385,7 @@
       "position": 0.1,
       "trade_price@entry_date": 274.0,
       "trade_price@exit_date": 283.0,
-      "close": 297.5
+      "close": 288.0
     },
     {
       "stock_id": "2347",
@@ -398,7 +398,7 @@
       "position": 0.1,
       "trade_price@entry_date": 91.4,
       "trade_price@exit_date": 87.6,
-      "close": 96.4
+      "close": 98.9
     },
     {
       "stock_id": "2425",
@@ -411,7 +411,7 @@
       "position": 0.1,
       "trade_price@entry_date": 48.25,
       "trade_price@exit_date": 36.5,
-      "close": 35.75
+      "close": 35.7
     },
     {
       "stock_id": "2637",
@@ -424,7 +424,7 @@
       "position": 0.1,
       "trade_price@entry_date": 87.4,
       "trade_price@exit_date": 98.3,
-      "close": 98.4
+      "close": 102.0
     },
     {
       "stock_id": "3022",
@@ -437,7 +437,7 @@
       "position": 0.1,
       "trade_price@entry_date": 115.5,
       "trade_price@exit_date": 82.2,
-      "close": 90.3
+      "close": 90.1
     },
     {
       "stock_id": "3416",
@@ -450,7 +450,7 @@
       "position": 0.1,
       "trade_price@entry_date": 198.0,
       "trade_price@exit_date": 159.0,
-      "close": 182.0
+      "close": 177.5
     },
     {
       "stock_id": "3605",
@@ -463,7 +463,7 @@
       "position": 0.1,
       "trade_price@entry_date": 111.5,
       "trade_price@exit_date": 125.0,
-      "close": 163.0
+      "close": 179.0
     },
     {
       "stock_id": "3702",
@@ -476,7 +476,7 @@
       "position": 0.1,
       "trade_price@entry_date": 126.0,
       "trade_price@exit_date": 105.5,
-      "close": 117.5
+      "close": 116.0
     },
     {
       "stock_id": "5288",
@@ -489,7 +489,7 @@
       "position": 0.1,
       "trade_price@entry_date": 200.0,
       "trade_price@exit_date": 178.0,
-      "close": 188.5
+      "close": 183.0
     }
   ],
   "latest_selection": {
@@ -503,6 +503,36 @@
       "6538"
     ],
     "source": "reviewed_historical_baseline"
+  },
+  "allocation_prices": {
+    "2606": {
+      "close": 77.3,
+      "name": ""
+    },
+    "2617": {
+      "close": 32.5,
+      "name": ""
+    },
+    "3006": {
+      "close": 260.5,
+      "name": ""
+    },
+    "3219": {
+      "close": 120.5,
+      "name": ""
+    },
+    "3374": {
+      "close": 481.5,
+      "name": ""
+    },
+    "6426": {
+      "close": 333.5,
+      "name": ""
+    },
+    "6538": {
+      "close": 303.0,
+      "name": ""
+    }
   },
   "limitations": [
     "歷史名單沿用已核對的研究回測；2026/10/12起保存當次決策，不回改名單。",

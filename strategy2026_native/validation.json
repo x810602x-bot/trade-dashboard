@@ -1,0 +1,8 @@
+{
+  "strategy_rules_unchanged": true,
+  "performance_backend": "finlab.metrics_from_nav",
+  "finlab_sim_used": false,
+  "fees_unchanged": true,
+  "historical_decisions_unchanged": true,
+  "data_date": "2026-10-12"
+}

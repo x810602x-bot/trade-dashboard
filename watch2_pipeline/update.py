@@ -6,14 +6,15 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
-import math
-import numpy as np
+import sys
 import pandas as pd
 import finlab
 from finlab import data, FinlabDataFrame
 from finlab.backtest import sim
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+from dashboard_shared.performance import clean, save, measure
 STATE = ROOT/'watch2_pipeline/selections.json'
 VERSION = 'watch2-fixed10-v1'
 START = '2008-03-10'
@@ -25,27 +26,6 @@ DATASETS = [
     'benchmark_return:發行量加權股價報酬指數', 'etl:market_value',
     'etl:is_flagged_stock', 'security_categories', 'delisting_announcements',
 ]
-
-
-def clean(value):
-    if value is pd.NaT or value is None:
-        return None
-    if isinstance(value, dict):
-        return {str(k): clean(v) for k, v in value.items()}
-    if isinstance(value, (list, tuple)):
-        return [clean(v) for v in value]
-    if isinstance(value, (pd.Timestamp, datetime)):
-        return value.isoformat()
-    if isinstance(value, (np.integer, np.floating)):
-        value = value.item()
-    if isinstance(value, float) and not math.isfinite(value):
-        return None
-    return value
-
-
-def save(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(clean(value), ensure_ascii=False, indent=2, allow_nan=False), encoding='utf-8')
 
 
 def first_signal_day(calendar, year, month):
@@ -151,7 +131,6 @@ def run(reference=False):
     trades.to_csv(out/'trades.csv',index=False,encoding='utf-8-sig')
     nav.to_csv(out/'nav.csv',encoding='utf-8-sig')
     closed = trades.loc[trades.entry_date.notna() & trades.exit_date.notna()]
-    valid = closed.loc[closed['return'].notna()]
     pending = trades.loc[trades.entry_date.isna() & trades.entry_sig_date.notna()]
     holding = trades.loc[trades.entry_date.notna() & trades.exit_date.isna()]
     last_exit = closed.exit_date.max()
@@ -166,24 +145,16 @@ def run(reference=False):
             result.append(row)
         return result
     selected_day = position.index[-1]
-    year_rows, month_rows = {}, {}
-    labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-    for year, values in stats['return_table'].items():
-        year_rows[str(year)] = values['YTD']
-        for number,label in enumerate(labels,1):
-            if pd.Timestamp(int(year),number,1) <= end:
-                month_rows[f'{int(year):04d}-{number:02d}'] = values[label]
+    performance, year_rows, month_rows, _ = measure(nav,trades,stats)
     payload = {
         'schema_version':1, 'strategy_version':VERSION, 'date':str(end.date()),
         'generated_at':now.isoformat(), 'start':START, 'selection_date':str(selected_day.date()),
-        'performance':{'cagr':stats['cagr'],'sharpe':stats['daily_sharpe'],
-            'max_drawdown':stats['max_drawdown'],'win_rate':stats['win_ratio'],
-            'closed_trades':len(closed),'valid_closed_trades':len(valid),
-            'avg_return':valid['return'].mean(),'max_gain':valid['return'].max(),
-            'max_loss':valid['return'].min(),'missing_return_trades':len(closed)-len(valid)},
+        'performance':performance,
         'yearly_returns':year_rows, 'monthly_returns':month_rows,
         'holdings':rows(holding), 'pending':rows(pending), 'recent_sells':rows(recent_sells),
         'latest_selection':state['selections'][str(selected_day.date())],
+        'allocation_prices':{str(s):{'close':raw.loc[end,s],'name':''} for s in position.columns
+            if s in state['selections'][str(selected_day.date())]['picks']},
         'limitations':['歷史名單沿用已核對的研究回測；2026/10/12起保存當次決策，不回改名單。',
                        '回測以開盤價模擬，未額外計入滑價；缺價交易請見完整報表。'],
         'metric_sources':{'cagr':'report.get_stats().cagr','sharpe':'report.get_stats().daily_sharpe; riskfree_rate=0.02',

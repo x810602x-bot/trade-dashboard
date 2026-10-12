@@ -6,12 +6,13 @@
 <section class="metrics" id="metrics" aria-label="策略績效"></section><p class="note" id="method"></p>
 <div class="dim">年度報酬（帳戶淨值）</div><div class="yearly" id="years"></div>
 <details><summary>每月報酬</summary><div class="scroll" id="months"></div></details>
-<details open><summary id="holding-title">目前持股</summary><div class="scroll" id="holdings"></div></details>
-<details open id="pending-section"><summary>已選定，待下次開盤</summary><p class="note">參考價為資料日收盤價，並非已成交價格。公布後保留該次名單。</p><div class="scroll" id="pending"></div></details>
-<details><summary>最近一次換股賣出</summary><div class="scroll" id="sells"></div></details>
-<details id="allocation-section"><summary>本金與各股張數試算</summary><p class="note" id="allocation-note"></p>
+<details open><summary id="holding-title">持倉</summary><div class="scroll" id="holdings"></div></details>
+<details open id="pending-section"><summary id="pending-title">買進</summary><p class="note" id="allocation-note"></p>
 <div class="capital"><label for="capital" id="capital-label"></label><input id="capital" type="number" min="0" step="1" placeholder="例如 600"><span>萬元</span></div>
-<div class="scroll" id="allocation"></div><p class="note" id="allocation-summary" aria-live="polite"></p></details>
+<div class="scroll" id="pending"></div><p class="note" id="allocation-summary" aria-live="polite"></p>
+<details id="allocation-section"><summary>各股配置試算（含續留股）</summary><div class="scroll" id="allocation"></div></details></details>
+<details open><summary id="sells-title">賣出</summary><p class="note">本期預計賣出的股票。尚未成交前，賣出價顯示「—」，賣出日為預定日期。</p><div class="scroll" id="sells"></div></details>
+<details><summary id="past-sells-title">上期賣出</summary><div class="scroll" id="past-sells"></div></details>
 <details><summary>統計口徑與策略規則</summary><div class="note" id="strategy-detail"></div></details>
 <footer><a id="native-report" href="report.html" target="_blank" rel="noopener">FinLab 完整原生報表</a><span id="native-separator"> · </span><a href="trades.csv">交易明細</a> · <a href="nav.csv">帳戶淨值</a><div id="limits"></div><div id="version"></div></footer>
 </main><script id="strategy-data" type="application/json">__PAYLOAD_JSON__</script>

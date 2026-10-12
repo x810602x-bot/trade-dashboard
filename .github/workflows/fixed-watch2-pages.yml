@@ -39,7 +39,7 @@ jobs:
         run: |
           python -m unittest discover -s watch2_pipeline -p 'test_*.py'
           python -m unittest discover -s dashboard_shared -p 'test_*.py'
-          node --test dashboard_shared/test_allocation.cjs
+          node --test dashboard_shared/test_*.cjs
       - name: Update from one FinLab report
         env:
           FINLAB_REFRESH_TOKEN: ${{ secrets.FINLAB_REFRESH_TOKEN }}

@@ -17,15 +17,24 @@ document.getElementById('years').innerHTML=years.map(([y,v])=>`<div class="year"
 const monthYears=[...new Set(Object.keys(d.monthly_returns).map(k=>k.slice(0,4)))];
 document.getElementById('months').innerHTML=`<table class="monthly"><thead><tr><th>年份</th>${Array.from({length:12},(_,i)=>`<th>${i+1}月</th>`).join('')}</tr></thead><tbody>${monthYears.map(y=>`<tr><td>${y}</td>${Array.from({length:12},(_,i)=>`<td>${ret(d.monthly_returns[`${y}-${String(i+1).padStart(2,'0')}`],1)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 const weightLabel=config.allocation.mode==='keep'?'初始股款比例':'換股目標';
+const selectedIds=new Set(d.latest_selection.picks);
+const sellRows=d.holdings.filter(r=>r.exit_sig_date||!selectedIds.has(r.stock_id));
+const holdingRows=d.holdings.filter(r=>!sellRows.includes(r));
+const plannedDate=d.latest_selection.execution_date?date(d.latest_selection.execution_date):'下個交易日';
 function stockTable(rows,mode){
- if(!rows.length)return '<div class="empty">目前沒有項目</div>';
- return `<table><thead><tr><th><button class="sort" type="button">名稱 ↕</button></th><th>${mode==='pending'?'參考收盤價':'每筆報酬'}</th><th>${mode==='pending'?weightLabel:'買入價'}</th>${mode==='hold'?'<th>最新收盤價</th>':''}<th>${mode==='sell'?'賣出價':mode==='pending'?'訊號日':weightLabel}</th><th>${mode==='sell'?'賣出日':mode==='pending'?'狀態':'買入日'}</th></tr></thead><tbody>${rows.map(r=>`<tr data-id="${esc(r.stock_id)}"><td>${esc(r.stock_id)} ${esc(r.name)}</td><td>${mode==='pending'?num(r.close):ret(r.return)}</td><td>${mode==='pending'?'10%':num(r['trade_price@entry_date'])}</td>${mode==='hold'?`<td>${num(r.close)}</td>`:''}<td>${mode==='sell'?num(r['trade_price@exit_date']):mode==='pending'?date(r.entry_sig_date):pct(r.position,0).replace('+','')}</td><td>${mode==='sell'?date(r.exit_date):mode==='pending'?'<span class="tag">待開盤</span>':date(r.entry_date)}</td></tr>`).join('')}</tbody></table>`;
+ if(!rows.length)return `<div class="empty">${mode==='hold'?'本期沒有續留股票；預計賣出的股票列在「賣出」。':'目前沒有項目'}</div>`;
+ if(mode==='buy')return `<table><thead><tr><th><button class="sort" type="button">名稱 ↕</button></th><th>狀態</th><th>最新收盤價</th><th>張數</th><th>${weightLabel}</th><th>買入日</th></tr></thead><tbody>${rows.map(r=>`<tr data-id="${esc(r.stock_id)}"><td>${esc(r.stock_id)} ${esc(r.name)}</td><td><span class="tag act-buy">新增</span></td><td>${num(r.close)}</td><td class="buy-shares" data-stock-id="${esc(r.stock_id)}">—</td><td>${pct(config.allocation.weight,0).replace('+','')}</td><td>${r.entry_date?date(r.entry_date):plannedDate}</td></tr>`).join('')}</tbody></table>`;
+ const status=mode==='hold'?'持有':mode==='sell'?'移除':'已賣出';
+ return `<table><thead><tr><th><button class="sort" type="button">名稱 ↕</button></th><th>狀態</th><th>漲跌</th><th>買入價</th><th>最新收盤價</th><th>賣出價</th><th>${weightLabel}</th><th>買入日</th><th>賣出日</th></tr></thead><tbody>${rows.map(r=>`<tr data-id="${esc(r.stock_id)}"><td>${esc(r.stock_id)} ${esc(r.name)}</td><td><span class="tag ${mode==='hold'?'act-hold':'act-sell'}">${status}</span></td><td>${ret(r.return)}</td><td>${num(r['trade_price@entry_date'])}</td><td>${num(r.close)}</td><td>${r.exit_date?num(r['trade_price@exit_date']):'—'}</td><td>${mode==='hold'?pct(r.position,0).replace('+',''):'—'}</td><td>${date(r.entry_date)}</td><td>${r.exit_date?date(r.exit_date):mode==='sell'?plannedDate:'—'}</td></tr>`).join('')}</tbody></table>`;
 }
-document.getElementById('holding-title').textContent=`目前持股（${d.holdings.length} 檔）`;
-document.getElementById('holdings').innerHTML=stockTable(d.holdings,'hold');
-document.getElementById('pending').innerHTML=stockTable(d.pending,'pending');
-document.getElementById('pending-section').hidden=!d.pending.length;
-document.getElementById('sells').innerHTML=stockTable(d.recent_sells,'sell');
+document.getElementById('holding-title').textContent=`持倉（${holdingRows.length} 檔）`;
+document.getElementById('holdings').innerHTML=stockTable(holdingRows,'hold');
+document.getElementById('pending-title').textContent=`買進（${d.pending.length} 筆）`;
+document.getElementById('pending').innerHTML=stockTable(d.pending,'buy');
+document.getElementById('sells-title').textContent=`賣出（${sellRows.length} 筆）`;
+document.getElementById('sells').innerHTML=stockTable(sellRows,'sell');
+document.getElementById('past-sells-title').textContent=`上期賣出（${d.recent_sells.length} 筆）`;
+document.getElementById('past-sells').innerHTML=stockTable(d.recent_sells,'past');
 document.getElementById('limits').textContent=d.limitations.join(' ');
 document.getElementById('version').textContent=`${d.strategy_version}｜更新時間 ${d.generated_at.slice(0,19).replace('T',' ')}（台灣）`;
 document.getElementById('native-report').hidden=!config.has_native_report;
@@ -39,10 +48,13 @@ document.getElementById('strategy-detail').textContent=`${config.detail} 夏普�
 document.querySelectorAll('button.sort').forEach(b=>b.onclick=()=>{const body=b.closest('table').tBodies[0];const direction=b.dataset.desc==='1'?-1:1;b.dataset.desc=direction===1?'1':'0';[...body.rows].sort((a,c)=>direction*a.dataset.id.localeCompare(c.dataset.id,'zh-TW',{numeric:true})).forEach(r=>body.append(r));});
 document.getElementById('capital').addEventListener('input',e=>{
  const capital=Number(e.target.value)*10000, box=document.getElementById('allocation'), summary=document.getElementById('allocation-summary');
+ document.querySelectorAll('.buy-shares').forEach(cell=>cell.textContent='—');
  if(!Number.isFinite(capital)||capital<=0){box.textContent='';summary.textContent='';return;}
  const byId=new Map([...d.holdings,...d.pending].map(r=>[r.stock_id,r]));
  const stocks=d.latest_selection.picks.map(id=>{const held=byId.get(id),quote=d.allocation_prices?.[id];return {stock_id:id,name:held?.name||quote?.name||'',close:quote?.close??held?.close};});
  const result=StrategyAllocation.allocate(capital,stocks,allocationConfig);
+ const lotsById=new Map(result.rows.map(r=>[r.stock_id,r.lots]));
+ document.querySelectorAll('.buy-shares').forEach(cell=>{const lots=lotsById.get(cell.dataset.stockId);cell.textContent=lots==null?'缺參考價':`${lots} 張`;});
  const rows=result.rows.map(r=>`<tr><td>${esc(r.stock_id)} ${esc(r.name)}</td><td>${num(r.budget)}</td><td>${num(r.close)}</td><td>${r.lots===null?'缺參考價':`${r.lots} 張`}</td></tr>`);
  box.innerHTML=`<table><thead><tr><th>股票</th><th>${allocationConfig.budget_includes_fee?'每檔預算（含費）':'每檔股款上限'}</th><th>參考價</th><th>${allocationConfig.mode==='keep'?'新建倉參考':'整張目標'}</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
  summary.textContent=`${allocationConfig.mode==='keep'?'若這次全部新建倉：':''}估計使用 ${num(result.used)} 元（含買入手續費），剩餘現金 ${num(result.remaining)} 元。買不起一張或不足十檔的資金保留，不集中到其他股票。${result.missingPrice?' 有股票缺參考價，合計尚未包含該股。':''}`;

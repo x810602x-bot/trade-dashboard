@@ -16,7 +16,7 @@ for page,config in CONFIGS.items():
     stats=json.loads((source/'native_stats.json').read_text(encoding='utf-8'))
     nav=pd.read_csv(source/'nav.csv',index_col=0,parse_dates=True).iloc[:,0]
     trades=pd.read_csv(source/'trades.csv',dtype={'stock_id':str})
-    perf,years,months,_=measure(nav,trades,stats if page=='watch2' else None)
+    perf,years,months,_=measure(nav,trades,stats if config['has_native_report'] else None)
     assert all(abs(perf[k]-v)<1e-10 if isinstance(v,(float,int)) else perf[k]==v for k,v in payload['performance'].items())
     assert years.keys()==payload['yearly_returns'].keys() and months.keys()==payload['monthly_returns'].keys()
     assert all(abs(years[k]-v)<1e-10 for k,v in payload['yearly_returns'].items())

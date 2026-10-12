@@ -9,12 +9,13 @@ import json
 import sys
 import pandas as pd
 import finlab
-from finlab import data, FinlabDataFrame
+from finlab import data
 from finlab.backtest import sim
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from dashboard_shared.performance import clean, save, measure
+from dashboard_shared.positions import position_from_state
 STATE = ROOT/'watch2_pipeline/selections.json'
 VERSION = 'watch2-fixed10-v1'
 START = '2008-03-10'
@@ -75,20 +76,6 @@ def append_selection(state, close, raw, now):
         'inputs_sha256':hashlib.sha256(pd.util.hash_pandas_object(score.loc[signal]).values.tobytes()).hexdigest()}
 
 
-def position_from_state(state, columns, end):
-    records = {day:{sid:.1 for sid in row['picks']} for day,row in state['selections'].items() if day <= str(end.date())}
-    # Only construct saved decision rows. Financial input alignment remains native.
-    # Preserve empty selections too: they explicitly rebalance the account to cash.
-    frame = pd.DataFrame(0., index=pd.to_datetime(sorted(records)), columns=columns)
-    for day, weights in records.items():
-        if weights:
-            frame.loc[pd.Timestamp(day), list(weights)] = .1
-    assert len(frame) == len(records)
-    assert frame.index.to_period('M').is_unique
-    assert frame.gt(0).sum(axis=1).max() <= 10
-    return FinlabDataFrame(frame)
-
-
 def run(reference=False):
     assert importlib.metadata.version('finlab') == '2.2.10'
     cache = ROOT/'.runtime'/('reference_cache' if reference else 'cache')
@@ -112,6 +99,7 @@ def run(reference=False):
         append_selection(state, close, raw, now)
     assert all(state['selections'][k] == v for k,v in before['selections'].items())
     position = position_from_state(state, close.columns, end)
+    assert position.index.to_period('M').is_unique
     report = sim(position, resample=position.index, position_limit=.1,
         fee_ratio=.000475, tax_ratio=.003, stop_loss=None, trade_at_price='open',
         end_date=str(end.date()), upload=False, notification_enable=False,

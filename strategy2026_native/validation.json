@@ -1,8 +1,11 @@
 {
-  "strategy_rules_unchanged": true,
-  "performance_backend": "finlab.metrics_from_nav",
-  "finlab_sim_used": false,
+  "strategy_version": "2026-reinvest-v2",
+  "selection_rules_unchanged": true,
+  "allocation_mode": "rebalance",
+  "finlab_sim_used": true,
+  "native_finlab_version": "2.2.10",
   "fees_unchanged": true,
   "historical_decisions_unchanged": true,
+  "all_cards_from_same_report": true,
   "data_date": "2026-10-12"
 }

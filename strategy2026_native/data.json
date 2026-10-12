@@ -2,7 +2,7 @@
   "schema_version": 1,
   "strategy_version": "2026-original-v1",
   "date": "2026-10-12",
-  "generated_at": "2026-10-12T20:17:30.668778+08:00",
+  "generated_at": "2026-10-12T20:22:28.575939+08:00",
   "start": "2008-03-10",
   "selection_date": "2026-09-10",
   "performance": {
@@ -454,6 +454,10 @@
     "source": "locked_original"
   },
   "allocation_prices": {
+    "2617": {
+      "close": 32.5,
+      "name": "台航"
+    },
     "2606": {
       "close": 77.3,
       "name": "裕民"
@@ -461,10 +465,6 @@
     "3219": {
       "close": 120.5,
       "name": "倚強科"
-    },
-    "2617": {
-      "close": 32.5,
-      "name": "台航"
     }
   },
   "limitations": [

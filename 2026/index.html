@@ -1,19 +1,618 @@
-<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>每月換股策略（200 元・獲利再投入）</title><link rel="stylesheet" href="../assets/dashboard.css?v=1291b2a95ecb"></head>
-<body><main class="container">
-<h1 id="title"></h1><div class="sub" id="rules"></div><div class="sub" id="date"></div>
-<section class="metrics" id="metrics" aria-label="策略績效"></section><p class="note" id="method"></p>
-<div class="dim">年度報酬（帳戶淨值）</div><div class="yearly" id="years"></div>
-<details><summary>每月報酬</summary><div class="scroll" id="months"></div></details>
-<details open><summary id="holding-title">持倉</summary><div class="scroll" id="holdings"></div></details>
-<details open id="pending-section"><summary id="pending-title">買進</summary><p class="note" id="allocation-note"></p>
-<div class="capital"><label for="capital" id="capital-label"></label><input id="capital" type="number" min="0" step="1" placeholder="例如 600"><span>萬元</span></div>
-<div class="scroll" id="pending"></div><p class="note" id="allocation-summary" aria-live="polite"></p>
-<details id="allocation-section"><summary>各股配置試算（含續留股）</summary><div class="scroll" id="allocation"></div></details></details>
-<details open><summary id="sells-title">賣出</summary><p class="note">本期預計賣出的股票。尚未成交前，賣出價顯示「—」，賣出日為預定日期。</p><div class="scroll" id="sells"></div></details>
-<details><summary id="past-sells-title">上期賣出</summary><div class="scroll" id="past-sells"></div></details>
-<details><summary>統計口徑與策略規則</summary><div class="note" id="strategy-detail"></div></details>
-<footer><a id="native-report" href="report.html" target="_blank" rel="noopener">FinLab 完整原生報表</a><span id="native-separator"> · </span><a href="trades.csv">交易明細</a> · <a href="nav.csv">帳戶淨值</a><div id="limits"></div><div id="version"></div></footer>
-</main><script id="strategy-data" type="application/json">{"schema_version": 1, "strategy_version": "2026-reinvest-v2", "date": "2026-10-28", "generated_at": "2026-10-29T03:37:48.684051+08:00", "start": "2008-03-10", "selection_date": "2026-10-12", "performance": {"cagr": 0.35520959204179325, "sharpe": 1.3263041093642123, "max_drawdown": -0.26668980653076013, "win_rate": 0.5050125313283208, "closed_trades": 1598, "valid_closed_trades": 1597, "avg_return": 0.039134363471248816, "max_gain": 1.4019650600939682, "max_loss": -0.4312278828395434, "missing_return_trades": 1}, "yearly_returns": {"2008": 0.018610648197257884, "2009": 0.4031844227383403, "2010": 0.5228052729089006, "2011": -0.0461961333245996, "2012": 0.03629261737938516, "2013": 0.7495473837189404, "2014": -0.012723911712431368, "2015": 0.10837172205491274, "2016": 0.11805011946431909, "2017": 0.7027042290672658, "2018": 0.2637661760873491, "2019": 0.3593900098522931, "2020": 1.6184324028233057, "2021": 0.8564125924523125, "2022": 0.05774177695279037, "2023": 0.5435944396629042, "2024": 0.37893693992707855, "2025": 0.6190407242201239, "2026": 0.20776644051585347}, "monthly_returns": {"2008-01": 0.0, "2008-02": 0.0, "2008-03": 0.02712627884615393, "2008-04": 0.0598072634802731, "2008-05": 0.0032901729330812035, "2008-06": -0.04215520617249768, "2008-07": 0.015182914591634011, "2008-08": -0.01417981853520367, "2008-09": -0.022784820185584365, "2008-10": 0.00569784332657175, "2008-11": -0.015330343810022296, "2008-12": 0.0054153120953992495, "2009-01": -0.0037029743040494223, "2009-02": 0.014363705981369268, "2009-03": 0.04513899804286048, "2009-04": 0.01409788262388667, "2009-05": 0.05996714666881586, "2009-06": -0.10968793562401313, "2009-07": 0.07934746542708493, "2009-08": -0.006416617081287712, "2009-09": 0.16587170310382615, "2009-10": -0.0503075213884181, "2009-11": 0.02886141689053856, "2009-12": 0.13628530488072976, "2010-01": -0.1214515422399366, "2010-02": 0.010086231800400691, "2010-03": 0.19686214250873668, "2010-04": 0.01337604676769999, "2010-05": -0.09256519857565948, "2010-06": 0.04893143937527, "2010-07": 0.09082052073121871, "2010-08": 0.029257833665331523, "2010-09": 0.13567870376023072, "2010-10": -0.001743199077407831, "2010-11": 0.03556596282774671, "2010-12": 0.12769042704722167, "2011-01": -0.00322218266535923, "2011-02": 0.12739411586759597, "2011-03": 0.02191423954330962, "2011-04": -0.020883892238850232, "2011-05": 0.006856903821616855, "2011-06": 0.03617296846431217, "2011-07": 0.01845116657239143, "2011-08": -0.16069369490848306, "2011-09": -0.022021661193723507, "2011-10": 0.0058571622088741115, "2011-11": -0.031884052098791416, "2011-12": -0.0011904747578550534, "2012-01": -0.016481662708186295, "2012-02": 0.006972633373856674, "2012-03": 0.015476058567596596, "2012-04": -0.014411471305841195, "2012-05": -0.02133500453591608, "2012-06": 0.017815796059913236, "2012-07": 0.013401746933674241, "2012-08": 0.049442980162169414, "2012-09": 0.02317325490502764, "2012-10": -0.02946615550054621, "2012-11": -0.0014221412897716945, "2012-12": -0.004751773008617288, "2013-01": 9.444449492423956e-05, "2013-02": 0.10406192903351852, "2013-03": 0.03467615327420259, "2013-04": 0.03764286095404068, "2013-05": 0.16570000735919876, "2013-06": -0.04622872939150946, "2013-07": 0.1216607729351531, "2013-08": -0.009574339407751764, "2013-09": -0.023221532056834082, "2013-10": 0.05738158748964306, "2013-11": 0.015293454553159558, "2013-12": 0.13947567564507102, "2014-01": -0.09673622540830529, "2014-02": 0.14595597750404155, "2014-03": 0.03288032144334285, "2014-04": -0.10331941001257838, "2014-05": 0.09476281064781555, "2014-06": 0.006677375418698173, "2014-07": 0.04049358894065791, "2014-08": -0.024864989695532858, "2014-09": -0.055019328860108074, "2014-10": -0.082011464221037, "2014-11": 0.018192573515965593, "2014-12": 0.04271040890514777, "2015-01": 0.028715137945546143, "2015-02": 0.009005745477365767, "2015-03": 0.042146955237454264, "2015-04": 0.015334369774098633, "2015-05": 0.012881413503229133, "2015-06": 0.020671041381028266, "2015-07": -0.061893272735182525, "2015-08": -0.00443763137494646, "2015-09": 0.04203262655127271, "2015-10": 0.049963434793884653, "2015-11": -0.02631448444889184, "2015-12": -0.018886398867233978, "2016-01": 0.018873001827852898, "2016-02": 0.0035274111456287116, "2016-03": 0.018160763846629235, "2016-04": -0.01384166932727482, "2016-05": 0.003336157594041378, "2016-06": 0.04825166709305684, "2016-07": 0.031758816954260416, "2016-08": 0.022963870328490676, "2016-09": -0.0029125956998279356, "2016-10": -0.007644863361190857, "2016-11": 0.01177086922198134, "2016-12": -0.020022868869401744, "2017-01": 0.041772613942801406, "2017-02": 0.09336776376980627, "2017-03": -0.016093030608857695, "2017-04": -0.0470874535007737, "2017-05": -0.011774386946081905, "2017-06": -0.02299651478232223, "2017-07": 0.08532067666721876, "2017-08": 0.1642841022400321, "2017-09": 0.08880980207477118, "2017-10": 0.1413289026436375, "2017-11": 0.04277445077948161, "2017-12": 0.008487335160256126, "2018-01": 0.06684422927079425, "2018-02": -0.02751155179114484, "2018-03": 0.16290473013584772, "2018-04": -0.020555833364634846, "2018-05": 0.12549198722670019, "2018-06": 0.03633608307214953, "2018-07": -0.029836021337939944, "2018-08": 0.027615909185506382, "2018-09": -0.025023810499697263, "2018-10": -0.10684460320576783, "2018-11": 0.03416155942385912, "2018-12": 0.021242838102792927, "2019-01": 0.05336077243631032, "2019-02": 0.05159528858064877, "2019-03": 0.023418770223369245, "2019-04": 0.015934286296474642, "2019-05": -0.01491444046739454, "2019-06": -0.006115023470204428, "2019-07": 0.15577720848859222, "2019-08": 0.057385262139919124, "2019-09": -0.067833673056934, "2019-10": 0.044935378702753326, "2019-11": 0.01682463838781012, "2019-12": -0.004014666559142066, "2020-01": -0.017955839780752325, "2020-02": -0.003899631611787635, "2020-03": -0.016803963681159773, "2020-04": 0.16686851226203436, "2020-05": 0.1437544833786728, "2020-06": 0.12573819881501436, "2020-07": 0.14780328590542657, "2020-08": 0.316867493842069, "2020-09": -0.07323060277413662, "2020-10": 0.025560445034851442, "2020-11": 0.14720461868144685, "2020-12": 0.09949085576814087, "2021-01": 0.04587399434180983, "2021-02": 0.16098660096647932, "2021-03": 0.020977701581273323, "2021-04": 0.1669679117260936, "2021-05": -0.07974067925287465, "2021-06": 0.11286338586229139, "2021-07": -0.022522233840228445, "2021-08": -0.019292924401443146, "2021-09": -0.020579074999131475, "2021-10": 0.06630078513279836, "2021-11": 0.04439828912957, "2021-12": 0.19833771531099398, "2022-01": -0.1395827479833711, "2022-02": 0.04108022223161245, "2022-03": 0.032941083539524074, "2022-04": 0.0593080185028001, "2022-05": 0.12570078410640173, "2022-06": -0.10083510499289194, "2022-07": -0.0008915056267865262, "2022-08": 0.11963179868584528, "2022-09": -0.05931945611696432, "2022-10": -0.07396616256763644, "2022-11": 0.06786883004728983, "2022-12": 0.024593097908496953, "2023-01": -0.010404423480213199, "2023-02": 0.13272008588601758, "2023-03": 0.08954645236675907, "2023-04": 0.11523878965180678, "2023-05": 0.062130317297379944, "2023-06": 0.08804522913405255, "2023-07": 0.013036688197694213, "2023-08": -0.06174104317726603, "2023-09": -0.007841775866155754, "2023-10": -0.015204550795486105, "2023-11": 0.068506774881403, "2023-12": -0.011760192634944544, "2024-01": 0.166800725584477, "2024-02": 0.08703142730063451, "2024-03": -0.025205350870537102, "2024-04": 0.02190634572306771, "2024-05": 0.0705562447792003, "2024-06": 0.07775561469442271, "2024-07": 0.06949493038615828, "2024-08": -0.008426734589593088, "2024-09": 0.03810128552183922, "2024-10": -0.040207417935950174, "2024-11": -0.023915693741800026, "2024-12": -0.08284315384399998, "2025-01": -0.062441523865994, "2025-02": 0.10186520722554704, "2025-03": -0.06197301637827335, "2025-04": -0.007747190845929786, "2025-05": 0.002313261415967105, "2025-06": 0.006930179270600245, "2025-07": 0.04058878072551497, "2025-08": 0.23067024487491028, "2025-09": 0.030997193456866023, "2025-10": 0.06502075592610268, "2025-11": 0.036222440246315823, "2025-12": 0.14498829863526996, "2026-01": 0.08375340829511635, "2026-02": -0.018277320593023894, "2026-03": 0.03828094661651815, "2026-04": 0.1216938513813024, "2026-05": 0.18569158022359566, "2026-06": -0.010424918179191778, "2026-07": -0.18916565140226982, "2026-08": 0.10614684554342313, "2026-09": -0.029073764101265054, "2026-10": -0.04605620505571595}, "holdings": [{"stock_id": "1815", "name": "富喬", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": 0.10611384615384623, "position": 0.1, "trade_price@entry_date": 130.0, "trade_price@exit_date": 136.0, "close": 144.0}, {"stock_id": "2340", "name": "台亞", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.1345035749027239, "position": 0.1, "trade_price@entry_date": 51.4, "trade_price@exit_date": 44.0, "close": 44.55}, {"stock_id": "2607", "name": "榮運", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.017000693240901477, "position": 0.1, "trade_price@entry_date": 57.7, "trade_price@exit_date": 56.5, "close": 56.8}, {"stock_id": "3016", "name": "嘉晶", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.20399307142857137, "position": 0.1, "trade_price@entry_date": 175.0, "trade_price@exit_date": 143.0, "close": 139.5}, {"stock_id": "3287", "name": "廣寰科", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": 0.218733267716535, "position": 0.1, "trade_price@entry_date": 50.8, "trade_price@exit_date": 62.0, "close": 62.0}, {"stock_id": "3564", "name": "其陽", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.09578963328631906, "position": 0.1, "trade_price@entry_date": 70.9, "trade_price@exit_date": 62.2, "close": 64.2}, {"stock_id": "3597", "name": "映興", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.16169012345679057, "position": 0.1, "trade_price@entry_date": 48.6, "trade_price@exit_date": 42.25, "close": 40.8}, {"stock_id": "5230", "name": "雷笛克光學", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": 0.08293398821218045, "position": 0.1, "trade_price@entry_date": 25.45, "trade_price@exit_date": 25.8, "close": 27.6}, {"stock_id": "6505", "name": "台塑化", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.0342420187793423, "position": 0.1, "trade_price@entry_date": 106.5, "trade_price@exit_date": 106.0, "close": 103.0}, {"stock_id": "6834", "name": "天二科技", "entry_date": "2026-10-13T00:00:00", "exit_date": null, "entry_sig_date": "2026-10-12T00:00:00", "exit_sig_date": null, "return": -0.16226929530201328, "position": 0.1, "trade_price@entry_date": 149.0, "trade_price@exit_date": 128.5, "close": 125.0}], "pending": [], "recent_sells": [{"stock_id": "2606", "name": "裕民", "entry_date": "2026-09-11T00:00:00", "exit_date": "2026-10-13T00:00:00", "entry_sig_date": "2026-09-10T00:00:00", "exit_sig_date": "2026-10-12T00:00:00", "return": -0.008425918545454492, "position": 0.1, "trade_price@entry_date": 77.0, "trade_price@exit_date": 76.8, "close": 73.5}, {"stock_id": "2617", "name": "台航", "entry_date": "2026-09-11T00:00:00", "exit_date": "2026-10-13T00:00:00", "entry_sig_date": "2026-09-10T00:00:00", "exit_sig_date": "2026-10-12T00:00:00", "return": -0.050424694627242084, "position": 0.1, "trade_price@entry_date": 33.45, "trade_price@exit_date": 31.95, "close": 31.75}, {"stock_id": "3219", "name": "倚強科", "entry_date": "2026-09-11T00:00:00", "exit_date": "2026-10-13T00:00:00", "entry_sig_date": "2026-09-10T00:00:00", "exit_sig_date": "2026-10-12T00:00:00", "return": 0.4160947376635178, "position": 0.1, "trade_price@entry_date": 86.0, "trade_price@exit_date": 122.5, "close": 107.5}], "latest_selection": {"picks": ["6834", "1815", "6505", "2607", "3564", "3016", "3597", "3287", "2340", "5230"], "yoy": {"6834": 132.39, "1815": 82.14, "6505": 65.59, "2607": 64.69, "3564": 54.24, "3016": 52.71, "3597": 50.09, "3287": 34.45, "2340": 34.26, "5230": 22.76}, "source": "original_revenue_gate", "recorded_at": "2026-10-12T22:45:02.537925+08:00", "forced": false, "execution_date": "2026-10-13"}, "allocation_prices": {"6834": {"close": 125.0, "name": ""}, "1815": {"close": 144.0, "name": ""}, "6505": {"close": 103.0, "name": ""}, "2607": {"close": 56.8, "name": ""}, "3564": {"close": 64.2, "name": ""}, "3016": {"close": 139.5, "name": ""}, "3597": {"close": 40.8, "name": ""}, "3287": {"close": 62.0, "name": ""}, "2340": {"close": 44.55, "name": ""}, "5230": {"close": 27.6, "name": ""}}, "limitations": ["沿用 200 元版選股名單、日期與手續費；全段歷史改以換股時總資產配置，獲利再投入。", "歷史名單含原版重算及鎖定結果，不代表當時均有保存；2026 年 8 月的兩次換股照原紀錄保留。", "與 600 元版同用 FinLab 開盤價模擬及缺價處理，未額外模擬滑價、未成交或整張限制。"], "metric_sources": {"cagr": "report.get_stats().cagr", "sharpe": "report.get_stats().daily_sharpe; riskfree_rate=0.02", "max_drawdown": "report.get_stats().max_drawdown", "win_rate": "report.get_stats().win_ratio", "yearly_monthly": "report.get_stats().return_table", "trades": "report.get_trades()"}, "config": {"strategy_version": "2026-reinvest-v2", "title": "每月換股策略（200 元・獲利再投入）", "rules": ["股價 ≤ 200 元｜5 日均成交量 > 50 萬股｜排除金融保險業", "每月 10 號後等營收條件到齊；未齊最多順延 5 個交易日，名單鎖定後下一交易日開盤換股", "最多 10 檔，每檔換股目標 10%；續留股也重新配置，不足額留現金，獲利再投入"], "detail": "近 2 個月平均營收達近 12 個月最高；近 5 天至少 2 天達 200 日新高。符合條件且營收年增率為正，依年增率取前 10 檔。保留原版等營收、鎖名單及無合格名單不換股的行為；資金配置與 600 元版一致。沒有另加停損。", "engine_label": "FinLab 原生回測", "has_native_report": true, "allocation": {"mode": "rebalance", "capital_label": "換股時帳戶總資產", "weight": 0.1, "fee_buy": 0.001425, "fee_sell": 0.001425, "tax_sell": 0.003, "budget_includes_fee": true}}}</script>
-<script src="../assets/allocation.js?v=1291b2a95ecb"></script><script src="../assets/dashboard.js?v=1291b2a95ecb"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每月換股策略</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,"Segoe UI",sans-serif;
+  background:#1a1a2e;color:#e0e0e0;
+  min-height:100vh;display:flex;justify-content:center;padding:16px;
+}
+.container{width:100%;max-width:720px}
+h1{font-size:1.4rem;padding:20px 0 4px}
+.sub{padding-bottom:16px}
+.date{color:#888;font-size:0.95rem}
+
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:16px;
+}
+.metric{background:#1e1e36;border-radius:6px;padding:10px 12px}
+.metric-label{font-size:0.75rem;color:#888}
+.metric-value{font-size:1.1rem;font-weight:600;font-variant-numeric:tabular-nums}
+.metric-value.pos{color:#f87171}
+.metric-value.neg{color:#4ade80}
+
+.yearly{margin-bottom:16px}
+.yearly-title{font-size:0.85rem;color:#888;margin-bottom:6px}
+.yearly-row{display:flex;gap:2px}
+.yearly-cell{flex:1;text-align:center;border-radius:4px;padding:6px 2px}
+.yearly-val{font-size:0.82rem;font-weight:600;color:#fff}
+.yearly-year{font-size:0.72rem;color:#999;margin-top:2px}
+
+.monthly{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.m-row{display:grid;grid-template-columns:42px repeat(12,1fr);gap:2px}
+.m-year{
+  text-align:right;padding-right:6px;color:#999;font-size:0.72rem;
+  font-variant-numeric:tabular-nums;align-self:center;
+}
+.m-cell{
+  text-align:center;border-radius:3px;padding:4px 0;
+  font-size:0.66rem;font-weight:600;color:#fff;
+  font-variant-numeric:tabular-nums;
+  min-height:20px;display:flex;align-items:center;justify-content:center;
+}
+.m-empty{background:#262640}
+.m-month{background:transparent;color:#999;font-weight:400;font-size:0.7rem}
+
+table{width:100%;border-collapse:collapse;font-size:0.92rem}
+thead th{
+  text-align:left;padding:8px 6px;color:#888;font-weight:500;
+  border-bottom:1px solid #333;font-size:0.82rem;white-space:nowrap;
+}
+tbody td{padding:8px 6px;border-bottom:1px solid #262640}
+tbody tr:hover{background:rgba(255,255,255,0.03)}
+
+.col-name{min-width:120px}
+.col-act{text-align:center;width:60px}
+.col-ret{text-align:right;width:64px}
+.col-price{text-align:right;width:72px}
+.col-wt{text-align:right;width:64px}
+.col-date{text-align:center;width:90px;color:#999;font-size:0.85rem}
+
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:#bbb}
+.sort-ind{
+  display:inline-block;margin-left:6px;font-size:0.7rem;
+  color:#555;line-height:1;font-variant-numeric:tabular-nums;
+}
+.sort-ind::before{content:"↕"}
+.sort-ind.asc{color:#e0e0e0}
+.sort-ind.asc::before{content:"▲"}
+.sort-ind.desc{color:#e0e0e0}
+.sort-ind.desc::before{content:"▼"}
+
+.act{
+  display:inline-block;font-size:0.82rem;padding:2px 8px;
+  border-radius:4px;font-weight:600;
+}
+.act-buy{background:#4a1525;color:#f87171}
+.act-sell{background:#1b4332;color:#4ade80}
+.act-hold{background:#1e293b;color:#94a3b8}
+
+.ret{font-weight:600;font-variant-numeric:tabular-nums}
+.ret.pos{color:#f87171}
+.ret.neg{color:#4ade80}
+.ret.neutral{color:#666}
+
+.wt{font-variant-numeric:tabular-nums}
+.wt.dim{color:#555}
+
+.price{font-variant-numeric:tabular-nums}
+.price.dim{color:#555}
+
+.shares{font-variant-numeric:tabular-nums;font-weight:600}
+.shares.dim{color:#555;font-weight:400}
+.col-shares{text-align:right;width:72px}
+
+.capital-box{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:#1e1e36;border-radius:6px;padding:10px 14px;margin-bottom:8px;
+}
+.capital-label{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#bbb;font-size:0.88rem;
+}
+.capital-label input{
+  background:#0f0f1e;border:1px solid #333;color:#e0e0e0;
+  border-radius:4px;padding:4px 8px;width:100px;font-size:0.95rem;
+  font-variant-numeric:tabular-nums;
+}
+.capital-label input:focus{outline:none;border-color:#4a5fa8}
+.capital-unit{color:#888;font-size:0.85rem}
+.capital-summary{color:#888;font-size:0.82rem;flex:1;min-width:180px}
+.capital-summary.active{color:#bbb}
+
+.empty{text-align:center;padding:32px;color:#666}
+
+.section{margin-top:16px}
+.section summary{
+  cursor:pointer;font-size:0.85rem;color:#888;
+  padding:8px 14px;background:#1e1e36;border-radius:6px;
+  display:inline-block;user-select:none;
+}
+.section summary:hover{color:#bbb;background:#262640}
+.section[open] summary{margin-bottom:8px}
+.section table{margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>每月換股策略</h1>
+<div class="sub">
+  <span class="date">最後更新日期 2026-10-29</span>
+</div>
+<div class="metrics">
+<div class="metric"><div class="metric-label">年化報酬</div><div class="metric-value pos">+33.8%</div></div>
+<div class="metric"><div class="metric-label">夏普比率</div><div class="metric-value">1.40</div></div>
+<div class="metric"><div class="metric-label">最大回撤</div><div class="metric-value neg">-25.1%</div></div>
+<div class="metric"><div class="metric-label">勝率</div><div class="metric-value">49.8%</div></div>
+<div class="metric"><div class="metric-label">總交易</div><div class="metric-value">1,439 筆</div></div>
+<div class="metric"><div class="metric-label">平均報酬</div><div class="metric-value pos">+4.5%</div></div>
+<div class="metric"><div class="metric-label">最大獲利</div><div class="metric-value pos">+184.4%</div></div>
+<div class="metric"><div class="metric-label">最大虧損</div><div class="metric-value neg">-43.1%</div></div>
+</div>
+
+<div class="yearly">
+<div class="yearly-title">近十年報酬</div>
+<div class="yearly-row">
+<div class="yearly-cell" style="background:rgba(219,39,119,0.23)"><div class="yearly-val">+12%</div><div class="yearly-year">2016</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.49)"><div class="yearly-val">+49%</div><div class="yearly-year">2017</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.36)"><div class="yearly-val">+31%</div><div class="yearly-year">2018</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.37)"><div class="yearly-val">+33%</div><div class="yearly-year">2019</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.85)"><div class="yearly-val">+102%</div><div class="yearly-year">2020</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.59)"><div class="yearly-val">+64%</div><div class="yearly-year">2021</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.30)"><div class="yearly-val">+21%</div><div class="yearly-year">2022</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.53)"><div class="yearly-val">+55%</div><div class="yearly-year">2023</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.39)"><div class="yearly-val">+36%</div><div class="yearly-year">2024</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.36)"><div class="yearly-val">+30%</div><div class="yearly-year">2025</div></div>
+<div class="yearly-cell" style="background:rgba(219,39,119,0.46)"><div class="yearly-val">+45%</div><div class="yearly-year">2026</div></div>
+</div>
+</div>
+
+<details class="section monthly-section">
+<summary>每月報酬</summary>
+<div class="monthly">
+<div class="m-row"><div class="m-year">2008</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">5.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-3.5%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div></div>
+<div class="m-row"><div class="m-year">2009</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.3%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.28)">6.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-3.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">6.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.38)">11.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">7.9%</div></div>
+<div class="m-row"><div class="m-year">2010</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-3.2%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.24)">4.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.40)">12.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.25)">-4.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-3.8%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.51)">18.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.30)">7.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.7%</div></div>
+<div class="m-row"><div class="m-year">2011</div><div class="m-cell" style="background:rgba(219,39,119,0.42)">13.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.32)">8.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">10.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-3.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.40)">-12.5%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-3.9%</div><div class="m-cell m-empty"></div></div>
+<div class="m-row"><div class="m-year">2012</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-4.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">3.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-2.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.15)">0.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">6.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">4.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.15)">0.1%</div></div>
+<div class="m-row"><div class="m-year">2013</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">10.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.51)">18.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.28)">6.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">4.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.7%</div></div>
+<div class="m-row"><div class="m-year">2014</div><div class="m-cell" style="background:rgba(219,39,119,0.38)">11.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-3.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.29)">7.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.37)">-11.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.34)">9.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-1.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.37)">-11.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-2.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">5.4%</div></div>
+<div class="m-row"><div class="m-year">2015</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.38)">11.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">6.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-3.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-3.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">4.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.1%</div></div>
+<div class="m-row"><div class="m-year">2016</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-1.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">10.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-4.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.22)">-3.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">7.9%</div></div>
+<div class="m-row"><div class="m-year">2017</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.30)">7.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-4.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-2.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.36)">10.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.57)">21.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.33)">9.3%</div></div>
+<div class="m-row"><div class="m-year">2018</div><div class="m-cell" style="background:rgba(219,39,119,0.35)">10.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-4.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.39)">12.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.31)">8.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.42)">13.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.25)">-5.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-1.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.28)">-6.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.6%</div></div>
+<div class="m-row"><div class="m-year">2019</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">4.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">4.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">3.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.6%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.49)">17.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-1.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.1%</div></div>
+<div class="m-row"><div class="m-year">2020</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.15)">-0.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">3.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.37)">11.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.35)">10.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.62)">23.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">4.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.85)">35.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.42)">13.5%</div></div>
+<div class="m-row"><div class="m-year">2021</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">5.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">5.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.59)">22.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.23)">4.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.34)">9.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.34)">9.8%</div><div class="m-cell" style="background:rgba(74,222,128,0.25)">-5.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">4.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.28)">6.6%</div></div>
+<div class="m-row"><div class="m-year">2022</div><div class="m-cell" style="background:rgba(219,39,119,0.33)">8.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.27)">6.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-2.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.35)">10.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.26)">-5.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">5.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.27)">-5.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.3%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div></div>
+<div class="m-row"><div class="m-year">2023</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">0.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.22)">3.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.42)">13.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">5.0%</div><div class="m-cell" style="background:rgba(219,39,119,0.48)">16.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.35)">9.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-4.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.18)">1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.20)">2.4%</div><div class="m-cell" style="background:rgba(219,39,119,0.26)">5.7%</div></div>
+<div class="m-row"><div class="m-year">2024</div><div class="m-cell" style="background:rgba(74,222,128,0.18)">-1.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.45)">15.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.28)">6.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.44)">14.5%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">5.1%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.2%</div><div class="m-cell" style="background:rgba(74,222,128,0.23)">-4.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.16)">0.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">1.9%</div></div>
+<div class="m-row"><div class="m-year">2025</div><div class="m-cell" style="background:rgba(74,222,128,0.40)">-12.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.25)">5.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.21)">-2.9%</div><div class="m-cell m-empty"></div><div class="m-cell" style="background:rgba(219,39,119,0.21)">2.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.24)">-4.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.17)">1.2%</div><div class="m-cell" style="background:rgba(219,39,119,0.28)">6.7%</div><div class="m-cell" style="background:rgba(219,39,119,0.63)">24.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.21)">3.1%</div><div class="m-cell" style="background:rgba(74,222,128,0.17)">-0.8%</div><div class="m-cell" style="background:rgba(219,39,119,0.30)">7.4%</div></div>
+<div class="m-row"><div class="m-year">2026</div><div class="m-cell" style="background:rgba(219,39,119,0.38)">11.5%</div><div class="m-cell" style="background:rgba(219,39,119,0.19)">2.3%</div><div class="m-cell" style="background:rgba(219,39,119,0.60)">23.0%</div><div class="m-cell" style="background:rgba(74,222,128,0.19)">-1.9%</div><div class="m-cell" style="background:rgba(219,39,119,0.50)">17.6%</div><div class="m-cell" style="background:rgba(219,39,119,0.24)">4.7%</div><div class="m-cell" style="background:rgba(74,222,128,0.16)">-0.4%</div><div class="m-cell" style="background:rgba(74,222,128,0.33)">-8.9%</div><div class="m-cell" style="background:rgba(74,222,128,0.20)">-2.6%</div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div><div class="m-cell m-empty"></div></div>
+<div class="m-row"><div class="m-year"></div><div class="m-cell m-month">Jan</div><div class="m-cell m-month">Feb</div><div class="m-cell m-month">Mar</div><div class="m-cell m-month">Apr</div><div class="m-cell m-month">May</div><div class="m-cell m-month">Jun</div><div class="m-cell m-month">Jul</div><div class="m-cell m-month">Aug</div><div class="m-cell m-month">Sep</div><div class="m-cell m-month">Oct</div><div class="m-cell m-month">Nov</div><div class="m-cell m-month">Dec</div></div>
+</div>
+</details>
+
+<details class="section" open>
+<summary>買進（10 筆）</summary>
+<div class="capital-box">
+  <label class="capital-label">資金
+    <input id="capital-input" type="number" inputmode="numeric" min="0" step="1" placeholder="例如 500">
+    <span class="capital-unit">萬</span>
+  </label>
+  <span id="capital-summary" class="capital-summary">輸入資金後自動計算張數</span>
+</div>
+<table class="buy-table">
+<thead>
+<tr>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
+  <th style="text-align:center">狀態</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">收盤價<span class="sort-ind"></span></th>
+  <th style="text-align:right">張數</th>
+  <th style="text-align:right">權重</th>
+  <th style="text-align:center">買入日</th>
+</tr>
+</thead>
+<tbody>
+<tr data-stock-id="8099" data-close="102.5" data-sort-id="8099" data-sort-price="102.5">
+  <td class="col-name">8099 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">102.5</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="4938" data-close="104.5" data-sort-id="4938" data-sort-price="104.5">
+  <td class="col-name">4938 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">104.5</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="1416" data-close="13.3" data-sort-id="1416" data-sort-price="13.3">
+  <td class="col-name">1416 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">13.3</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="6756" data-close="132.5" data-sort-id="6756" data-sort-price="132.5">
+  <td class="col-name">6756 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">132.5</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="6416" data-close="119.0" data-sort-id="6416" data-sort-price="119.0">
+  <td class="col-name">6416 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">119.0</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="4961" data-close="195.0" data-sort-id="4961" data-sort-price="195.0">
+  <td class="col-name">4961 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">195.0</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="6221" data-close="38.45" data-sort-id="6221" data-sort-price="38.45">
+  <td class="col-name">6221 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">38.5</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="4566" data-close="87.8" data-sort-id="4566" data-sort-price="87.8">
+  <td class="col-name">4566 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">87.8</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="5465" data-close="36.9" data-sort-id="5465" data-sort-price="36.9">
+  <td class="col-name">5465 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">36.9</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-stock-id="4720" data-close="29.25" data-sort-id="4720" data-sort-price="29.25">
+  <td class="col-name">4720 </td>
+  <td class="col-act"><span class="act act-buy">新增</span></td>
+  <td class="col-price"><span class="price">29.2</span></td>
+  <td class="col-shares"><span class="shares dim">—</span></td>
+  <td class="col-wt"><span class="wt">10%</span></td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+
+</tbody>
+</table>
+</details>
+<details class="section" open>
+<summary>賣出（4 筆）</summary>
+<table>
+<thead>
+<tr>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">買入價<span class="sort-ind"></span></th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sort-id="2606" data-sort-price="77.0">
+  <td class="col-name">2606 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-3.5%</span></td>
+  <td class="col-price"><span class="price">77.0</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-09-11</td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-sort-id="2617" data-sort-price="33.45">
+  <td class="col-name">2617 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-5.2%</span></td>
+  <td class="col-price"><span class="price">33.5</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-09-11</td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-sort-id="3219" data-sort-price="86.0">
+  <td class="col-name">3219 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+21.5%</span></td>
+  <td class="col-price"><span class="price">86.0</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-09-11</td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+<tr data-sort-id="3474" data-sort-price="29.65">
+  <td class="col-name">3474 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neutral">—</span></td>
+  <td class="col-price"><span class="price">29.6</span></td>
+  <td class="col-price"><span class="price dim">—</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2016-11-11</td>
+  <td class="col-date">2026-10-30</td>
+</tr>
+
+</tbody>
+</table>
+</details>
+<details class="section">
+<summary>上期賣出（10 筆）</summary>
+<table>
+<thead>
+<tr>
+  <th class="sortable" data-sort-key="id">名稱<span class="sort-ind"></span></th>
+  <th style="text-align:center">狀態</th>
+  <th style="text-align:right">漲跌</th>
+  <th class="sortable" data-sort-key="price" style="text-align:right">買入價<span class="sort-ind"></span></th>
+  <th style="text-align:right">賣出價</th>
+  <th style="text-align:right">權重</th>
+  <th style="text-align:center">買入日</th>
+  <th style="text-align:center">賣出日</th>
+</tr>
+</thead>
+<tbody>
+<tr data-sort-id="3022" data-sort-price="86.6">
+  <td class="col-name">3022 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-2.1%</span></td>
+  <td class="col-price"><span class="price">86.6</span></td>
+  <td class="col-price"><span class="price">82.2</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="2637" data-sort-price="76.0">
+  <td class="col-name">2637 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+28.6%</span></td>
+  <td class="col-price"><span class="price">76.0</span></td>
+  <td class="col-price"><span class="price">98.3</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-06-11</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="2027" data-sort-price="47.5">
+  <td class="col-name">2027 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-1.2%</span></td>
+  <td class="col-price"><span class="price">47.5</span></td>
+  <td class="col-price"><span class="price">47.2</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-11</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="3605" data-sort-price="111.5">
+  <td class="col-name">3605 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret pos">+13.0%</span></td>
+  <td class="col-price"><span class="price">111.5</span></td>
+  <td class="col-price"><span class="price">125.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-11</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="3416" data-sort-price="198.0">
+  <td class="col-name">3416 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-16.2%</span></td>
+  <td class="col-price"><span class="price">198.0</span></td>
+  <td class="col-price"><span class="price">159.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-11</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="5351" data-sort-price="127.0">
+  <td class="col-name">5351 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-12.7%</span></td>
+  <td class="col-price"><span class="price">127.0</span></td>
+  <td class="col-price"><span class="price">111.5</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-13</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="2465" data-sort-price="99.1">
+  <td class="col-name">2465 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-10.8%</span></td>
+  <td class="col-price"><span class="price">99.1</span></td>
+  <td class="col-price"><span class="price">88.9</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-13</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="6913" data-sort-price="150.0">
+  <td class="col-name">6913 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-15.8%</span></td>
+  <td class="col-price"><span class="price">150.0</span></td>
+  <td class="col-price"><span class="price">127.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-13</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="8415" data-sort-price="38.7">
+  <td class="col-name">8415 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-7.6%</span></td>
+  <td class="col-price"><span class="price">38.7</span></td>
+  <td class="col-price"><span class="price">36.0</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-13</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+<tr data-sort-id="1904" data-sort-price="25.3">
+  <td class="col-name">1904 </td>
+  <td class="col-act"><span class="act act-sell">移除</span></td>
+  <td class="col-ret"><span class="ret neg">-0.8%</span></td>
+  <td class="col-price"><span class="price">25.3</span></td>
+  <td class="col-price"><span class="price">25.2</span></td>
+  <td class="col-wt"><span class="wt dim">—</span></td>
+  <td class="col-date">2026-08-13</td>
+  <td class="col-date">2026-09-11</td>
+</tr>
+
+</tbody>
+</table>
+</details>
+</div>
+<script>
+(function () {
+  const input = document.getElementById("capital-input");
+  const summary = document.getElementById("capital-summary");
+  if (!input) return;
+
+  const rows = Array.from(document.querySelectorAll(".buy-table tbody tr[data-stock-id]"));
+  const stocks = rows.map(function (r) {
+    return {
+      id: r.dataset.stockId,
+      close: parseFloat(r.dataset.close) || 0,
+      cell: r.querySelector(".col-shares .shares"),
+    };
+  });
+
+  function resetShares() {
+    stocks.forEach(function (s) {
+      s.cell.textContent = "—";
+      s.cell.classList.add("dim");
+    });
+    summary.textContent = "輸入資金後自動計算張數";
+    summary.classList.remove("active");
+  }
+
+  function calcShares(capital) {
+    const cost = {};
+    stocks.forEach(function (s) {
+      cost[s.id] = s.close * 1.10 * 1000;
+    });
+    const shares = {};
+    stocks.forEach(function (s) { shares[s.id] = 0; });
+
+    let remaining = capital;
+
+    // 階段 1：按每張成本從低到高，能買 1 張就買，盡量買更多檔
+    const sorted = stocks.slice().sort(function (a, b) { return cost[a.id] - cost[b.id]; });
+    const bought = [];
+    sorted.forEach(function (s) {
+      if (cost[s.id] > 0 && remaining >= cost[s.id]) {
+        shares[s.id] = 1;
+        remaining -= cost[s.id];
+        bought.push(s);
+      }
+    });
+
+    // 階段 2：對已買進的股票平均權重加張（每次選投入最少且買得起的）
+    while (true) {
+      let target = null;
+      let minInvest = Infinity;
+      for (let i = 0; i < bought.length; i++) {
+        const s = bought[i];
+        if (remaining < cost[s.id]) continue;
+        const invest = shares[s.id] * cost[s.id];
+        if (invest < minInvest) {
+          minInvest = invest;
+          target = s;
+        }
+      }
+      if (target === null) break;
+      shares[target.id] += 1;
+      remaining -= cost[target.id];
+    }
+
+    return { shares: shares, remaining: remaining, boughtCount: bought.length };
+  }
+
+  function update() {
+    const raw = input.value.trim();
+    if (raw === "") { resetShares(); return; }
+    const wan = parseFloat(raw);
+    if (isNaN(wan) || wan <= 0) { resetShares(); return; }
+
+    const capital = wan * 10000;
+    const result = calcShares(capital);
+
+    stocks.forEach(function (s) {
+      const n = result.shares[s.id];
+      s.cell.textContent = n + " 張";
+      s.cell.classList.toggle("dim", n === 0);
+    });
+
+    const used = capital - result.remaining;
+    const usedWan = (used / 10000).toFixed(2);
+    const remainStr = Math.round(result.remaining).toLocaleString("zh-TW");
+    summary.textContent = "配到 " + result.boughtCount + " 檔　用 " + usedWan + " 萬　剩 " + remainStr + " 元";
+    summary.classList.add("active");
+  }
+
+  input.addEventListener("input", update);
+  resetShares();
+})();
+
+(function () {
+  const tables = document.querySelectorAll("table");
+  tables.forEach(function (table) {
+    const tbody = table.tBodies[0];
+    if (!tbody) return;
+    const headers = table.querySelectorAll("th.sortable");
+    if (!headers.length) return;
+    let currentKey = null;
+    let currentDir = null;
+
+    function readKey(row, key) {
+      const raw = key === "id" ? row.dataset.sortId : row.dataset.sortPrice;
+      const n = parseFloat(raw);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function applySort(key, dir) {
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort(function (a, b) {
+        const av = readKey(a, key);
+        const bv = readKey(b, key);
+        return dir === "asc" ? av - bv : bv - av;
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+      headers.forEach(function (h) {
+        const ind = h.querySelector(".sort-ind");
+        if (!ind) return;
+        ind.classList.remove("asc", "desc");
+        if (h.dataset.sortKey === key) ind.classList.add(dir);
+      });
+    }
+
+    headers.forEach(function (h) {
+      h.addEventListener("click", function () {
+        const key = h.dataset.sortKey;
+        if (key === currentKey) {
+          currentDir = currentDir === "desc" ? "asc" : "desc";
+        } else {
+          currentKey = key;
+          currentDir = "desc";
+        }
+        applySort(currentKey, currentDir);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

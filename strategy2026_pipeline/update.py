@@ -13,7 +13,7 @@ from finlab.backtest import sim
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from dashboard_shared.performance import clean,save,measure
+from dashboard_shared.performance import clean,save,measure,fix_continuing_returns
 from dashboard_shared.positions import position_from_state
 from dashboard_shared.strategies import CONFIGS
 
@@ -25,7 +25,7 @@ DATASETS=['price:收盤價','price:開盤價','price:成交股數','etl:adj_clos
     'security_categories','delisting_announcements']
 
 
-def append_selection(state,get,info,now,end):
+def append_selection(state,get,categories,now,end):
     """The original current-month revenue gate, never replace a saved decision."""
     close,raw=get('etl#adj_close'),get('price#收盤價')
     days=close.index
@@ -40,7 +40,8 @@ def append_selection(state,get,info,now,end):
     if now>=calendar.open_at(calendar.next_session(end.date())):
         raise RuntimeError('Latest price date is stale; refusing to create a decision after its next open.')
     rev,yoy=get('monthly_revenue#當月營收'),get('monthly_revenue#去年同月增減(%)')
-    financial=set(info.loc[info['產業類別'].isin(['金融保險業','金融業']),'stock_id'].astype(str))
+    # FinLab's sector table (the one data.universe uses); company_basic_info omits 2809 and delisted financials.
+    financial=set(categories.loc[categories['category'].isin(['金融保險業','金融業']),'stock_id'].astype(str))
     rows=rev.index[rev.index<=end]
     if not len(rows):
         return
@@ -78,7 +79,7 @@ def run(cached=False):
             data.get(name,force_download=True)
     data.use_local_data_only=True
     get=lambda name:data.get(name.replace('#',':'))
-    info=data.get('company_basic_info')
+    categories=data.get('security_categories')
     close=get('etl#adj_close')
     raw=get('price#收盤價')
     end=min(close.index[-1],raw.index[-1])
@@ -89,7 +90,7 @@ def run(cached=False):
     close=get('etl#adj_close');raw=get('price#收盤價')
     before=json.loads(STATE.read_text(encoding='utf-8'))
     state=json.loads(json.dumps(before))
-    append_selection(state,get,info,now,end)
+    append_selection(state,get,categories,now,end)
     assert all(state['selections'][k]==v for k,v in before['selections'].items())
     config=CONFIGS['2026'];allocation=config['allocation']
     position=position_from_state(state,close.columns,end)
@@ -97,7 +98,7 @@ def run(cached=False):
         fee_ratio=allocation['fee_buy'],tax_ratio=allocation['tax_sell'],stop_loss=None,trade_at_price='open',
         end_date=str(end.date()),upload=False,notification_enable=False,name='每月換股／200元／獲利再投入')
     stats=report.get_stats(riskfree_rate=.02)
-    trades=report.get_trades().copy()
+    trades=fix_continuing_returns(report.get_trades(),get('etl#adj_open'),allocation['fee_buy'],allocation['tax_sell'])
     nav=report.daily_creturn.copy()
     assert str(nav.index[-1].date())==str(end.date())
     perf,years,months,_=measure(nav,trades,stats)
@@ -125,8 +126,9 @@ def run(cached=False):
           '歷史名單含原版重算及鎖定結果，不代表當時均有保存；2026 年 8 月的兩次換股照原紀錄保留。',
           '與 600 元版同用 FinLab 開盤價模擬及缺價處理，未額外模擬滑價、未成交或整張限制。'],
       'metric_sources':{'cagr':'report.get_stats().cagr','sharpe':'report.get_stats().daily_sharpe; riskfree_rate=0.02',
-          'max_drawdown':'report.get_stats().max_drawdown','win_rate':'report.get_stats().win_ratio',
-          'yearly_monthly':'report.get_stats().return_table','trades':'report.get_trades()'}}
+          'max_drawdown':'report.get_stats().max_drawdown','win_rate':'closed trades with return > 0',
+          'yearly_monthly':'report.get_stats().return_table',
+          'trades':'report.get_trades(); kept-stock splits re-priced open-to-open (return_native keeps FinLab value)'}}
     out=ROOT/'strategy2026_native';out.mkdir(exist_ok=True)
     save(out/'data.json',payload);save(out/'native_stats.json',stats)
     nav.to_csv(out/'nav.csv',encoding='utf-8-sig');trades.to_csv(out/'trades.csv',index=False,encoding='utf-8-sig')

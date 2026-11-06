@@ -39,7 +39,6 @@ jobs:
         run: |
           python -m unittest discover -s watch2_pipeline -p 'test_*.py'
           python -m unittest discover -s dashboard_shared -p 'test_*.py'
-          node --test dashboard_shared/test_*.cjs
       - name: Update from one FinLab report
         env:
           FINLAB_REFRESH_TOKEN: ${{ secrets.FINLAB_REFRESH_TOKEN }}
@@ -52,6 +51,9 @@ jobs:
         run: |
           python watch2_pipeline/build.py
           python watch2_pipeline/verify.py
+          # Page tests read watch2/index.html, so run them on the page just built:
+          # the old Auto-Trade-Executor publisher may have pushed a legacy page over it.
+          node --test dashboard_shared/test_*.cjs
       - name: Preserve decisions and native report
         run: |
           git config user.name 'github-actions[bot]'

@@ -27,6 +27,25 @@ def save(path,value):
     path.write_text(json.dumps(clean(value),ensure_ascii=False,indent=2,allow_nan=False),encoding='utf-8')
 
 
+def fix_continuing_returns(trades,adj_open,fee,tax):
+    """Re-price trades that FinLab split at a rebalance while the stock was kept.
+
+    FinLab values the first part at the rebalance day's close although the second part
+    starts at that day's open, so the open-to-close move is counted in both. Those parts
+    are re-priced open-to-open with FinLab's own fee formula, which reproduces FinLab
+    exactly on ordinary trades. The native value stays in return_native."""
+    trades=trades.copy()
+    trades['return_native']=trades['return']
+    adj_open=pd.DataFrame(adj_open)
+    ids=trades['stock_id'].astype(str)
+    starts=set(zip(ids,trades['entry_date']))
+    for i in trades.index[[(s,d) in starts for s,d in zip(ids,trades['exit_date'])]]:
+        sid=ids[i]
+        buy,sell=adj_open.at[trades.at[i,'entry_date'],sid],adj_open.at[trades.at[i,'exit_date'],sid]
+        trades.at[i,'return']=sell/buy*(1-fee)*(1-fee-tax)-1
+    return trades
+
+
 def measure(nav,trades,native_stats=None):
     """Measure supplied net NAV; never change orders, sizing or the engine."""
     metric=metrics_from_nav(nav)
@@ -41,8 +60,8 @@ def measure(nav,trades,native_stats=None):
     assert all(abs(stats[k]-v)<1e-10 for k,v in core.items())
     closed=trades.loc[trades.entry_date.notna() & trades.exit_date.notna()]
     valid=closed['return'].dropna()
-    # Preserve FinLab's own closed-trade win ratio for native Report inputs.
-    win=stats['win_ratio'] if native_stats is not None else (float((valid>0).mean()) if len(valid) else None)
+    # From the same trade returns as the cards; FinLab's win_ratio uses the unfixed split trades.
+    win=float((valid>0).mean()) if len(valid) else None
     perf={'cagr':stats['cagr'],'sharpe':stats['daily_sharpe'],'max_drawdown':stats['max_drawdown'],
           'win_rate':win,'closed_trades':len(closed),'valid_closed_trades':len(valid),
           'avg_return':valid.mean(),'max_gain':valid.max(),'max_loss':valid.min(),

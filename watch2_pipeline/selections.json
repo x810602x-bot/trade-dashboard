@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "strategy_version": "watch2-fixed10-v1",
+  "strategy_version": "watch2-fixed10-v2",
   "live_from": "2026-10-12",
   "historical_note": "2026-09-10以前為已核對的研究回測名單；不是當年逐日公布紀錄。",
   "selections": {
@@ -87,16 +87,34 @@
     },
     "2009-05-11": {
       "picks": [
-        "2854",
         "3041",
         "3293",
-        "6022",
         "6120",
         "6146",
         "8042",
         "8933"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "2854",
+          "3041",
+          "3293",
+          "6022",
+          "6120",
+          "6146",
+          "8042",
+          "8933"
+        ],
+        "removed": [
+          "2854",
+          "6022"
+        ],
+        "added": [],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2009-06-10": {
       "picks": [],
@@ -118,10 +136,23 @@
     "2009-08-10": {
       "picks": [
         "1809",
-        "2823",
         "8255"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "1809",
+          "2823",
+          "8255"
+        ],
+        "removed": [
+          "2823"
+        ],
+        "added": [],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2009-09-10": {
       "picks": [
@@ -371,12 +402,26 @@
     },
     "2011-03-10": {
       "picks": [
-        "2809",
         "3519",
         "3556",
         "3615"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "2809",
+          "3519",
+          "3556",
+          "3615"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2011-04-11": {
       "picks": [
@@ -589,8 +634,8 @@
     "2013-02-18": {
       "picks": [
         "2059",
+        "2206",
         "2428",
-        "2809",
         "3303",
         "3450",
         "3556",
@@ -599,7 +644,30 @@
         "5534",
         "9914"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "2059",
+          "2428",
+          "2809",
+          "3303",
+          "3450",
+          "3556",
+          "3587",
+          "5306",
+          "5534",
+          "9914"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [
+          "2206"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2013-03-11": {
       "picks": [
@@ -709,9 +777,9 @@
     "2013-10-11": {
       "picks": [
         "1589",
+        "2311",
         "2395",
         "2459",
-        "2823",
         "3057",
         "3705",
         "6197",
@@ -719,7 +787,30 @@
         "8916",
         "8936"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "1589",
+          "2395",
+          "2459",
+          "2823",
+          "3057",
+          "3705",
+          "6197",
+          "8076",
+          "8916",
+          "8936"
+        ],
+        "removed": [
+          "2823"
+        ],
+        "added": [
+          "2311"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2013-11-11": {
       "picks": [
@@ -750,17 +841,40 @@
     "2014-01-10": {
       "picks": [
         "1512",
-        "2823",
         "3452",
         "3519",
         "3535",
         "3579",
+        "3662",
         "3686",
         "3691",
         "5263",
         "5457"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "1512",
+          "2823",
+          "3452",
+          "3519",
+          "3535",
+          "3579",
+          "3686",
+          "3691",
+          "5263",
+          "5457"
+        ],
+        "removed": [
+          "2823"
+        ],
+        "added": [
+          "3662"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2014-02-10": {
       "picks": [
@@ -837,7 +951,7 @@
     },
     "2014-07-10": {
       "picks": [
-        "2856",
+        "2402",
         "3048",
         "3360",
         "3390",
@@ -848,7 +962,30 @@
         "6203",
         "8064"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "2856",
+          "3048",
+          "3360",
+          "3390",
+          "3484",
+          "3490",
+          "4153",
+          "6104",
+          "6203",
+          "8064"
+        ],
+        "removed": [
+          "2856"
+        ],
+        "added": [
+          "2402"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2014-08-11": {
       "picks": [
@@ -1115,14 +1252,37 @@
         "1906",
         "2360",
         "2439",
-        "2809",
         "3018",
         "3163",
         "3324",
         "3338",
+        "8358",
         "8436"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "1569",
+          "1906",
+          "2360",
+          "2439",
+          "2809",
+          "3018",
+          "3163",
+          "3324",
+          "3338",
+          "8436"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [
+          "8358"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2016-09-10": {
       "picks": [
@@ -1247,7 +1407,7 @@
       "picks": [
         "1597",
         "2441",
-        "2809",
+        "3227",
         "3236",
         "3515",
         "3563",
@@ -1256,22 +1416,68 @@
         "6409",
         "8155"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "1597",
+          "2441",
+          "2809",
+          "3236",
+          "3515",
+          "3563",
+          "3580",
+          "4966",
+          "6409",
+          "8155"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [
+          "3227"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2017-07-10": {
       "picks": [
         "1595",
         "2031",
-        "2809",
         "3025",
         "3512",
         "3563",
         "4912",
         "6169",
         "8107",
-        "8155"
+        "8155",
+        "9941"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "1595",
+          "2031",
+          "2809",
+          "3025",
+          "3512",
+          "3563",
+          "4912",
+          "6169",
+          "8107",
+          "8155"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [
+          "9941"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2017-08-10": {
       "picks": [
@@ -2204,13 +2410,33 @@
         "2383",
         "2415",
         "2458",
-        "2809",
         "3548",
         "3693",
         "6114",
         "8081"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "2020",
+          "2329",
+          "2383",
+          "2415",
+          "2458",
+          "2809",
+          "3548",
+          "3693",
+          "6114",
+          "8081"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2023-09-11": {
       "picks": [
@@ -2509,17 +2735,40 @@
     "2025-08-11": {
       "picks": [
         "2368",
-        "2809",
         "3167",
         "5439",
         "5536",
         "5607",
+        "6274",
         "6667",
         "8033",
         "8038",
         "8271"
       ],
-      "source": "reviewed_historical_baseline"
+      "source": "reviewed_historical_baseline",
+      "correction": {
+        "on": "2026-11-04",
+        "version": "watch2-fixed10-v2",
+        "previous_picks": [
+          "2368",
+          "2809",
+          "3167",
+          "5439",
+          "5536",
+          "5607",
+          "6667",
+          "8033",
+          "8038",
+          "8271"
+        ],
+        "removed": [
+          "2809"
+        ],
+        "added": [
+          "6274"
+        ],
+        "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股"
+      }
     },
     "2025-09-10": {
       "picks": [
@@ -2723,5 +2972,27 @@
       "execution_date": "2026-10-13",
       "inputs_sha256": "9a5b95dd479dc9264fa2f52dc96d616d613172d424da887f4110829e84ad4fbb"
     }
-  }
+  },
+  "corrections": [
+    {
+      "on": "2026-11-04",
+      "version": "watch2-fixed10-v2",
+      "months": [
+        "2009-05-11",
+        "2009-08-10",
+        "2011-03-10",
+        "2013-02-18",
+        "2013-10-11",
+        "2014-01-10",
+        "2014-07-10",
+        "2016-08-10",
+        "2017-06-12",
+        "2017-07-10",
+        "2023-08-10",
+        "2025-08-11"
+      ],
+      "reason": "排除金融保險業改用 FinLab security_categories；原用 company_basic_info 缺 2809 京城銀及已下市金融股",
+      "note": "只替換含金融股的月份；換股日期、其餘月份及 2026-10-12 起的實際決策不變。"
+    }
+  ]
 }

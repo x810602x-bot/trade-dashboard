@@ -14,10 +14,10 @@ from finlab.backtest import sim
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from dashboard_shared.performance import clean, save, measure
+from dashboard_shared.performance import clean, save, measure, fix_continuing_returns
 from dashboard_shared.positions import position_from_state
 STATE = ROOT/'watch2_pipeline/selections.json'
-VERSION = 'watch2-fixed10-v1'
+VERSION = 'watch2-fixed10-v2'
 START = '2008-03-10'
 TZ = ZoneInfo('Asia/Taipei')
 DATASETS = [
@@ -57,8 +57,9 @@ def append_selection(state, close, raw, now):
     yoy = data.get('monthly_revenue:去年同月增減(%)').loc[:signal]
     if len(rev) == 0 or rev.index[-1].to_period('M') != signal.to_period('M'):
         raise RuntimeError('Current revenue table is unavailable; do not reuse the previous month as current revenue.')
-    info = data.get('company_basic_info')
-    financial = set(info.loc[info['產業類別'].isin(['金融保險業','金融業']), 'stock_id'].astype(str))
+    # FinLab's sector table (the one data.universe uses); company_basic_info omits 2809 and delisted financials.
+    categories = data.get('security_categories')
+    financial = set(categories.loc[categories['category'].isin(['金融保險業','金融業']), 'stock_id'].astype(str))
     pool = close.columns.intersection(rev.columns).difference(financial)
     c, r, y = close.loc[:signal,pool], rev[pool], yoy[pool]
     amount = data.get('price:成交金額').loc[:signal,pool]
@@ -107,11 +108,11 @@ def run(reference=False):
     # Capture each public API once before rendering; never recalculate the
     # website's former fixed-initial-capital profit statistics.
     stats = report.get_stats(riskfree_rate=.02)
-    trades = report.get_trades().copy()
+    trades = fix_continuing_returns(report.get_trades(), data.get('etl:adj_open'), .000475, .003)
     nav = report.daily_creturn.copy()
     assert str(nav.index[-1].date()) == str(end.date())
     if reference:
-        expected = {'cagr':.3401941656346643,'daily_sharpe':1.26335788772093,'max_drawdown':-.305252992763152}
+        expected = {'cagr':.34321933470795263,'daily_sharpe':1.2717572059612305,'max_drawdown':-.3052529927631521}
         assert all(abs(stats[k]-v)<1e-10 for k,v in expected.items()), {k:stats[k] for k in expected}
     out = ROOT/'.runtime/reference_result' if reference else ROOT/'watch2_native'
     out.mkdir(parents=True,exist_ok=True)
@@ -146,8 +147,8 @@ def run(reference=False):
         'limitations':['歷史名單沿用已核對的研究回測；2026/10/12起保存當次決策，不回改名單。',
                        '回測以開盤價模擬，未額外計入滑價；缺價交易請見完整報表。'],
         'metric_sources':{'cagr':'report.get_stats().cagr','sharpe':'report.get_stats().daily_sharpe; riskfree_rate=0.02',
-            'max_drawdown':'report.get_stats().max_drawdown','win_rate':'report.get_stats().win_ratio',
-            'trade_cards':'report.get_trades(); closed rows; average/max/min omit missing returns',
+            'max_drawdown':'report.get_stats().max_drawdown','win_rate':'closed trades with return > 0',
+            'trade_cards':'report.get_trades(); closed rows; kept-stock splits re-priced open-to-open (return_native keeps FinLab value); average/max/min omit missing returns',
             'yearly_monthly':'report.get_stats().return_table'},
     }
     save(out/'data.json',payload)

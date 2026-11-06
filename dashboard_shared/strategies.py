@@ -1,7 +1,7 @@
 """Page-specific rules; calculation and UI are shared."""
 CONFIGS={
  'watch2':{
-  'strategy_version':'watch2-fixed10-v1','title':'每月換股策略（固定日期・10 檔）',
+  'strategy_version':'watch2-fixed10-v2','title':'每月換股策略（固定日期・10 檔）',
   'rules':['股價 ≤ 600 元｜5 日均成交金額 > 3,000 萬｜排除金融保險業',
     '每月 10 號（含）後首個交易日晚上選股，下一交易日開盤換股',
     '最多 10 檔，每檔換股目標 10%；續留股也重新配置，不足額留現金，獲利再投入'],
@@ -10,7 +10,7 @@ CONFIGS={
   'allocation':{'mode':'rebalance','capital_label':'換股時帳戶總資產','weight':.1,'fee_buy':.000475,'fee_sell':.000475,'tax_sell':.003,'budget_includes_fee':True},
  },
  '2026':{
-  'strategy_version':'2026-reinvest-v2','title':'每月換股策略（200 元・獲利再投入）',
+  'strategy_version':'2026-reinvest-v3','title':'每月換股策略（200 元・獲利再投入）',
   'rules':['股價 ≤ 200 元｜5 日均成交量 > 50 萬股｜排除金融保險業',
     '每月 10 號後等營收條件到齊；未齊最多順延 5 個交易日，名單鎖定後下一交易日開盤換股',
     '最多 10 檔，每檔換股目標 10%；續留股也重新配置，不足額留現金，獲利再投入'],

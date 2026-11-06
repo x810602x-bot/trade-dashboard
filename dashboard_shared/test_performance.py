@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import unittest
 import pandas as pd
-from dashboard_shared.performance import measure
+from dashboard_shared.performance import measure, fix_continuing_returns
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -14,6 +14,16 @@ class MeasurementTests(unittest.TestCase):
         self.assertEqual(p['closed_trades'],0)
         self.assertEqual(p['cagr'],0)
         self.assertAlmostEqual(p['max_drawdown'],-.5)
+
+    def test_kept_stock_split_is_repriced_open_to_open(self):
+        days=pd.to_datetime(['2009-09-11','2009-10-13','2009-11-11'])
+        adj_open=pd.DataFrame({'2499':[62.19,68.41,63.19],'2330':[10.,11.,12.]},index=days)
+        trades=pd.DataFrame({'stock_id':['2499','2499','2330'],'entry_date':[days[0],days[1],days[0]],
+            'exit_date':[days[1],days[2],days[2]],'return':[.1674,-.0796,.25]})
+        fixed=fix_continuing_returns(trades,adj_open,.000475,.003)
+        self.assertAlmostEqual(fixed.at[0,'return'],68.41/62.19*(1-.000475)*(1-.000475-.003)-1)
+        self.assertEqual(fixed['return'][1:].tolist(),[-.0796,.25])
+        self.assertEqual(fixed['return_native'].tolist(),[.1674,-.0796,.25])
 
     def test_watch2_all_saved_stats_stay_identical(self):
         folder=ROOT/'watch2_native'

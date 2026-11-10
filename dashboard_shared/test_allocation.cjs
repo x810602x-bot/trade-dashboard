@@ -33,6 +33,18 @@ test('50 萬、200 元版四檔：一張買不起也用零股補到約 10%，合
   result.rows.forEach(r=>assert(r.cost<=50000 && r.cost>50000-r.close*1.01,`${r.stock_id} 應接近每檔 5 萬`));
   assert(result.used>199000 && result.used<=200000);
 });
+test('只用整張：四捨五入到最近的整張，並回報每檔實際比例',()=>{
+  const settings={...rebalance,fee_buy:.001425};
+  const result=allocate(500000,[{stock_id:'1416',close:18.35},{stock_id:'2412',close:159.5},{stock_id:'2468',close:66},{stock_id:'6112',close:57}],settings,true);
+  assert.deepEqual(result.rows.map(x=>x.shares),[3000,0,1000,1000]);
+  assert.deepEqual(result.rows.map(x=>Math.round(x.weight*1000)/10),[11,0,13.2,11.4]);
+  assert(Math.abs(result.used/500000-.356)<.001);
+});
+test('只用整張：往上進位也不會花超過手上的現金',()=>{
+  const result=allocate(1000000,Array.from({length:10},(_,i)=>({stock_id:String(i),close:66})),rebalance,true);
+  assert.deepEqual(result.rows.map(x=>x.shares),[2000,2000,2000,2000,2000,2000,2000,1000,0,0]);
+  assert(result.used<=1000000 && result.remaining>=0);
+});
 test('不把多餘資金塞入便宜股，名單順序不變',()=>{
   const result=allocate(100000,[{stock_id:'expensive',close:200},{stock_id:'cheap',close:5}],rebalance);
   assert.deepEqual(result.rows.map(x=>x.shares),[49,1999]);
@@ -43,7 +55,7 @@ test('張數寫法：整張加零股',()=>{
   assert.equal(lotText(2720),'2 張 720 股');
   assert.equal(lotText(6000),'6 張');
   assert.equal(lotText(756),'756 股');
-  assert.equal(lotText(0),'0 股');
+  assert.equal(lotText(0),'0 張');
   assert.equal(lotText(null),'缺參考價');
   assert.equal(lotText(undefined),'缺參考價');
 });

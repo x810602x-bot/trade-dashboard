@@ -18,7 +18,7 @@ function render(data,now=Date.parse('2026-11-10T12:00:00+08:00')){
  const context=vm.createContext({document,StrategyAllocation,Date:{now:()=>now,parse:Date.parse}});
  vm.runInContext(source,context);
  assert.equal(vm.runInContext('JSON.stringify(d)',context),JSON.stringify(data),'Rendering must not change strategy data');
- return {elements,get shares(){return lotCells();},input(value){elements.get('capital').input({target:{value}});}};
+ return {elements,get shares(){return lotCells();},input(value){const box=elements.get('capital');box.value=value;box.input();},wholeLots(on){const box=elements.get('whole-lots');box.checked=on;box.change();}};
 }
 
 test('本期待賣與上期成交分開，未成交不顯示回測的參考賣價',()=>{
@@ -130,4 +130,22 @@ test('買進張數沿用同一份配置計算，清空本金即清除舊張數',
  view.input('');
  assert.equal(view.shares[0].textContent,'—');
  assert.equal(view.elements.get('allocation-summary').textContent,'');
+});
+
+test('勾選只用整張：張數改成四捨五入的整張，並打開試算表看比例',()=>{
+ const data=fixture();
+ data.latest_selection={picks:['A','B'],execution_date:'2026-11-11'};
+ data.holdings=[];
+ data.pending=[{stock_id:'A',close:18.35},{stock_id:'B',close:66}];
+ data.allocation_prices={A:{close:18.35},B:{close:66}};
+ const view=render(data);
+ view.input('50');
+ assert.deepEqual(view.shares.map(c=>c.textContent),['2 張 720 股','756 股'].map((t,i)=>StrategyAllocation.lotText(StrategyAllocation.allocate(500000,[{close:18.35},{close:66}],data.config.allocation).rows[i].shares)));
+ view.wholeLots(true);
+ assert.deepEqual(view.shares.map(c=>c.textContent),['3 張','1 張']);
+ assert.equal(view.elements.get('allocation-section').open,true);
+ assert.match(view.elements.get('allocation').innerHTML,/<th>占總資產<\/th>/);
+ assert.match(view.elements.get('allocation-summary').textContent,/占總資產/);
+ view.wholeLots(false);
+ assert.notEqual(view.shares[0].textContent,'3 張');
 });

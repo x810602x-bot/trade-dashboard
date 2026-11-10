@@ -72,7 +72,7 @@ test('教學按鈕開關說明層，引用的圖片都存在',()=>{
  help.click({target:help});
  assert.equal(help.hidden,true,'點旁邊空白處會關閉');
  const images=[...template.matchAll(/src="\.\.\/assets\/tutorial\/([^"]+)"/g)].map(m=>m[1]);
- assert.equal(images.length,4);
+ assert.equal(images.length,3);
  images.forEach(name=>assert(fs.existsSync(path.join(__dirname,'tutorial',name)),`Missing ${name}`));
 });
 

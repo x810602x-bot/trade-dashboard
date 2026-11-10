@@ -19,16 +19,11 @@
 </main>
 <div class="help" id="help" hidden><div class="help-box" role="dialog" aria-modal="true" aria-labelledby="help-title">
 <button class="help-close" id="help-close" type="button" aria-label="關閉">×</button>
-<h2 id="help-title">換股日怎麼操作</h2>
-<p class="note">圖片是範例：甲～庚是假設的股票，帳戶總資產假設 1,000 萬。實際以當天網頁為準。</p>
+<h2 id="help-title">換股日只要 3 步</h2>
 <ol class="help-steps">
-<li><b>選股日晚上 9 點後打開網頁，確認新名單已鎖定。</b>「本期選股日」是今天、「更新時間」是今晚 21:00 以後、而且不是紅字。200 元版如果營收還沒到齊會順延，選股日不是今天就代表今晚不用換股。<img src="../assets/tutorial/1-check-update.png" alt="標題下方的本期選股日與更新時間" loading="lazy"></li>
-<li><b>看三個區塊。</b><br>賣出：這次沒選到，明天開盤全部賣掉。<br>持倉：續留，不用全賣，但要調回總資產的 10%。<br>買進：新選進來，明天開盤買。<img src="../assets/tutorial/2-three-lists.png" alt="持倉、買進、賣出三個區塊" loading="lazy"></li>
-<li><b>輸入帳戶總資產，看每檔目標張數。</b>在「買進」區填「股票市值＋現金」（單位萬元），持倉表和買進表就會直接顯示每檔目標張數。<img src="../assets/tutorial/3-target-lots.png" alt="輸入總資產後，持倉表與買進表顯示目標張數" loading="lazy"></li>
-<li><b>算出明天的委託單。</b><br>賣出區：手上張數全部賣。<br>持倉區：目標張數減手上張數，正的買、負的賣。例：乙公司目標 6 張、手上 8 張，就賣 2 張。<br>買進區：照目標張數買。</li>
-<li><b>換股日早上 8 點再看一次。</b>「更新時間」如果變成紅字加警告，代表昨晚沒有更新成功，先不要下單。<img src="../assets/tutorial/4-stale-warning.png" alt="更新時間變紅並出現警告" loading="lazy"></li>
-<li><b>8:30～9:00 盤前同時下賣單和買單。</b>用市價，或賣單掛跌停、買單掛漲停，讓它們在 9:00 開盤成交，跟回測用開盤價一致。同一天買賣的交割款會互相抵掉，只要準備差額。</li>
-<li><b>換股日晚上網頁更新後確認。</b>買進、賣出變成 0 筆，全部股票都在「持倉」，剛賣掉的移到「上期賣出」。之後到下個月選股日都不用動。</li>
-</ol></div></div>
+<li><b>賣出：表上的股票全部賣掉。</b>手上有幾張就賣幾張。<img src="../assets/tutorial/1-sell.png" alt="賣出表：全部賣掉" loading="lazy"></li>
+<li><b>買進：先填帳戶總資產，再照「張數」買。</b>總資產＝股票＋現金，單位是萬元（1000 萬就填 1000）。<img src="../assets/tutorial/2-buy.png" alt="填好總資產後，買進表顯示要買的張數" loading="lazy"></li>
+<li><b>持倉：把手上的張數調成「目標張數」。</b>手上比較多就賣掉多的，一樣就不動，比較少就補買。例：目標 6 張、手上 8 張，就賣 2 張。<img src="../assets/tutorial/3-hold.png" alt="持倉表的目標張數" loading="lazy"></li>
+</ol><p class="note">圖中的股票是範例。</p></div></div>
 <script id="strategy-data" type="application/json">__PAYLOAD_JSON__</script>
 <script src="../assets/allocation.js?v=__ASSET_VERSION__"></script><script src="../assets/dashboard.js?v=__ASSET_VERSION__"></script></body></html>

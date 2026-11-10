@@ -41,6 +41,15 @@ class MeasurementTests(unittest.TestCase):
         self.assertEqual(fixed['return'][1:].tolist(),[-.0796,.25])
         self.assertEqual(fixed['return_native'].tolist(),[.1674,-.0796,.25])
 
+    def test_trade_pending_for_next_open_is_left_alone(self):
+        days=pd.to_datetime(['2026-10-13','2026-11-10'])
+        adj_open=pd.DataFrame({'1303':[50.,52.],'6870':[400.,440.]},index=days)
+        trades=pd.DataFrame({'stock_id':['1303','6870'],'entry_date':[days[0],pd.NaT],
+            'exit_date':[pd.NaT,pd.NaT],'return':[.04,None]})
+        fixed=fix_continuing_returns(trades,adj_open,.000475,.003)
+        self.assertEqual(fixed.at[0,'return'],.04)
+        self.assertTrue(pd.isna(fixed.at[1,'return']))
+
     def test_watch2_all_saved_stats_stay_identical(self):
         folder=ROOT/'watch2_native'
         nav=pd.read_csv(folder/'nav.csv',index_col=0,parse_dates=True).iloc[:,0]

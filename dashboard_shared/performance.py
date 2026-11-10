@@ -53,7 +53,8 @@ def fix_continuing_returns(trades,adj_open,fee,tax):
     trades['return_native']=trades['return']
     adj_open=pd.DataFrame(adj_open)
     ids=trades['stock_id'].astype(str)
-    starts=set(zip(ids,trades['entry_date']))
+    # Trades pending for the next open have neither date yet; they are no split.
+    starts={(s,d) for s,d in zip(ids,trades['entry_date']) if pd.notna(d)}
     for i in trades.index[[(s,d) in starts for s,d in zip(ids,trades['exit_date'])]]:
         sid=ids[i]
         buy,sell=adj_open.at[trades.at[i,'entry_date'],sid],adj_open.at[trades.at[i,'exit_date'],sid]

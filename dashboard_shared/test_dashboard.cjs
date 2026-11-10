@@ -122,9 +122,9 @@ test('買進張數沿用同一份配置計算，清空本金即清除舊張數',
  const view=render(data);
  view.input('600');
  const expected=StrategyAllocation.allocate(6000000,[{stock_id:'keep',close:100},{stock_id:'new',close:50}],data.config.allocation);
- assert.equal(view.shares[0].textContent,`${expected.rows[1].lots} 張`);
+ assert.equal(view.shares[0].textContent,StrategyAllocation.lotText(expected.rows[1].shares));
  assert.match(view.elements.get('holdings').innerHTML,/<th>目標張數<\/th>/);
- assert.equal(view.shares.find(c=>c.dataset.stockId==='keep').textContent,`${expected.rows[0].lots} 張`,'續留股在持倉表顯示目標張數');
+ assert.equal(view.shares.find(c=>c.dataset.stockId==="keep").textContent,StrategyAllocation.lotText(expected.rows[0].shares),'續留股在持倉表顯示目標張數');
  assert.doesNotMatch(view.elements.get('sells').innerHTML,/目標張數/);
  assert.match(view.elements.get('allocation').innerHTML,/keep/);
  view.input('');

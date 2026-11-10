@@ -51,7 +51,7 @@ const allocationConfig=config.allocation;
 document.getElementById('capital-label').textContent=allocationConfig.capital_label;
 document.getElementById('allocation-note').textContent=allocationConfig.mode==='keep'
  ?'輸入原始投入本金，以每檔初始本金 10% 的股款估算新建倉張數。已持有的續留股維持原張數，不照此表增減；獲利不會自動加大新倉。參考收盤價不等於實際成交價。'
- :'輸入換股時帳戶總資產，每檔以 10% 含買入手續費估算整張目標。續留股也調回目標；實際買賣張數需自行扣除現有持股。參考收盤價不等於實際成交價。';
+ :'輸入換股時帳戶總資產，每檔以 10% 含買入手續費估算目標張數，不足一張的部分用零股補。續留股也調回目標；實際買賣張數需自行扣除現有持股。零股要用盤中零股下單，成交價會跟開盤價有些差距；參考收盤價也不等於實際成交價。';
 document.getElementById('strategy-detail').textContent=`${config.detail} 夏普使用每日報酬及年無風險利率 2%。年度與月度報酬來自同一條淨值。交易筆數、勝率及單筆極值只計已平倉交易。買賣手續費各 ${pct(allocationConfig.fee_buy,4).replace('+','')}，賣出證交稅 ${pct(allocationConfig.tax_sell,1).replace('+','')}。`;
 document.querySelectorAll('button.sort').forEach(b=>b.onclick=()=>{const body=b.closest('table').tBodies[0];const direction=b.dataset.desc==='1'?-1:1;b.dataset.desc=direction===1?'1':'0';[...body.rows].sort((a,c)=>direction*a.dataset.id.localeCompare(c.dataset.id,'zh-TW',{numeric:true})).forEach(r=>body.append(r));});
 document.getElementById('capital').addEventListener('input',e=>{
@@ -61,9 +61,9 @@ document.getElementById('capital').addEventListener('input',e=>{
  const byId=new Map([...d.holdings,...d.pending].map(r=>[r.stock_id,r]));
  const stocks=d.latest_selection.picks.map(id=>{const held=byId.get(id),quote=d.allocation_prices?.[id];return {stock_id:id,name:held?.name||quote?.name||'',close:quote?.close??held?.close};});
  const result=StrategyAllocation.allocate(capital,stocks,allocationConfig);
- const lotsById=new Map(result.rows.map(r=>[r.stock_id,r.lots]));
- document.querySelectorAll('.buy-shares').forEach(cell=>{const lots=lotsById.get(cell.dataset.stockId);cell.textContent=lots==null?'缺參考價':`${lots} 張`;});
- const rows=result.rows.map(r=>`<tr><td>${esc(r.stock_id)} ${esc(r.name)}</td><td>${num(r.budget)}</td><td>${num(r.close)}</td><td>${r.lots===null?'缺參考價':`${r.lots} 張`}</td></tr>`);
- box.innerHTML=`<table><thead><tr><th>股票</th><th>${allocationConfig.budget_includes_fee?'每檔預算（含費）':'每檔股款上限'}</th><th>參考價</th><th>${allocationConfig.mode==='keep'?'新建倉參考':'整張目標'}</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
- summary.textContent=`${allocationConfig.mode==='keep'?'若這次全部新建倉：':''}估計使用 ${num(result.used)} 元（含買入手續費），剩餘現金 ${num(result.remaining)} 元。買不起一張或不足十檔的資金保留，不集中到其他股票。${result.missingPrice?' 有股票缺參考價，合計尚未包含該股。':''}`;
+ const sharesById=new Map(result.rows.map(r=>[r.stock_id,r.shares])), lotText=StrategyAllocation.lotText;
+ document.querySelectorAll('.buy-shares').forEach(cell=>{cell.textContent=lotText(sharesById.get(cell.dataset.stockId));});
+ const rows=result.rows.map(r=>`<tr><td>${esc(r.stock_id)} ${esc(r.name)}</td><td>${num(r.budget)}</td><td>${num(r.close)}</td><td>${lotText(r.shares)}</td></tr>`);
+ box.innerHTML=`<table><thead><tr><th>股票</th><th>${allocationConfig.budget_includes_fee?'每檔預算（含費）':'每檔股款上限'}</th><th>參考價</th><th>${allocationConfig.mode==='keep'?'新建倉參考':'目標張數'}</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+ summary.textContent=`${allocationConfig.mode==='keep'?'若這次全部新建倉：':''}估計使用 ${num(result.used)} 元（含買入手續費），剩餘現金 ${num(result.remaining)} 元。不足十檔的資金留現金，不集中到其他股票。${result.missingPrice?' 有股票缺參考價，合計尚未包含該股。':''}`;
 });

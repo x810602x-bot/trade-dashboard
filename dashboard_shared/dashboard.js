@@ -7,6 +7,10 @@ const ret=(v,n=2)=>`<span class="${v>0?'pos':v<0?'neg':'dim'}">${pct(v,n)}</span
 const num=v=>v==null?'—':Number(v).toLocaleString('zh-TW',{maximumFractionDigits:2});
 const date=v=>v?String(v).slice(0,10):'—';
 document.getElementById('title').textContent=config.title;
+const help=document.getElementById('help');
+document.getElementById('help-open').addEventListener('click',()=>{help.hidden=false;});
+document.getElementById('help-close').addEventListener('click',()=>{help.hidden=true;});
+help.addEventListener('click',e=>{if(e.target===help)help.hidden=true;});
 document.getElementById('rules').innerHTML=config.rules.map(esc).join('<br>');
 document.getElementById('date').textContent=`資料截至 ${d.date}｜回測自 ${d.start}｜本期選股日 ${d.selection_date}`;
 const stale=Boolean(d.stale_after)&&Date.now()>=Date.parse(d.stale_after), updated=document.getElementById('updated');

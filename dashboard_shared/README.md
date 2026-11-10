@@ -2,7 +2,7 @@
 
 `performance.py` 用 FinLab 的 `metrics_from_nav` 計算完整淨值的 CAGR、每日夏普及最大回撤；年、月報酬採 FinLab 隨附的 `PerformanceStats`。原生 report 的輸出會核對為相同數字。交易卡片只使用已平倉紀錄。
 
-`template.html`、`dashboard.js`、`dashboard.css`、`allocation.js` 各只有一份。每個頁面差異集中於 `strategies.py`，本金不會改股票名單；不足一張／不足十檔的餘額不集中投入其他股票。缺價格明確顯示，不拿零元代替。
+`template.html`、`dashboard.js`、`dashboard.css`、`allocation.js` 各只有一份。右上「教學」說明層寫在 `template.html`，圖片在 `tutorial/`，是用假設股票（甲～庚、總資產 1,000 萬）做的範例畫面；畫面或換股規則改動時要重截。每個頁面差異集中於 `strategies.py`，本金不會改股票名單；不足一張／不足十檔的餘額不集中投入其他股票。缺價格明確顯示，不拿零元代替。
 
 | 規則         | 2026 原版                 | watch2                           |
 | ------------ | ------------------------- | -------------------------------- |

@@ -58,6 +58,22 @@ test('更新時間放在上方；交易日 8 點前沒更新就變紅並警告',
  assert.equal(view.elements.get('updated').className,'sub');
 });
 
+test('教學按鈕開關說明層，引用的圖片都存在',()=>{
+ const {elements}=render(fixture()), help=elements.get('help');
+ elements.get('help-open').click();
+ assert.equal(help.hidden,false);
+ elements.get('help-close').click();
+ assert.equal(help.hidden,true);
+ elements.get('help-open').click();
+ help.click({target:{}});
+ assert.equal(help.hidden,false,'點說明內容不會關閉');
+ help.click({target:help});
+ assert.equal(help.hidden,true,'點旁邊空白處會關閉');
+ const images=[...template.matchAll(/src="\.\.\/assets\/tutorial\/([^"]+)"/g)].map(m=>m[1]);
+ assert.equal(images.length,4);
+ images.forEach(name=>assert(fs.existsSync(path.join(__dirname,'tutorial',name)),`Missing ${name}`));
+});
+
 test('回測開始前的月份顯示「—」而不是 0%',()=>{
  const data=fixture();
  data.start='2008-03-10';

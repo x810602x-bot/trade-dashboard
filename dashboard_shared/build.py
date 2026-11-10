@@ -18,6 +18,7 @@ def build():
     version=hashlib.sha256(b''.join((shared/n).read_bytes() for n in names)).hexdigest()[:12]
     for name in names:
         shutil.copy2(shared/name,site/'assets'/name)
+    shutil.copytree(shared/'tutorial',site/'assets'/'tutorial',dirs_exist_ok=True)
     for page,config in CONFIGS.items():
         source=ROOT/('watch2_native' if page=='watch2' else 'strategy2026_native')
         payload=json.loads((source/'data.json').read_text(encoding='utf-8'))

@@ -11,12 +11,14 @@ const fixture=()=>JSON.parse(fs.readFileSync(path.join(__dirname,'../watch2/inde
 function render(data,now=Date.parse('2026-11-10T12:00:00+08:00')){
  const elements=new Map([...template.matchAll(/id="([^"]+)"/g)].map(([,id])=>[id,{textContent:'',innerHTML:'',hidden:false,addEventListener(type,handler){this[type]=handler;}}]));
  elements.get('strategy-data').textContent=JSON.stringify(data);
- const shares=data.pending.map(r=>({dataset:{stockId:r.stock_id},textContent:'—'}));
- const document={getElementById(id){assert(elements.has(id),`Missing element: ${id}`);return elements.get(id);},querySelectorAll(selector){return selector==='.buy-shares'?shares:[];}};
+ // Target-lot cells are whatever the rendered buy and holding tables contain.
+ let shares;
+ const lotCells=()=>shares??=['pending','holdings'].flatMap(id=>[...elements.get(id).innerHTML.matchAll(/class="buy-shares" data-stock-id="([^"]+)"/g)].map(([,stockId])=>({dataset:{stockId},textContent:'—'})));
+ const document={getElementById(id){assert(elements.has(id),`Missing element: ${id}`);return elements.get(id);},querySelectorAll(selector){return selector==='.buy-shares'?lotCells():[];}};
  const context=vm.createContext({document,StrategyAllocation,Date:{now:()=>now,parse:Date.parse}});
  vm.runInContext(source,context);
  assert.equal(vm.runInContext('JSON.stringify(d)',context),JSON.stringify(data),'Rendering must not change strategy data');
- return {elements,shares,input(value){elements.get('capital').input({target:{value}});}};
+ return {elements,get shares(){return lotCells();},input(value){elements.get('capital').input({target:{value}});}};
 }
 
 test('本期待賣與上期成交分開，未成交不顯示回測的參考賣價',()=>{
@@ -121,6 +123,9 @@ test('買進張數沿用同一份配置計算，清空本金即清除舊張數',
  view.input('600');
  const expected=StrategyAllocation.allocate(6000000,[{stock_id:'keep',close:100},{stock_id:'new',close:50}],data.config.allocation);
  assert.equal(view.shares[0].textContent,`${expected.rows[1].lots} 張`);
+ assert.match(view.elements.get('holdings').innerHTML,/<th>目標張數<\/th>/);
+ assert.equal(view.shares.find(c=>c.dataset.stockId==='keep').textContent,`${expected.rows[0].lots} 張`,'續留股在持倉表顯示目標張數');
+ assert.doesNotMatch(view.elements.get('sells').innerHTML,/目標張數/);
  assert.match(view.elements.get('allocation').innerHTML,/keep/);
  view.input('');
  assert.equal(view.shares[0].textContent,'—');

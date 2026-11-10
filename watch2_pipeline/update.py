@@ -137,7 +137,7 @@ def run(reference=False):
     performance, year_rows, month_rows, _ = measure(nav,trades,stats)
     payload = {
         'schema_version':1, 'strategy_version':VERSION, 'date':str(end.date()),
-        'generated_at':now.isoformat(), 'stale_after':stale_after(data.get_calendar('tw'),end), 'start':START, 'selection_date':str(selected_day.date()),
+        'generated_at':now.isoformat(), 'stale_after':stale_after(data.get_calendar('tw'),end,now), 'start':START, 'selection_date':str(selected_day.date()),
         'performance':performance,
         'yearly_returns':year_rows, 'monthly_returns':month_rows,
         'holdings':rows(holding), 'pending':rows(pending), 'recent_sells':rows(recent_sells),

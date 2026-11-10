@@ -29,13 +29,17 @@ def save(path,value):
     path.write_text(json.dumps(clean(value),ensure_ascii=False,indent=2,allow_nan=False),encoding='utf-8')
 
 
-def stale_after(calendar,end):
-    """Taipei 08:00 of the second session after the data date: the next night's update should be live by then."""
+def stale_after(calendar,end,now):
+    """Taipei 08:00 of the session after the next nightly (22:00+) run; a run before 22:00 on the data date still awaits that night's run."""
+    tz=ZoneInfo('Asia/Taipei')
+    hops=1 if now<datetime.combine(end.date(),time(22),tz) else 2
     try:
-        session=calendar.next_session(calendar.next_session(end.date()))
+        session=end.date()
+        for _ in range(hops):
+            session=calendar.next_session(session)
     except CalendarUnavailable:  # Next year's calendar not yet published: count weekdays only.
-        session=pd.Timestamp(np.busday_offset(end.date(),2,roll='forward')).date()
-    return datetime.combine(session,time(8),ZoneInfo('Asia/Taipei')).isoformat()
+        session=pd.Timestamp(np.busday_offset(end.date(),hops,roll='forward')).date()
+    return datetime.combine(session,time(8),tz).isoformat()
 
 
 def fix_continuing_returns(trades,adj_open,fee,tax):

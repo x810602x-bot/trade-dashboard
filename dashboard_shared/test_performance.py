@@ -2,20 +2,26 @@ import json
 from pathlib import Path
 import unittest
 import pandas as pd
-from datetime import date
+from datetime import date, datetime
 from unittest import mock
+from zoneinfo import ZoneInfo
 from finlab.session_calendar import CalendarUnavailable
 from dashboard_shared.performance import measure, fix_continuing_returns, stale_after
 
 ROOT=Path(__file__).resolve().parents[1]
 
 class MeasurementTests(unittest.TestCase):
-    def test_stale_after_is_8am_of_second_session(self):
+    def test_stale_after_waits_for_the_next_nightly_run(self):
+        tw=ZoneInfo('Asia/Taipei')
         calendar=mock.Mock()
         calendar.next_session.side_effect=lambda d:{date(2026,11,13):date(2026,11,16),date(2026,11,16):date(2026,11,17)}[d]
-        self.assertEqual(stale_after(calendar,pd.Timestamp('2026-11-13')),'2026-11-17T08:00:00+08:00')
+        friday=pd.Timestamp('2026-11-13')
+        # Nightly run (even if GitHub starts it after midnight): next night's run is due Tuesday 08:00.
+        self.assertEqual(stale_after(calendar,friday,datetime(2026,11,14,3,tzinfo=tw)),'2026-11-17T08:00:00+08:00')
+        # Daytime run on the data date: that night's run is still due by Monday 08:00.
+        self.assertEqual(stale_after(calendar,friday,datetime(2026,11,13,19,55,tzinfo=tw)),'2026-11-16T08:00:00+08:00')
         calendar.next_session.side_effect=CalendarUnavailable('outside coverage')
-        self.assertEqual(stale_after(calendar,pd.Timestamp('2026-12-31')),'2027-01-04T08:00:00+08:00')
+        self.assertEqual(stale_after(calendar,pd.Timestamp('2026-12-31'),datetime(2026,12,31,23,tzinfo=tw)),'2027-01-04T08:00:00+08:00')
 
     def test_unrealized_loss_counts_in_drawdown(self):
         nav=pd.Series([100.,120.,60.]+[100.]*257,index=pd.bdate_range('2020-01-01',periods=260))

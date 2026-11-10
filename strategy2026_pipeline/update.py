@@ -35,7 +35,7 @@ def append_selection(state,get,categories,now,end):
         return
     # Only publish an actual pre-open decision, never backfill after trading.
     calendar=data.get_calendar('tw')
-    if now<datetime.combine(end.date(),time(22),TZ):
+    if now<datetime.combine(end.date(),time(21),TZ):
         return
     if now>=calendar.open_at(calendar.next_session(end.date())):
         raise RuntimeError('Latest price date is stale; refusing to create a decision after its next open.')

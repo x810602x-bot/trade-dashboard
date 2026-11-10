@@ -43,5 +43,5 @@ class Decisions(TestCase):
         calendar.open_at.return_value = datetime(2026,11,11,9,tzinfo=TZ)
         state = {'live_from':'2026-11-10','selections':{}}
         with mock.patch('update.data.get_calendar',return_value=calendar):
-            append_selection(state,None,None,datetime(2026,11,10,12,tzinfo=TZ))
+            append_selection(state,None,None,datetime(2026,11,10,20,59,tzinfo=TZ))
         self.assertEqual(state['selections'],{})

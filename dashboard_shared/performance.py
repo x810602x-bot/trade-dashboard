@@ -30,9 +30,9 @@ def save(path,value):
 
 
 def stale_after(calendar,end,now):
-    """Taipei 08:00 of the session after the next nightly (22:00+) run; a run before 22:00 on the data date still awaits that night's run."""
+    """Taipei 08:00 of the session after the next nightly (21:00+) run; a run before 21:00 on the data date still awaits that night's run."""
     tz=ZoneInfo('Asia/Taipei')
-    hops=1 if now<datetime.combine(end.date(),time(22),tz) else 2
+    hops=1 if now<datetime.combine(end.date(),time(21),tz) else 2
     try:
         session=end.date()
         for _ in range(hops):

@@ -47,7 +47,7 @@ def append_selection(state, close, raw, now):
             raise RuntimeError(f'Missed frozen selection for {required}; refusing to invent an earlier trade.')
     if key in state['selections'] or now.date() < signal_day:
         return
-    if now < datetime.combine(signal_day, time(22), TZ):
+    if now < datetime.combine(signal_day, time(21), TZ):
         return
     if now >= calendar.open_at(calendar.next_session(signal_day)):
         raise RuntimeError('The planned trading open has passed; late historical selection is forbidden.')

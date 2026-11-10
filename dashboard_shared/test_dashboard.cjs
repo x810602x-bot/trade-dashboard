@@ -58,6 +58,14 @@ test('更新時間放在上方；交易日 8 點前沒更新就變紅並警告',
  assert.equal(view.elements.get('updated').className,'sub');
 });
 
+test('回測開始前的月份顯示「—」而不是 0%',()=>{
+ const data=fixture();
+ data.start='2008-03-10';
+ data.monthly_returns={...data.monthly_returns,'2008-01':0,'2008-02':0,'2008-03':.027};
+ const months=render(data).elements.get('months').innerHTML;
+ assert.match(months,/<tr><td>2008<\/td><td><span class="dim">—<\/span><\/td><td><span class="dim">—<\/span><\/td><td><span class="pos">\+2\.7%<\/span><\/td>/);
+});
+
 test('原版沒有 exit_sig_date 時，仍按已保存名單顯示待賣股票',()=>{
  const data=fixture();
  data.latest_selection={picks:['keep']};

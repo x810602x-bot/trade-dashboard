@@ -62,6 +62,27 @@ def fix_continuing_returns(trades,adj_open,fee,tax):
     return trades
 
 
+def merge_kept(trades,adj_open,adj_close,end,fee,tax):
+    """Display rows only: join the parts FinLab splits a kept stock into at each rebalance.
+
+    A joined row keeps the first part's entry and the last part's exit. Its return uses FinLab's
+    own formulas from the first entry open: closed to the exit open net of both fees and tax,
+    open to the latest close net of the buy fee. Statistics keep using the unjoined trades."""
+    adj_open,adj_close=pd.DataFrame(adj_open),pd.DataFrame(adj_close)
+    rows=[]
+    for _,part in trades.sort_values(['stock_id','entry_date'],na_position='last').iterrows():
+        last=rows[-1] if rows else None
+        if last is not None and str(last['stock_id'])==str(part['stock_id']) and pd.notna(part['entry_date']) and last['exit_date']==part['entry_date']:
+            for key in ['exit_date','exit_sig_date','trade_price@exit_date','position']:
+                last[key]=part[key]
+            sid=str(part['stock_id']);buy=adj_open.at[last['entry_date'],sid]
+            last['return']=(adj_open.at[last['exit_date'],sid]/buy*(1-fee)*(1-fee-tax)-1 if pd.notna(last['exit_date'])
+                else adj_close.at[end,sid]/buy*(1-fee)-1)
+        else:
+            rows.append(part.copy())
+    return pd.DataFrame(rows,columns=trades.columns)
+
+
 def measure(nav,trades,native_stats=None):
     """Measure supplied net NAV; never change orders, sizing or the engine."""
     metric=metrics_from_nav(nav)

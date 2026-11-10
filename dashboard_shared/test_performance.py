@@ -6,7 +6,7 @@ from datetime import date, datetime
 from unittest import mock
 from zoneinfo import ZoneInfo
 from finlab.session_calendar import CalendarUnavailable
-from dashboard_shared.performance import measure, fix_continuing_returns, stale_after
+from dashboard_shared.performance import measure, fix_continuing_returns, merge_kept, stale_after
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -40,6 +40,28 @@ class MeasurementTests(unittest.TestCase):
         self.assertAlmostEqual(fixed.at[0,'return'],68.41/62.19*(1-.000475)*(1-.000475-.003)-1)
         self.assertEqual(fixed['return'][1:].tolist(),[-.0796,.25])
         self.assertEqual(fixed['return_native'].tolist(),[.1674,-.0796,.25])
+
+    def test_kept_stock_parts_show_as_one_holding(self):
+        d=pd.to_datetime(['2026-09-11','2026-10-13','2026-11-10','2026-11-11'])
+        adj_open=pd.DataFrame({'A':[100.,110.,0,120.],'B':[50.,55.,0,60.],'C':[10.,11.,0,12.]},index=d)
+        adj_close=pd.DataFrame({'A':[0,0,130.,0],'B':[0,0,0,0],'C':[0,0,0,0]},index=d)
+        nat=pd.NaT
+        trades=pd.DataFrame({'stock_id':['A','A','B','B','C','D'],
+            'entry_date':[d[0],d[1],d[0],d[1],d[0],nat],'exit_date':[d[1],nat,d[1],d[3],d[1],nat],
+            'entry_sig_date':[d[0],d[1],d[0],d[1],d[0],d[2]],'exit_sig_date':[d[1],nat,d[1],d[2],d[1],nat],
+            'trade_price@entry_date':[100,110,50,55,10,None],'trade_price@exit_date':[110,None,55,60,11,None],
+            'position':[.1,.1,.1,.1,.1,None],'return':[.09,.18,.09,.09,.09,None]})
+        shown=merge_kept(trades,adj_open,adj_close,d[2],.000475,.003).set_index('stock_id')
+        self.assertEqual(list(shown.index),['A','B','C','D'])
+        # Kept A: one open holding from its first buy, priced like FinLab's open trades.
+        self.assertEqual(shown.at['A','entry_date'],d[0]);self.assertTrue(pd.isna(shown.at['A','exit_date']))
+        self.assertEqual(shown.at['A','trade_price@entry_date'],100)
+        self.assertAlmostEqual(shown.at['A','return'],130/100*(1-.000475)-1)
+        # Kept B then sold: one closed trade from first buy to final sell.
+        self.assertEqual((shown.at['B','entry_date'],shown.at['B','exit_date']),(d[0],d[3]))
+        self.assertAlmostEqual(shown.at['B','return'],60/50*(1-.000475)*(1-.000475-.003)-1)
+        # Ordinary sale and pending buy are untouched.
+        self.assertEqual(shown.at['C','return'],.09);self.assertTrue(pd.isna(shown.at['D','entry_date']))
 
     def test_trade_pending_for_next_open_is_left_alone(self):
         days=pd.to_datetime(['2026-10-13','2026-11-10'])

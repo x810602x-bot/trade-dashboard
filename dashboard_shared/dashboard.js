@@ -17,8 +17,9 @@ document.getElementById('metrics').innerHTML=cards.map(([label,value,color])=>`<
 document.getElementById('method').textContent=`${config.engine_label}。CAGR、夏普及回撤依完整帳戶淨值計算，包含未賣出部位。${p.missing_return_trades?`${p.missing_return_trades} 筆已平倉交易缺少報酬值，未納入平均與單筆極值。`:''}`;
 const years=Object.entries(d.yearly_returns).filter(([y])=>Number(y)>=Number(d.date.slice(0,4))-10);
 document.getElementById('years').innerHTML=years.map(([y,v])=>`<div class="year" style="background:${v>=0?'rgba(219,39,119,.42)':'rgba(74,222,128,.22)'}"><strong>${pct(v,1)}</strong><span>${y}${y===d.date.slice(0,4)?' 至今':''}</span></div>`).join('');
-const monthYears=[...new Set(Object.keys(d.monthly_returns).map(k=>k.slice(0,4)))];
-document.getElementById('months').innerHTML=`<table class="monthly"><thead><tr><th>年份</th>${Array.from({length:12},(_,i)=>`<th>${i+1}月</th>`).join('')}</tr></thead><tbody>${monthYears.map(y=>`<tr><td>${y}</td>${Array.from({length:12},(_,i)=>`<td>${ret(d.monthly_returns[`${y}-${String(i+1).padStart(2,'0')}`],1)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+const monthYears=[...new Set(Object.keys(d.monthly_returns).map(k=>k.slice(0,4)))], startMonth=d.start.slice(0,7);
+const monthCell=k=>ret(k<startMonth?null:d.monthly_returns[k],1);
+document.getElementById('months').innerHTML=`<table class="monthly"><thead><tr><th>年份</th>${Array.from({length:12},(_,i)=>`<th>${i+1}月</th>`).join('')}</tr></thead><tbody>${monthYears.map(y=>`<tr><td>${y}</td>${Array.from({length:12},(_,i)=>`<td>${monthCell(`${y}-${String(i+1).padStart(2,'0')}`)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 const weightLabel=config.allocation.mode==='keep'?'初始股款比例':'換股目標';
 const selectedIds=new Set(d.latest_selection.picks);
 const sellRows=d.holdings.filter(r=>r.exit_sig_date||!selectedIds.has(r.stock_id));

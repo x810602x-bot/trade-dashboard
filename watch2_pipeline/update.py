@@ -14,7 +14,7 @@ from finlab.backtest import sim
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from dashboard_shared.performance import clean, save, measure, fix_continuing_returns, stale_after
+from dashboard_shared.performance import clean, save, measure, fix_continuing_returns, merge_kept, stale_after
 from dashboard_shared.positions import position_from_state
 STATE = ROOT/'watch2_pipeline/selections.json'
 VERSION = 'watch2-fixed10-v2'
@@ -119,9 +119,10 @@ def run(reference=False):
     save(out/'native_stats.json', stats)
     trades.to_csv(out/'trades.csv',index=False,encoding='utf-8-sig')
     nav.to_csv(out/'nav.csv',encoding='utf-8-sig')
-    closed = trades.loc[trades.entry_date.notna() & trades.exit_date.notna()]
-    pending = trades.loc[trades.entry_date.isna() & trades.entry_sig_date.notna()]
-    holding = trades.loc[trades.entry_date.notna() & trades.exit_date.isna()]
+    shown = merge_kept(trades, data.get('etl:adj_open'), close, end, .000475, .003)
+    closed = shown.loc[shown.entry_date.notna() & shown.exit_date.notna()]
+    pending = shown.loc[shown.entry_date.isna() & shown.entry_sig_date.notna()]
+    holding = shown.loc[shown.entry_date.notna() & shown.exit_date.isna()]
     last_exit = closed.exit_date.max()
     recent_sells = closed.loc[closed.exit_date == last_exit]
     columns = ['stock_id','name','entry_date','exit_date','entry_sig_date','exit_sig_date',

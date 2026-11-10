@@ -13,7 +13,7 @@ from finlab.backtest import sim
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from dashboard_shared.performance import clean,save,measure,fix_continuing_returns,stale_after
+from dashboard_shared.performance import clean,save,measure,fix_continuing_returns,merge_kept,stale_after
 from dashboard_shared.positions import position_from_state
 from dashboard_shared.strategies import CONFIGS
 
@@ -102,9 +102,10 @@ def run(cached=False):
     nav=report.daily_creturn.copy()
     assert str(nav.index[-1].date())==str(end.date())
     perf,years,months,_=measure(nav,trades,stats)
-    closed=trades.loc[trades.entry_date.notna() & trades.exit_date.notna()]
-    holding=trades.loc[trades.entry_date.notna() & trades.exit_date.isna()]
-    pending=trades.loc[trades.entry_date.isna() & trades.entry_sig_date.notna()]
+    shown=merge_kept(trades,get('etl#adj_open'),close,end,allocation['fee_buy'],allocation['tax_sell'])
+    closed=shown.loc[shown.entry_date.notna() & shown.exit_date.notna()]
+    holding=shown.loc[shown.entry_date.notna() & shown.exit_date.isna()]
+    pending=shown.loc[shown.entry_date.isna() & shown.entry_sig_date.notna()]
     columns=['stock_id','name','entry_date','exit_date','entry_sig_date','exit_sig_date',
         'return','position','trade_price@entry_date','trade_price@exit_date']
     def rows(frame):

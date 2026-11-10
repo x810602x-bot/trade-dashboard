@@ -1,11 +1,13 @@
 """One performance definition for native reports and preserved external NAV."""
 import json
 import math
-from datetime import datetime
+from datetime import datetime, time
+from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 from finlab.backtest import metrics_from_nav
 from finlab.ffn_core import PerformanceStats
+from finlab.session_calendar import CalendarUnavailable
 
 
 def clean(value):
@@ -25,6 +27,15 @@ def clean(value):
 def save(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(clean(value),ensure_ascii=False,indent=2,allow_nan=False),encoding='utf-8')
+
+
+def stale_after(calendar,end):
+    """Taipei 08:00 of the second session after the data date: the next night's update should be live by then."""
+    try:
+        session=calendar.next_session(calendar.next_session(end.date()))
+    except CalendarUnavailable:  # Next year's calendar not yet published: count weekdays only.
+        session=pd.Timestamp(np.busday_offset(end.date(),2,roll='forward')).date()
+    return datetime.combine(session,time(8),ZoneInfo('Asia/Taipei')).isoformat()
 
 
 def fix_continuing_returns(trades,adj_open,fee,tax):

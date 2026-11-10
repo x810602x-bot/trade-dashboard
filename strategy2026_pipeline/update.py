@@ -13,7 +13,7 @@ from finlab.backtest import sim
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from dashboard_shared.performance import clean,save,measure,fix_continuing_returns
+from dashboard_shared.performance import clean,save,measure,fix_continuing_returns,stale_after
 from dashboard_shared.positions import position_from_state
 from dashboard_shared.strategies import CONFIGS
 
@@ -118,7 +118,7 @@ def run(cached=False):
     latest={**state['selections'][str(selected.date())],
         'execution_date':str(data.get_calendar('tw').next_session(selected.date()))}
     payload={'schema_version':1,'strategy_version':config['strategy_version'],'date':str(end.date()),'generated_at':now.isoformat(),
-      'start':str(position.index[0].date()),'selection_date':str(selected.date()),'performance':perf,'yearly_returns':years,'monthly_returns':months,
+      'stale_after':stale_after(data.get_calendar('tw'),end),'start':str(position.index[0].date()),'selection_date':str(selected.date()),'performance':perf,'yearly_returns':years,'monthly_returns':months,
       'holdings':rows(holding),'pending':rows(pending),
       'recent_sells':rows(closed.loc[closed.exit_date==closed.exit_date.max()]),'latest_selection':latest,
       'allocation_prices':{s:{'close':raw.loc[end,s],'name':''} for s in latest['picks']},

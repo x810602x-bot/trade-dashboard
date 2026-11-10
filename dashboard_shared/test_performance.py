@@ -2,11 +2,21 @@ import json
 from pathlib import Path
 import unittest
 import pandas as pd
-from dashboard_shared.performance import measure, fix_continuing_returns
+from datetime import date
+from unittest import mock
+from finlab.session_calendar import CalendarUnavailable
+from dashboard_shared.performance import measure, fix_continuing_returns, stale_after
 
 ROOT=Path(__file__).resolve().parents[1]
 
 class MeasurementTests(unittest.TestCase):
+    def test_stale_after_is_8am_of_second_session(self):
+        calendar=mock.Mock()
+        calendar.next_session.side_effect=lambda d:{date(2026,11,13):date(2026,11,16),date(2026,11,16):date(2026,11,17)}[d]
+        self.assertEqual(stale_after(calendar,pd.Timestamp('2026-11-13')),'2026-11-17T08:00:00+08:00')
+        calendar.next_session.side_effect=CalendarUnavailable('outside coverage')
+        self.assertEqual(stale_after(calendar,pd.Timestamp('2026-12-31')),'2027-01-04T08:00:00+08:00')
+
     def test_unrealized_loss_counts_in_drawdown(self):
         nav=pd.Series([100.,120.,60.]+[100.]*257,index=pd.bdate_range('2020-01-01',periods=260))
         trades=pd.DataFrame({'entry_date':[pd.Timestamp('2020-01-01')],'exit_date':[pd.NaT],'return':[0.]})

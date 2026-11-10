@@ -14,7 +14,7 @@ from finlab.backtest import sim
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from dashboard_shared.performance import clean, save, measure, fix_continuing_returns
+from dashboard_shared.performance import clean, save, measure, fix_continuing_returns, stale_after
 from dashboard_shared.positions import position_from_state
 STATE = ROOT/'watch2_pipeline/selections.json'
 VERSION = 'watch2-fixed10-v2'
@@ -137,7 +137,7 @@ def run(reference=False):
     performance, year_rows, month_rows, _ = measure(nav,trades,stats)
     payload = {
         'schema_version':1, 'strategy_version':VERSION, 'date':str(end.date()),
-        'generated_at':now.isoformat(), 'start':START, 'selection_date':str(selected_day.date()),
+        'generated_at':now.isoformat(), 'stale_after':stale_after(data.get_calendar('tw'),end), 'start':START, 'selection_date':str(selected_day.date()),
         'performance':performance,
         'yearly_returns':year_rows, 'monthly_returns':month_rows,
         'holdings':rows(holding), 'pending':rows(pending), 'recent_sells':rows(recent_sells),

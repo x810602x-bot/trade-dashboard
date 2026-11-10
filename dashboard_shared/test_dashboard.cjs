@@ -8,12 +8,12 @@ const source=fs.readFileSync(path.join(__dirname,'dashboard.js'),'utf8');
 const template=fs.readFileSync(path.join(__dirname,'template.html'),'utf8');
 const fixture=()=>JSON.parse(fs.readFileSync(path.join(__dirname,'../watch2/index.html'),'utf8').match(/<script id="strategy-data" type="application\/json">(.*?)<\/script>/s)[1]);
 
-function render(data){
+function render(data,now=Date.parse('2026-11-10T12:00:00+08:00')){
  const elements=new Map([...template.matchAll(/id="([^"]+)"/g)].map(([,id])=>[id,{textContent:'',innerHTML:'',hidden:false,addEventListener(type,handler){this[type]=handler;}}]));
  elements.get('strategy-data').textContent=JSON.stringify(data);
  const shares=data.pending.map(r=>({dataset:{stockId:r.stock_id},textContent:'—'}));
  const document={getElementById(id){assert(elements.has(id),`Missing element: ${id}`);return elements.get(id);},querySelectorAll(selector){return selector==='.buy-shares'?shares:[];}};
- const context=vm.createContext({document,StrategyAllocation});
+ const context=vm.createContext({document,StrategyAllocation,Date:{now:()=>now,parse:Date.parse}});
  vm.runInContext(source,context);
  assert.equal(vm.runInContext('JSON.stringify(d)',context),JSON.stringify(data),'Rendering must not change strategy data');
  return {elements,shares,input(value){elements.get('capital').input({target:{value}});}};
@@ -40,6 +40,22 @@ test('本期待賣與上期成交分開，未成交不顯示回測的參考賣�
  assert.match(elements.get('past-sells').innerHTML,/<td>90<\/td>/);
  assert.equal(elements.get('native-report').hidden,false);
  assert.match(elements.get('strategy-detail').textContent,/0\.0475%/);
+});
+
+test('更新時間放在上方；交易日 8 點前沒更新就變紅並警告',()=>{
+ const data=fixture();
+ data.generated_at='2026-11-10T07:27:30+08:00';
+ data.stale_after='2026-11-11T08:00:00+08:00';
+ let view=render(data,Date.parse('2026-11-11T07:59:00+08:00'));
+ assert.equal(view.elements.get('updated').textContent,'更新時間 2026-11-10 07:27（台灣）');
+ assert.equal(view.elements.get('updated').className,'sub');
+ assert.doesNotMatch(view.elements.get('version').textContent,/更新時間/);
+ view=render(data,Date.parse('2026-11-11T08:00:00+08:00'));
+ assert.equal(view.elements.get('updated').className,'sub stale');
+ assert.match(view.elements.get('updated').textContent,/⚠ 未如期更新/);
+ delete data.stale_after;
+ view=render(data,Date.parse('2030-01-01T00:00:00+08:00'));
+ assert.equal(view.elements.get('updated').className,'sub');
 });
 
 test('原版沒有 exit_sig_date 時，仍按已保存名單顯示待賣股票',()=>{

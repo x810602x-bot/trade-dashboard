@@ -2,10 +2,10 @@
   "schema_version": 1,
   "strategy_version": "2026-reinvest-v3",
   "date": "2026-11-10",
-  "generated_at": "2026-11-10T20:53:43.954826+08:00",
-  "stale_after": "2026-11-11T08:00:00+08:00",
+  "generated_at": "2026-11-10T21:05:37.394594+08:00",
+  "stale_after": "2026-11-12T08:00:00+08:00",
   "start": "2008-03-10",
-  "selection_date": "2026-10-12",
+  "selection_date": "2026-11-10",
   "performance": {
     "cagr": 0.353174079693229,
     "sharpe": 1.314189846978164,
@@ -275,7 +275,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.016787692307692392,
       "position": 0.1,
       "trade_price@entry_date": 130.0,
@@ -288,7 +288,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.20929956225680935,
       "position": 0.1,
       "trade_price@entry_date": 51.4,
@@ -301,7 +301,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.008347530329289365,
       "position": 0.1,
       "trade_price@entry_date": 57.7,
@@ -314,7 +314,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.3295282142857141,
       "position": 0.1,
       "trade_price@entry_date": 175.0,
@@ -327,7 +327,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": 0.5568334645669282,
       "position": 0.1,
       "trade_price@entry_date": 50.8,
@@ -340,7 +340,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.2591672073342738,
       "position": 0.1,
       "trade_price@entry_date": 70.9,
@@ -353,7 +353,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.23052193930041154,
       "position": 0.1,
       "trade_price@entry_date": 48.6,
@@ -366,7 +366,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": 0.21045338899803534,
       "position": 0.1,
       "trade_price@entry_date": 25.45,
@@ -379,7 +379,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.15988431924882618,
       "position": 0.1,
       "trade_price@entry_date": 106.5,
@@ -392,7 +392,7 @@
       "entry_date": "2026-10-13T00:00:00",
       "exit_date": null,
       "entry_sig_date": "2026-10-12T00:00:00",
-      "exit_sig_date": null,
+      "exit_sig_date": "2026-11-10T00:00:00",
       "return": -0.33718746644295283,
       "position": 0.1,
       "trade_price@entry_date": 149.0,
@@ -400,7 +400,60 @@
       "close": 98.9
     }
   ],
-  "pending": [],
+  "pending": [
+    {
+      "stock_id": "1416",
+      "name": "廣豐",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 18.9,
+      "trade_price@exit_date": 18.9,
+      "close": 18.35
+    },
+    {
+      "stock_id": "2412",
+      "name": "中華電",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 156.5,
+      "trade_price@exit_date": 156.5,
+      "close": 159.5
+    },
+    {
+      "stock_id": "2468",
+      "name": "華經",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 63.7,
+      "trade_price@exit_date": 63.7,
+      "close": 66.0
+    },
+    {
+      "stock_id": "6112",
+      "name": "邁達特",
+      "entry_date": null,
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": null,
+      "position": null,
+      "trade_price@entry_date": 52.4,
+      "trade_price@exit_date": 52.4,
+      "close": 57.0
+    }
+  ],
   "recent_sells": [
     {
       "stock_id": "2606",
@@ -444,73 +497,37 @@
   ],
   "latest_selection": {
     "picks": [
-      "6834",
-      "1815",
-      "6505",
-      "2607",
-      "3564",
-      "3016",
-      "3597",
-      "3287",
-      "2340",
-      "5230"
+      "1416",
+      "6112",
+      "2468",
+      "2412"
     ],
     "yoy": {
-      "6834": 132.39,
-      "1815": 82.14,
-      "6505": 65.59,
-      "2607": 64.69,
-      "3564": 54.24,
-      "3016": 52.71,
-      "3597": 50.09,
-      "3287": 34.45,
-      "2340": 34.26,
-      "5230": 22.76
+      "1416": 45.45,
+      "6112": 27.07,
+      "2468": 20.0,
+      "2412": 13.44
     },
     "source": "original_revenue_gate",
-    "recorded_at": "2026-10-12T22:45:02.537925+08:00",
+    "recorded_at": "2026-11-10T21:05:37.394594+08:00",
     "forced": false,
-    "execution_date": "2026-10-13"
+    "execution_date": "2026-11-11"
   },
   "allocation_prices": {
-    "6834": {
-      "close": 98.9,
+    "1416": {
+      "close": 18.35,
       "name": ""
     },
-    "1815": {
-      "close": 128.0,
+    "6112": {
+      "close": 57.0,
       "name": ""
     },
-    "6505": {
-      "close": 89.6,
+    "2468": {
+      "close": 66.0,
       "name": ""
     },
-    "2607": {
-      "close": 57.3,
-      "name": ""
-    },
-    "3564": {
-      "close": 52.6,
-      "name": ""
-    },
-    "3016": {
-      "close": 117.5,
-      "name": ""
-    },
-    "3597": {
-      "close": 37.45,
-      "name": ""
-    },
-    "3287": {
-      "close": 79.2,
-      "name": ""
-    },
-    "2340": {
-      "close": 40.7,
-      "name": ""
-    },
-    "5230": {
-      "close": 30.85,
+    "2412": {
+      "close": 159.5,
       "name": ""
     }
   },

@@ -5042,6 +5042,23 @@
       "source": "original_revenue_gate",
       "recorded_at": "2026-10-12T22:45:02.537925+08:00",
       "forced": false
+    },
+    "2026-11-10": {
+      "picks": [
+        "1416",
+        "6112",
+        "2468",
+        "2412"
+      ],
+      "yoy": {
+        "1416": 45.45,
+        "6112": 27.07,
+        "2468": 20.0,
+        "2412": 13.44
+      },
+      "source": "original_revenue_gate",
+      "recorded_at": "2026-11-10T21:05:37.394594+08:00",
+      "forced": false
     }
   },
   "corrections": [

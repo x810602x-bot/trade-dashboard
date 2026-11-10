@@ -2971,6 +2971,20 @@
       "recorded_at": "2026-10-12T22:44:58.774936+08:00",
       "execution_date": "2026-10-13",
       "inputs_sha256": "9a5b95dd479dc9264fa2f52dc96d616d613172d424da887f4110829e84ad4fbb"
+    },
+    "2026-11-10": {
+      "picks": [
+        "1416",
+        "2412",
+        "2468",
+        "6112",
+        "6782",
+        "6870"
+      ],
+      "source": "frozen_before_next_open",
+      "recorded_at": "2026-11-10T21:05:34.373018+08:00",
+      "execution_date": "2026-11-11",
+      "inputs_sha256": "b875b1f87be2ab52bd1591137f9fb6aac516f897eb340fb28da4a8a688a28c11"
     }
   },
   "corrections": [

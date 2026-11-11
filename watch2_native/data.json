@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
   "strategy_version": "watch2-fixed10-v2",
-  "date": "2026-11-10",
-  "generated_at": "2026-11-11T04:31:01.983087+08:00",
-  "stale_after": "2026-11-12T08:00:00+08:00",
+  "date": "2026-11-11",
+  "generated_at": "2026-11-12T04:16:08.709394+08:00",
+  "stale_after": "2026-11-13T08:00:00+08:00",
   "start": "2008-03-10",
   "selection_date": "2026-11-10",
   "performance": {
-    "cagr": 0.3265709703552826,
-    "sharpe": 1.2091281159180245,
+    "cagr": 0.328055168313762,
+    "sharpe": 1.2135751844171705,
     "max_drawdown": -0.35483977927754684,
-    "win_rate": 0.5106649937264742,
-    "closed_trades": 1595,
-    "valid_closed_trades": 1594,
-    "avg_return": 0.036979099414104225,
+    "win_rate": 0.5087281795511222,
+    "closed_trades": 1605,
+    "valid_closed_trades": 1604,
+    "avg_return": 0.03588658399746571,
     "max_gain": 1.4065443726638982,
     "max_loss": -0.6551729426407715,
     "missing_return_trades": 1
@@ -37,7 +37,7 @@
     "2023": 0.47613071272618823,
     "2024": 0.9305812869338506,
     "2025": 0.7192215279783942,
-    "2026": 0.008410706991832217
+    "2026": 0.030483784740923614
   },
   "monthly_returns": {
     "2008-01": 0.0,
@@ -266,311 +266,219 @@
     "2026-08": 0.12589273522312494,
     "2026-09": 0.005460900590260165,
     "2026-10": -0.1271196651491212,
-    "2026-11": -0.06575772301952776
+    "2026-11": -0.045308116253854
   },
   "holdings": [
+    {
+      "stock_id": "1416",
+      "name": "廣豐",
+      "entry_date": "2026-11-11T00:00:00",
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": 0.00954530075187976,
+      "position": 0.10000000000000002,
+      "trade_price@entry_date": 19.95,
+      "trade_price@exit_date": 19.95,
+      "close": 20.15
+    },
+    {
+      "stock_id": "2412",
+      "name": "中華電",
+      "entry_date": "2026-11-11T00:00:00",
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": 0.008924921630093952,
+      "position": 0.10000000000000002,
+      "trade_price@entry_date": 159.5,
+      "trade_price@exit_date": 159.5,
+      "close": 161.0
+    },
+    {
+      "stock_id": "2468",
+      "name": "華經",
+      "entry_date": "2026-11-11T00:00:00",
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": 0.03435693181818178,
+      "position": 0.10000000000000002,
+      "trade_price@entry_date": 66.0,
+      "trade_price@exit_date": 66.0,
+      "close": 68.3
+    },
+    {
+      "stock_id": "6112",
+      "name": "邁達特",
+      "entry_date": "2026-11-11T00:00:00",
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": 0.03337700534759347,
+      "position": 0.10000000000000002,
+      "trade_price@entry_date": 56.1,
+      "trade_price@exit_date": 56.1,
+      "close": 58.0
+    },
+    {
+      "stock_id": "6782",
+      "name": "視陽",
+      "entry_date": "2026-11-11T00:00:00",
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": -0.04606144425675662,
+      "position": 0.10000000000000002,
+      "trade_price@entry_date": 296.0,
+      "trade_price@exit_date": 296.0,
+      "close": 282.5
+    },
+    {
+      "stock_id": "6870",
+      "name": "騰雲",
+      "entry_date": "2026-11-11T00:00:00",
+      "exit_date": null,
+      "entry_sig_date": "2026-11-10T00:00:00",
+      "exit_sig_date": null,
+      "return": -0.0004750000000000032,
+      "position": 0.10000000000000002,
+      "trade_price@entry_date": 493.5,
+      "trade_price@exit_date": 493.5,
+      "close": 493.5
+    }
+  ],
+  "pending": [],
+  "recent_sells": [
     {
       "stock_id": "1303",
       "name": "南亞",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.025758094435076373,
+      "return": -0.005628031753794893,
       "position": 0.1,
       "trade_price@entry_date": 296.5,
-      "trade_price@exit_date": 278.0,
-      "close": 289.0
+      "trade_price@exit_date": 296.0,
+      "close": 313.0
     },
     {
       "stock_id": "1815",
       "name": "富喬",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.01585230769230761,
+      "return": 0.019037457947115533,
       "position": 0.1,
       "trade_price@entry_date": 130.0,
-      "trade_price@exit_date": 134.5,
-      "close": 128.0
+      "trade_price@exit_date": 133.0,
+      "close": 140.5
     },
     {
       "stock_id": "2607",
       "name": "榮運",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.0074041161178514114,
+      "return": 0.009861725503682361,
       "position": 0.1,
       "trade_price@entry_date": 57.7,
-      "trade_price@exit_date": 56.0,
-      "close": 57.3
+      "trade_price@exit_date": 58.5,
+      "close": 57.8
     },
     {
       "stock_id": "3016",
       "name": "嘉晶",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.32889035714285697,
+      "return": -0.30276384456249983,
       "position": 0.1,
       "trade_price@entry_date": 175.0,
-      "trade_price@exit_date": 117.5,
-      "close": 117.5
+      "trade_price@exit_date": 122.5,
+      "close": 125.0
     },
     {
       "stock_id": "3044",
       "name": "健鼎",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.1667692121478872,
+      "return": -0.08812172830105625,
       "position": 0.1,
       "trade_price@entry_date": 568.0,
-      "trade_price@exit_date": 455.5,
-      "close": 473.5
+      "trade_price@exit_date": 520.0,
+      "close": 520.0
     },
     {
       "stock_id": "3564",
       "name": "其陽",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.25846241184767293,
+      "return": -0.2764928066687238,
       "position": 0.1,
       "trade_price@entry_date": 70.9,
-      "trade_price@exit_date": 51.6,
-      "close": 52.6
+      "trade_price@exit_date": 51.5,
+      "close": 57.8
     },
     {
       "stock_id": "6505",
       "name": "台塑化",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.15908507042253528,
+      "return": -0.16294250956866196,
       "position": 0.1,
       "trade_price@entry_date": 106.5,
-      "trade_price@exit_date": 88.5,
-      "close": 89.6
+      "trade_price@exit_date": 89.5,
+      "close": 91.2
     },
     {
       "stock_id": "6672",
       "name": "騰輝電子-KY",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.10042749999999978,
+      "return": -0.08932420514285688,
       "position": 0.1,
       "trade_price@entry_date": 560.0,
-      "trade_price@exit_date": 518.0,
-      "close": 504.0
+      "trade_price@exit_date": 512.0,
+      "close": 525.0
     },
     {
       "stock_id": "6811",
       "name": "宏碁資訊",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.13398555956678693,
+      "return": -0.15137837708483737,
       "position": 0.1,
       "trade_price@entry_date": 277.0,
-      "trade_price@exit_date": 235.0,
-      "close": 240.0
+      "trade_price@exit_date": 236.0,
+      "close": 241.0
     },
     {
       "stock_id": "6834",
       "name": "天二科技",
       "entry_date": "2026-10-13T00:00:00",
-      "exit_date": null,
+      "exit_date": "2026-11-11T00:00:00",
       "entry_sig_date": "2026-10-12T00:00:00",
       "exit_sig_date": "2026-11-10T00:00:00",
-      "return": -0.3365568959731543,
+      "return": -0.33485141451552014,
       "position": 0.1,
       "trade_price@entry_date": 149.0,
-      "trade_price@exit_date": 101.0,
-      "close": 98.9
-    }
-  ],
-  "pending": [
-    {
-      "stock_id": "1416",
-      "name": "廣豐",
-      "entry_date": null,
-      "exit_date": null,
-      "entry_sig_date": "2026-11-10T00:00:00",
-      "exit_sig_date": null,
-      "return": null,
-      "position": null,
-      "trade_price@entry_date": 18.9,
-      "trade_price@exit_date": 18.9,
-      "close": 18.35
-    },
-    {
-      "stock_id": "2412",
-      "name": "中華電",
-      "entry_date": null,
-      "exit_date": null,
-      "entry_sig_date": "2026-11-10T00:00:00",
-      "exit_sig_date": null,
-      "return": null,
-      "position": null,
-      "trade_price@entry_date": 156.5,
-      "trade_price@exit_date": 156.5,
-      "close": 159.5
-    },
-    {
-      "stock_id": "2468",
-      "name": "華經",
-      "entry_date": null,
-      "exit_date": null,
-      "entry_sig_date": "2026-11-10T00:00:00",
-      "exit_sig_date": null,
-      "return": null,
-      "position": null,
-      "trade_price@entry_date": 63.7,
-      "trade_price@exit_date": 63.7,
-      "close": 66.0
-    },
-    {
-      "stock_id": "6112",
-      "name": "邁達特",
-      "entry_date": null,
-      "exit_date": null,
-      "entry_sig_date": "2026-11-10T00:00:00",
-      "exit_sig_date": null,
-      "return": null,
-      "position": null,
-      "trade_price@entry_date": 52.4,
-      "trade_price@exit_date": 52.4,
-      "close": 57.0
-    },
-    {
-      "stock_id": "6782",
-      "name": "視陽",
-      "entry_date": null,
-      "exit_date": null,
-      "entry_sig_date": "2026-11-10T00:00:00",
-      "exit_sig_date": null,
-      "return": null,
-      "position": null,
-      "trade_price@entry_date": 270.5,
-      "trade_price@exit_date": 270.5,
-      "close": 288.0
-    },
-    {
-      "stock_id": "6870",
-      "name": "騰雲",
-      "entry_date": null,
-      "exit_date": null,
-      "entry_sig_date": "2026-11-10T00:00:00",
-      "exit_sig_date": null,
-      "return": null,
-      "position": null,
-      "trade_price@entry_date": 432.0,
-      "trade_price@exit_date": 432.0,
-      "close": 449.0
-    }
-  ],
-  "recent_sells": [
-    {
-      "stock_id": "2606",
-      "name": "裕民",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": -0.006535496519480488,
-      "position": 0.1,
-      "trade_price@entry_date": 77.0,
-      "trade_price@exit_date": 76.8,
-      "close": 69.8
-    },
-    {
-      "stock_id": "2617",
-      "name": "台航",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": -0.04861434267656917,
-      "position": 0.1,
-      "trade_price@entry_date": 33.45,
-      "trade_price@exit_date": 31.95,
-      "close": 30.15
-    },
-    {
-      "stock_id": "3006",
-      "name": "晶豪科",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": -0.17104911971011505,
-      "position": 0.1,
-      "trade_price@entry_date": 304.0,
-      "trade_price@exit_date": 253.0,
-      "close": 225.5
-    },
-    {
-      "stock_id": "3219",
-      "name": "倚強科",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": 0.4187945023437498,
-      "position": 0.1,
-      "trade_price@entry_date": 86.0,
-      "trade_price@exit_date": 122.5,
-      "close": 109.0
-    },
-    {
-      "stock_id": "3374",
-      "name": "精材",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": -0.006058628295815716,
-      "position": 0.1,
-      "trade_price@entry_date": 472.0,
-      "trade_price@exit_date": 471.0,
-      "close": 424.5
-    },
-    {
-      "stock_id": "6426",
-      "name": "統新",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": 0.014874673943897188,
-      "position": 0.1,
-      "trade_price@entry_date": 317.5,
-      "trade_price@exit_date": 323.5,
-      "close": 266.0
-    },
-    {
-      "stock_id": "6538",
-      "name": "倉和",
-      "entry_date": "2026-09-11T00:00:00",
-      "exit_date": "2026-10-13T00:00:00",
-      "entry_sig_date": "2026-09-10T00:00:00",
-      "exit_sig_date": "2026-10-12T00:00:00",
-      "return": -0.1146207549999998,
-      "position": 0.1,
-      "trade_price@entry_date": 337.5,
-      "trade_price@exit_date": 300.0,
-      "close": 309.5
+      "trade_price@exit_date": 99.5,
+      "close": 104.5
     }
   ],
   "latest_selection": {
@@ -589,27 +497,27 @@
   },
   "allocation_prices": {
     "1416": {
-      "close": 18.35,
+      "close": 20.15,
       "name": ""
     },
     "2412": {
-      "close": 159.5,
+      "close": 161.0,
       "name": ""
     },
     "2468": {
-      "close": 66.0,
+      "close": 68.3,
       "name": ""
     },
     "6112": {
-      "close": 57.0,
+      "close": 58.0,
       "name": ""
     },
     "6782": {
-      "close": 288.0,
+      "close": 282.5,
       "name": ""
     },
     "6870": {
-      "close": 449.0,
+      "close": 493.5,
       "name": ""
     }
   },

@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "strategy_version": "2026-reinvest-v3",
-  "date": "2026-11-16",
-  "generated_at": "2026-11-17T06:57:28.201439+08:00",
-  "stale_after": "2026-11-18T08:00:00+08:00",
+  "date": "2026-11-17",
+  "generated_at": "2026-11-18T05:50:53.793906+08:00",
+  "stale_after": "2026-11-19T08:00:00+08:00",
   "start": "2008-03-10",
   "selection_date": "2026-11-10",
   "performance": {
-    "cagr": 0.3561619630150952,
-    "sharpe": 1.3233146602019787,
+    "cagr": 0.35402671193703505,
+    "sharpe": 1.3162726898134303,
     "max_drawdown": -0.3174262277172667,
     "win_rate": 0.5059412132582864,
     "closed_trades": 1600,
@@ -37,7 +37,7 @@
     "2023": 0.5450747678412451,
     "2024": 0.378936939926225,
     "2025": 0.6215094572925768,
-    "2026": 0.2144721452390168
+    "2026": 0.1802138606340482
   },
   "monthly_returns": {
     "2008-01": 0.0,
@@ -266,7 +266,7 @@
     "2026-08": 0.10614684554342313,
     "2026-09": -0.029073764101265276,
     "2026-10": -0.10431766921713403,
-    "2026-11": 0.07096032197917945
+    "2026-11": 0.04075027257226549
   },
   "holdings": [
     {
@@ -276,11 +276,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-11-10T00:00:00",
       "exit_sig_date": null,
-      "return": -0.026451942355889768,
+      "return": -0.12155432330827065,
       "position": 0.1,
       "trade_price@entry_date": 19.95,
-      "trade_price@exit_date": 17.85,
-      "close": 19.45
+      "trade_price@exit_date": 19.25,
+      "close": 17.55
     },
     {
       "stock_id": "2412",
@@ -289,11 +289,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-11-10T00:00:00",
       "exit_sig_date": null,
-      "return": 0.02361763322884003,
+      "return": 0.02987829153605004,
       "position": 0.1,
       "trade_price@entry_date": 159.5,
-      "trade_price@exit_date": 165.0,
-      "close": 163.5
+      "trade_price@exit_date": 166.5,
+      "close": 164.5
     },
     {
       "stock_id": "2468",
@@ -302,11 +302,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-11-10T00:00:00",
       "exit_sig_date": null,
-      "return": 0.2346018181818179,
+      "return": 0.11204943181818172,
       "position": 0.1,
       "trade_price@entry_date": 66.0,
-      "trade_price@exit_date": 77.1,
-      "close": 81.6
+      "trade_price@exit_date": 81.6,
+      "close": 73.5
     },
     {
       "stock_id": "6112",
@@ -315,11 +315,11 @@
       "exit_date": null,
       "entry_sig_date": "2026-11-10T00:00:00",
       "exit_sig_date": null,
-      "return": 0.01993489304812801,
+      "return": -0.056604723707665006,
       "position": 0.1,
       "trade_price@entry_date": 56.1,
-      "trade_price@exit_date": 58.7,
-      "close": 57.3
+      "trade_price@exit_date": 57.3,
+      "close": 53.0
     }
   ],
   "pending": [],
@@ -335,7 +335,7 @@
       "position": 0.1,
       "trade_price@entry_date": 130.0,
       "trade_price@exit_date": 133.0,
-      "close": 131.0
+      "close": 118.0
     },
     {
       "stock_id": "2340",
@@ -348,7 +348,7 @@
       "position": 0.1,
       "trade_price@entry_date": 51.4,
       "trade_price@exit_date": 40.7,
-      "close": 38.25
+      "close": 36.4
     },
     {
       "stock_id": "2607",
@@ -361,7 +361,7 @@
       "position": 0.1,
       "trade_price@entry_date": 57.7,
       "trade_price@exit_date": 58.5,
-      "close": 58.4
+      "close": 57.5
     },
     {
       "stock_id": "3016",
@@ -374,7 +374,7 @@
       "position": 0.1,
       "trade_price@entry_date": 175.0,
       "trade_price@exit_date": 122.5,
-      "close": 110.0
+      "close": 105.5
     },
     {
       "stock_id": "3287",
@@ -387,7 +387,7 @@
       "position": 0.1,
       "trade_price@entry_date": 50.8,
       "trade_price@exit_date": 79.2,
-      "close": 62.0
+      "close": 55.8
     },
     {
       "stock_id": "3564",
@@ -400,7 +400,7 @@
       "position": 0.1,
       "trade_price@entry_date": 70.9,
       "trade_price@exit_date": 51.5,
-      "close": 51.0
+      "close": 49.1
     },
     {
       "stock_id": "3597",
@@ -413,7 +413,7 @@
       "position": 0.1,
       "trade_price@entry_date": 48.6,
       "trade_price@exit_date": 39.6,
-      "close": 38.5
+      "close": 37.3
     },
     {
       "stock_id": "5230",
@@ -426,7 +426,7 @@
       "position": 0.1,
       "trade_price@entry_date": 25.45,
       "trade_price@exit_date": 33.9,
-      "close": 32.65
+      "close": 34.5
     },
     {
       "stock_id": "6505",
@@ -452,7 +452,7 @@
       "position": 0.1,
       "trade_price@entry_date": 149.0,
       "trade_price@exit_date": 99.5,
-      "close": 91.4
+      "close": 85.8
     }
   ],
   "latest_selection": {
@@ -475,19 +475,19 @@
   },
   "allocation_prices": {
     "1416": {
-      "close": 19.45,
+      "close": 17.55,
       "name": ""
     },
     "6112": {
-      "close": 57.3,
+      "close": 53.0,
       "name": ""
     },
     "2468": {
-      "close": 81.6,
+      "close": 73.5,
       "name": ""
     },
     "2412": {
-      "close": 163.5,
+      "close": 164.5,
       "name": ""
     }
   },
